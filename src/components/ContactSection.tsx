@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Mail } from 'lucide-react';
+import { Mail, Loader2 } from 'lucide-react';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
 import emailjs from '@emailjs/browser';
@@ -34,22 +34,21 @@ const ContactSection: React.FC = () => {
     setIsSubmitting(true);
 
     emailjs.send(
-      'service_xxxxxx',  // Your EmailJS service ID
-      'template_xxxxxx', // Your EmailJS template ID
+      import.meta.env.VITE_EMAILJS_SERVICE_ID,
+      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
       {
         from_name: formData.name,
         from_email: formData.email,
         subject: formData.subject,
         message: formData.message,
       },
-      'your_public_key_xxxxxx' // Your EmailJS public API key
+      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
     )
     .then(() => {
       toast({
-        title: "Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "✅ Message Sent!",
+        description: "Thank you! I'll get back to you soon.",
       });
-
       setFormData({
         name: '',
         email: '',
@@ -61,8 +60,8 @@ const ContactSection: React.FC = () => {
     .catch((error) => {
       console.error(error);
       toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
+        title: "❌ Error Sending Message",
+        description: "Please try again later or contact me directly at oussama.zbair9@gmail.com",
       });
       setIsSubmitting(false);
     });
@@ -86,7 +85,7 @@ const ContactSection: React.FC = () => {
             I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
             Feel free to reach out using the form or through social links.
           </p>
-          
+
           <div className="glass-card p-6 mb-6">
             <h4 className="text-lg font-bold text-white mb-4">Contact Information</h4>
             <div className="space-y-4">
@@ -100,7 +99,7 @@ const ContactSection: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="glass-card p-6">
             <h4 className="text-lg font-bold text-white mb-4">Schedule a Meeting</h4>
             <p className="text-gray-300 mb-4">
@@ -129,7 +128,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="email" className="block text-white mb-2">Email</label>
               <input
@@ -142,7 +141,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="subject" className="block text-white mb-2">Subject</label>
               <input
@@ -155,7 +154,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="message" className="block text-white mb-2">Message</label>
               <textarea
@@ -168,13 +167,17 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <Button 
               type="submit"
-              className="bg-neon hover:bg-neon/80 text-dark-300 w-full"
+              className="bg-neon hover:bg-neon/80 text-dark-300 w-full flex justify-center items-center"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+              {isSubmitting ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                'Send Message'
+              )}
             </Button>
           </form>
         </div>
