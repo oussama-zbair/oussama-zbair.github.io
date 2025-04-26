@@ -1,5 +1,5 @@
-
 import React from 'react';
+import { motion } from 'framer-motion';
 
 type TechLogoProps = {
   name: string;
@@ -22,6 +22,14 @@ const TechLogo: React.FC<TechLogoProps> = ({ name, className = "w-5 h-5" }) => {
       Docker: "https://raw.githubusercontent.com/devicons/devicon/master/icons/docker/docker-original.svg",
       Jenkins: "https://raw.githubusercontent.com/devicons/devicon/master/icons/jenkins/jenkins-original.svg",
       Git: "https://raw.githubusercontent.com/devicons/devicon/master/icons/git/git-original.svg",
+      Vue: "https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg",
+      "Vue.js": "https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original.svg",
+      Redux: "https://raw.githubusercontent.com/devicons/devicon/master/icons/redux/redux-original.svg",
+      Firebase: "https://raw.githubusercontent.com/devicons/devicon/master/icons/firebase/firebase-plain.svg",
+      Webpack: "https://raw.githubusercontent.com/devicons/devicon/master/icons/webpack/webpack-original.svg",
+      Babel: "https://raw.githubusercontent.com/devicons/devicon/master/icons/babel/babel-original.svg",
+      "Material UI": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/materialui/materialui-original.svg",
+      SASS: "https://raw.githubusercontent.com/devicons/devicon/master/icons/sass/sass-original.svg",
     };
     
     return logos[tech] || '';
@@ -30,10 +38,13 @@ const TechLogo: React.FC<TechLogoProps> = ({ name, className = "w-5 h-5" }) => {
   const logoUrl = getLogoUrl(name);
 
   return logoUrl ? (
-    <img 
+    <motion.img 
       src={logoUrl} 
       alt={`${name} logo`} 
       className={`${className} inline-block`}
+      loading="lazy"
+      whileHover={{ scale: 1.2 }}
+      transition={{ type: "spring", stiffness: 300 }}
     />
   ) : null;
 };
