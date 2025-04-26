@@ -60,10 +60,6 @@ const HeroSection: React.FC = () => {
               <ArrowDown size={16} className="mr-2" />
               Télécharger CV (FR)
             </Button>
-            <Button variant="outline" className="border-purple text-purple hover:bg-purple/10">
-              <Terminal size={16} className="mr-2" />
-              Open Terminal
-            </Button>
           </div>
         </div>
       </div>
