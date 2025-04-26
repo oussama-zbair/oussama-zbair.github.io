@@ -1,9 +1,23 @@
-
-import React from 'react';
-import { User, CalendarPlus, Mail, Phone, Github, Linkedin } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { User, CalendarPlus, Github, Linkedin } from 'lucide-react';
 import { Button } from './ui/button';
 
 const AboutSection: React.FC = () => {
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const openCalendly = () => {
+    (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/oussama-zbair' });
+  };
+
   return (
     <section id="about" className="section-container">
       <h2 className="section-title">About Me</h2>
@@ -26,9 +40,12 @@ const AboutSection: React.FC = () => {
             and staying updated with the latest industry trends. I'm always open to new challenges and 
             opportunities to grow as a developer.
           </p>
-          
+
           <div className="mt-6">
-            <Button className="bg-neon hover:bg-neon/80 text-dark-300">
+            <Button 
+              className="bg-neon hover:bg-neon/80 text-dark-300"
+              onClick={openCalendly}
+            >
               <CalendarPlus size={16} className="mr-2" />
               Schedule a Meeting
             </Button>
@@ -66,18 +83,6 @@ const AboutSection: React.FC = () => {
             <h3 className="text-xl font-bold text-white mb-4">Contact & Social</h3>
             
             <ul className="space-y-4">
-              <li>
-                <a href="mailto:contact@oussamazbair.com" className="flex items-center text-gray-300 hover:text-neon transition-colors">
-                  <Mail size={16} className="mr-3 text-neon" />
-                  <span>contact@oussamazbair.com</span>
-                </a>
-              </li>
-              <li>
-                <a href="tel:+212600000000" className="flex items-center text-gray-300 hover:text-neon transition-colors">
-                  <Phone size={16} className="mr-3 text-neon" />
-                  <span>+212 60 00 00 000</span>
-                </a>
-              </li>
               <li>
                 <a href="https://github.com/oussama-zbair" target="_blank" rel="noopener noreferrer" className="flex items-center text-gray-300 hover:text-neon transition-colors">
                   <Github size={16} className="mr-3 text-neon" />

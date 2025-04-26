@@ -1,8 +1,8 @@
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Mail } from 'lucide-react';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
+import emailjs from '@emailjs/browser';
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,8 +11,18 @@ const ContactSection: React.FC = () => {
     subject: '',
     message: ''
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -22,23 +32,44 @@ const ContactSection: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
+
+    emailjs.send(
+      'service_xxxxxx',  // Your EmailJS service ID
+      'template_xxxxxx', // Your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        subject: formData.subject,
+        message: formData.message,
+      },
+      'your_public_key_xxxxxx' // Your EmailJS public API key
+    )
+    .then(() => {
       toast({
         title: "Message Sent!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
-      
+
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
-      
       setIsSubmitting(false);
-    }, 1000);
+    })
+    .catch((error) => {
+      console.error(error);
+      toast({
+        title: "Error",
+        description: "Something went wrong. Please try again.",
+      });
+      setIsSubmitting(false);
+    });
+  };
+
+  const openCalendly = () => {
+    (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/oussama-zbair' });
   };
 
   return (
@@ -61,7 +92,7 @@ const ContactSection: React.FC = () => {
             <div className="space-y-4">
               <div>
                 <p className="text-gray-400">Email</p>
-                <p className="text-neon">contact@oussamazbair.com</p>
+                <p className="text-neon">oussama.zbair9@gmail.com</p>
               </div>
               <div>
                 <p className="text-gray-400">Location</p>
@@ -75,12 +106,15 @@ const ContactSection: React.FC = () => {
             <p className="text-gray-300 mb-4">
               Want to discuss a project or just have a chat? Schedule a virtual meeting directly on my calendar.
             </p>
-            <Button className="bg-purple hover:bg-purple/80 text-white w-full">
+            <Button 
+              className="bg-purple hover:bg-purple/80 text-white w-full"
+              onClick={openCalendly}
+            >
               Book a Time Slot
             </Button>
           </div>
         </div>
-        
+
         <div className="glass-card p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>

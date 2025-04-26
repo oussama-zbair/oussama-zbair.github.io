@@ -16,39 +16,84 @@ const CertificationsSection: React.FC = () => {
   const certifications: Certification[] = [
     {
       id: 1,
-      title: "AWS Certified Solutions Architect",
-      issuer: "Amazon Web Services",
-      date: "Jan 2023",
-      credentialId: "AWS-ASA-12345",
-      credentialUrl: "https://www.credly.com/badges/example",
-      image: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      title: "Oracle Cloud Infrastructure Certified Foundations Associate",
+      issuer: "Oracle",
+      date: "Feb 2025",
+      credentialId: "",
+      credentialUrl: "https://catalog-education.oracle.com/pls/certview/sharebadge?id=D30E4CA29B911578359425C1B0F4CB37631053C50554D49F58B721BC1F9B7EB6",
+      image: "https://brm-workforce.oracle.com/pdf/certview/images/OCI2024FNDCFA.png"
     },
     {
       id: 2,
-      title: "Professional React Developer",
-      issuer: "Meta (formerly Facebook)",
-      date: "Mar 2022",
-      credentialId: "FB-REACT-67890",
-      credentialUrl: "https://www.credential.net/example",
-      image: "https://images.unsplash.com/photo-1633356122102-3fe601e05bd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      title: " Scrum Foundation Professional Certificate (SFPC)",
+      issuer: "certiprof",
+      date: "Aug 2024",
+      credentialId: "",
+      credentialUrl: "",
+      image: "https://media.licdn.com/dms/image/v2/D4E2DAQGFWkczN-v6lg/profile-treasury-document-cover-images_480/profile-treasury-document-cover-images_480/0/1724410428718?e=1746291600&v=beta&t=CcmU612GGtjq-vmvEHH7Sh9CtmGOJFEgb3ANOKzSeEk"
     },
     {
       id: 3,
-      title: "Full Stack Web Development",
-      issuer: "freeCodeCamp",
-      date: "Nov 2021",
-      credentialId: "FCC-FSWD-13579",
-      credentialUrl: "https://www.freecodecamp.org/certification/example",
-      image: "https://images.unsplash.com/photo-1545670723-196ed0954986?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      title: "Certified Software Engineer",
+      issuer: "HackerRank",
+      date: "Aug 2024",
+      credentialId: "1dbd917c8d70",
+      credentialUrl: "https://www.hackerrank.com/certificates/1dbd917c8d70",
+      image: "https://hrcdn.net/fcore/assets/brand/logo-new-white-green-a5cb16e0ae.svg"
     },
     {
       id: 4,
-      title: "JavaScript Algorithms & Data Structures",
-      issuer: "Udemy",
-      date: "Aug 2021",
-      credentialId: "UDMY-JSDS-24680",
-      image: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80"
+      title: "Software Engineering Specialization",
+      issuer: "The Hong Kong University of Science and Technology",
+      date: "Dec 2023",
+      credentialId: "",
+      image: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/3a/37974779f7ad2a04626183c2f8951b/ustLogo.png?auto=format%2Ccompress&dpr=1&w=80&h=80"
+    },
+    {
+      id: 5,
+      title: "AWS Cloud Technical Essentials",
+      issuer: "Amazon Web Services (AWS)",
+      date: "Dec 2023",
+      credentialId: "",
+      image: "https://media.licdn.com/dms/image/v2/D4E0BAQE0fp2sCqnVLg/company-logo_200_200/company-logo_200_200/0/1738855736997/amazon_web_services_logo?e=1750896000&v=beta&t=0QhDsH0AB1AMui_htwOmtO0unEN0ycVMesxgPz-YQDA"
+    },
+    {
+      id: 6,
+      title: "Continuous Integration and Continuous Delivery (CI/CD)",
+      issuer: "IBM",
+      date: "Dec 2023",
+      credentialId: "",
+      image: "https://media.licdn.com/dms/image/v2/D560BAQGiz5ecgpCtkA/company-logo_200_200/company-logo_200_200/0/1688684715866/ibm_logo?e=1750896000&v=beta&t=2EYzlHr0aMMYjoavrnbg4-789SRk1pnprPjqZi8EBoU"
+    },
+    {
+      id: 7,
+      title: "Foundations of Cybersecurity",
+      issuer: "Google",
+      date: "Nov 2023",
+      credentialId: "831599c22e7d7256e8ee574d11a0cbf2",
+      credentialUrl: "https://coursera.org/share/831599c22e7d7256e8ee574d11a0cbf2",
+      image: "https://media.licdn.com/dms/image/v2/C4D0BAQHiNSL4Or29cg/company-logo_200_200/company-logo_200_200/0/1631311446380?e=1750896000&v=beta&t=RwIUDVm8bSK8s4zH7QCU2huXL124REnJ7oQg4Ihaj3c"
+    },
+    {
+      id: 8,
+      title: "Cybersecurity Fundamentals",
+      issuer: "IBM",
+      date: "Jan 2021",
+      credentialId: "9d19b0bb-62e8-426f-89e4-32ead2a42756",
+      credentialUrl: "https://www.youracclaim.com/badges/9d19b0bb-62e8-426f-89e4-32ead2a42756?source=linked_in_profile",
+      image: "https://media.licdn.com/dms/image/v2/D560BAQGiz5ecgpCtkA/company-logo_200_200/company-logo_200_200/0/1688684715866/ibm_logo?e=1750896000&v=beta&t=2EYzlHr0aMMYjoavrnbg4-789SRk1pnprPjqZi8EBoU"
+    },
+    {
+      id: 9,
+      title: "Working in a Digital World: Professional Skills",
+      issuer: "IBM",
+      date: "Jan 2021",
+      credentialId: "1c47fa45-0c2f-4acc-a076-862e0bf90bbc",
+      credentialUrl: "hhttps://www.youracclaim.com/badges/1c47fa45-0c2f-4acc-a076-862e0bf90bbc?source=linked_in_profile",
+      image: "https://media.licdn.com/dms/image/v2/D560BAQGiz5ecgpCtkA/company-logo_200_200/company-logo_200_200/0/1688684715866/ibm_logo?e=1750896000&v=beta&t=2EYzlHr0aMMYjoavrnbg4-789SRk1pnprPjqZi8EBoU"
     }
+    
+    
   ];
 
   return (
