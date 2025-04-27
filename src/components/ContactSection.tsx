@@ -68,8 +68,16 @@ const ContactSection: React.FC = () => {
   };
 
   const openCalendly = () => {
-    (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/oussama-zbair' });
+    if (typeof (window as any).Calendly !== "undefined") {
+      (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/oussama-zbair' });
+    } else {
+      toast({
+        title: "⚠️ Calendly Not Ready",
+        description: "Please wait a few seconds and try again.",
+      });
+    }
   };
+  
 
   return (
     <section id="contact" className="section-container">
