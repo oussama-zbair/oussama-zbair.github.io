@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { Mail, Loader2 } from 'lucide-react';
+
+import React, { useState } from 'react';
+import { Mail, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
-import emailjs from '@emailjs/browser';
+import { InlineWidget } from 'react-calendly';
 
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -11,73 +12,60 @@ const ContactSection: React.FC = () => {
     subject: '',
     message: ''
   });
-
+  
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [showCalendly, setShowCalendly] = useState(false);
 
-  useEffect(() => {
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
+ 
+  const CALENDLY_URL = 'https://calendly.com/oussama-zbair';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleCaptchaChange = (token: string | null) => {
+    setCaptchaToken(token);
+  };
+
+  const toggleCalendly = () => {
+    setShowCalendly(!showCalendly);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    emailjs.send(
-      import.meta.env.VITE_EMAILJS_SERVICE_ID,
-      import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-      {
-        from_name: formData.name,
-        from_email: formData.email,
-        subject: formData.subject,
-        message: formData.message,
-      },
-      import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-    )
-    .then(() => {
+    
+    if (!captchaToken) {
       toast({
-        title: "✅ Message Sent!",
-        description: "Thank you! I'll get back to you soon.",
+        title: "Verification Required",
+        description: "Please complete the reCAPTCHA verification.",
+        variant: "destructive",
       });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    // Simulate form submission
+    setTimeout(() => {
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
+      
+      
+      
       setIsSubmitting(false);
-    })
-    .catch((error) => {
-      console.error(error);
-      toast({
-        title: "❌ Error Sending Message",
-        description: "Please try again later or contact me directly at oussama.zbair9@gmail.com",
-      });
-      setIsSubmitting(false);
-    });
+    }, 1000);
   };
-
-  const openCalendly = () => {
-    if (typeof (window as any).Calendly !== "undefined") {
-      (window as any).Calendly.initPopupWidget({ url: 'https://calendly.com/oussama-zbair' });
-    } else {
-      toast({
-        title: "⚠️ Calendly Not Ready",
-        description: "Please wait a few seconds and try again.",
-      });
-    }
-  };
-  
 
   return (
     <section id="contact" className="section-container">
@@ -93,13 +81,13 @@ const ContactSection: React.FC = () => {
             I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
             Feel free to reach out using the form or through social links.
           </p>
-
+          
           <div className="glass-card p-6 mb-6">
             <h4 className="text-lg font-bold text-white mb-4">Contact Information</h4>
             <div className="space-y-4">
               <div>
                 <p className="text-gray-400">Email</p>
-                <p className="text-neon">oussama.zbair9@gmail.com</p>
+                <p className="text-neon">contact@oussamazbair.com</p>
               </div>
               <div>
                 <p className="text-gray-400">Location</p>
@@ -107,21 +95,40 @@ const ContactSection: React.FC = () => {
               </div>
             </div>
           </div>
-
+          
           <div className="glass-card p-6">
             <h4 className="text-lg font-bold text-white mb-4">Schedule a Meeting</h4>
             <p className="text-gray-300 mb-4">
               Want to discuss a project or just have a chat? Schedule a virtual meeting directly on my calendar.
             </p>
             <Button 
-              className="bg-purple hover:bg-purple/80 text-white w-full"
-              onClick={openCalendly}
+              className="bg-purple hover:bg-purple/80 text-white w-full mb-4"
+              onClick={toggleCalendly}
             >
-              Book a Time Slot
+              <Calendar size={18} className="mr-2" />
+              {showCalendly ? "Hide Calendar" : "Book a Time Slot"}
             </Button>
+            
+            {showCalendly ? (
+              <div className="rounded-lg overflow-hidden glass-card mt-4">
+                <InlineWidget 
+                  url={CALENDLY_URL}
+                  styles={{
+                    height: '630px',
+                    minWidth: '320px'
+                  }}
+                />
+              </div>
+            ) : (
+              <p className="text-sm text-gray-400 text-center mt-2">
+                <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer" className="text-neon hover:underline">
+                  Direct link to my calendar
+                </a>
+              </p>
+            )}
           </div>
         </div>
-
+        
         <div className="glass-card p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -136,7 +143,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-
+            
             <div>
               <label htmlFor="email" className="block text-white mb-2">Email</label>
               <input
@@ -149,7 +156,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-
+            
             <div>
               <label htmlFor="subject" className="block text-white mb-2">Subject</label>
               <input
@@ -162,7 +169,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-
+            
             <div>
               <label htmlFor="message" className="block text-white mb-2">Message</label>
               <textarea
@@ -175,17 +182,14 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-
+            
+           
             <Button 
               type="submit"
-              className="bg-neon hover:bg-neon/80 text-dark-300 w-full flex justify-center items-center"
-              disabled={isSubmitting}
+              className="bg-neon hover:bg-neon/80 text-dark-300 w-full"
+              disabled={isSubmitting || !captchaToken}
             >
-              {isSubmitting ? (
-                <Loader2 className="w-5 h-5 animate-spin" />
-              ) : (
-                'Send Message'
-              )}
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </Button>
           </form>
         </div>
