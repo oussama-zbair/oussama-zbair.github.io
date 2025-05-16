@@ -4,6 +4,8 @@ import { Button } from './ui/button';
 import { toast } from './ui/use-toast';
 import { InlineWidget } from 'react-calendly';
 
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xdkgbznv';
+
 const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -26,26 +28,41 @@ const ContactSection: React.FC = () => {
     setShowCalendly(!showCalendly);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate success (replace with emailjs.send in real use)
-    setTimeout(() => {
+    try {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        toast({
+          title: "✅ Message Sent!",
+          description: "Thank you! I'll get back to you soon.",
+        });
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        toast({
+          title: "❌ Failed to Send",
+          description: "Please try again or contact me directly.",
+          variant: "destructive",
+        });
+      }
+    } catch (err) {
       toast({
-        title: "✅ Message Sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "❌ Network Error",
+        description: "Please check your connection or try again later.",
+        variant: "destructive",
       });
-
-      setFormData({
-        name: '',
-        email: '',
-        subject: '',
-        message: ''
-      });
-
+    } finally {
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (
