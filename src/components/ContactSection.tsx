@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Mail, Calendar } from 'lucide-react';
 import { Button } from './ui/button';
@@ -12,21 +11,15 @@ const ContactSection: React.FC = () => {
     subject: '',
     message: ''
   });
-  
+
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [showCalendly, setShowCalendly] = useState(false);
 
- 
   const CALENDLY_URL = 'https://calendly.com/oussama-zbair';
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleCaptchaChange = (token: string | null) => {
-    setCaptchaToken(token);
   };
 
   const toggleCalendly = () => {
@@ -35,34 +28,22 @@ const ContactSection: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!captchaToken) {
-      toast({
-        title: "Verification Required",
-        description: "Please complete the reCAPTCHA verification.",
-        variant: "destructive",
-      });
-      return;
-    }
-    
     setIsSubmitting(true);
-    
-    // Simulate form submission
+
+    // Simulate success (replace with emailjs.send in real use)
     setTimeout(() => {
       toast({
-        title: "Message Sent!",
+        title: "✅ Message Sent!",
         description: "Thank you for your message. I'll get back to you soon.",
       });
-      
+
       setFormData({
         name: '',
         email: '',
         subject: '',
         message: ''
       });
-      
-      
-      
+
       setIsSubmitting(false);
     }, 1000);
   };
@@ -81,7 +62,7 @@ const ContactSection: React.FC = () => {
             I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.
             Feel free to reach out using the form or through social links.
           </p>
-          
+
           <div className="glass-card p-6 mb-6">
             <h4 className="text-lg font-bold text-white mb-4">Contact Information</h4>
             <div className="space-y-4">
@@ -95,7 +76,7 @@ const ContactSection: React.FC = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="glass-card p-6">
             <h4 className="text-lg font-bold text-white mb-4">Schedule a Meeting</h4>
             <p className="text-gray-300 mb-4">
@@ -108,7 +89,7 @@ const ContactSection: React.FC = () => {
               <Calendar size={18} className="mr-2" />
               {showCalendly ? "Hide Calendar" : "Book a Time Slot"}
             </Button>
-            
+
             {showCalendly ? (
               <div className="rounded-lg overflow-hidden glass-card mt-4">
                 <InlineWidget 
@@ -128,7 +109,7 @@ const ContactSection: React.FC = () => {
             )}
           </div>
         </div>
-        
+
         <div className="glass-card p-6 md:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
@@ -143,7 +124,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="email" className="block text-white mb-2">Email</label>
               <input
@@ -156,7 +137,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="subject" className="block text-white mb-2">Subject</label>
               <input
@@ -169,7 +150,7 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
+
             <div>
               <label htmlFor="message" className="block text-white mb-2">Message</label>
               <textarea
@@ -182,12 +163,11 @@ const ContactSection: React.FC = () => {
                 required
               />
             </div>
-            
-           
+
             <Button 
               type="submit"
               className="bg-neon hover:bg-neon/80 text-dark-300 w-full"
-              disabled={isSubmitting || !captchaToken}
+              disabled={isSubmitting}
             >
               {isSubmitting ? 'Sending...' : 'Send Message'}
             </Button>
