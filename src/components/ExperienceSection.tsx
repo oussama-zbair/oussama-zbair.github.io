@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Briefcase } from 'lucide-react';
 
@@ -16,45 +15,49 @@ const ExperienceSection: React.FC = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 1,
-      role: "Senior Software Engineer",
-      company: "Tech Solutions Inc.",
-      location: "Remote",
-      period: "Jan 2022 - Present",
+      role: "Software Engineering Intern – Web Full Stack Developer",
+      company: "Skills Conseil Dev (Skills & Smart Group)",
+      location: "Casablanca, Morocco",
+      period: "Feb 2025 – Jul 2025",
       description: [
-        "Lead a team of 5 developers working on a microservices-based e-commerce platform",
-        "Implemented CI/CD pipelines that reduced deployment time by 40%",
-        "Redesigned the authentication system, improving security and user experience",
-        "Mentored junior developers through code reviews and pair programming sessions"
+        "Designed and developed a full-stack insurance web platform for mobile and electronic device coverage",
+        "Built secure REST APIs in Spring Boot 3 for user authentication, policy management, and claims processing",
+        "Integrated advanced features: Google 2FA, Firebase email verification, file uploads, JWT security, reCAPTCHA",
+        "Developed fully responsive dashboards with React (Vite) for clients, admins, managers, and providers",
+        "Implemented PostgreSQL database schema with complex relations for users, contracts, claims, and devices",
+        "Followed agile methodology and managed source code via Bitbucket, with CI/CD delivery using Docker"
       ],
-      technologies: ["React", "Node.js", "Docker", "AWS", "GraphQL"]
+      technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker", "Firebase", "Google Authenticator", "Tailwind CSS"]
     },
     {
       id: 2,
-      role: "Full Stack Developer",
-      company: "Digital Innovations",
-      location: "Casablanca, Morocco",
-      period: "Mar 2020 - Dec 2021",
+      role: "Java Software Engineering Intern",
+      company: "Prefecture of Inzegane Ait Melloul – Ministry of Interior",
+      location: "Agadir, Morocco",
+      period: "Jul 2023 – Sep 2023",
       description: [
-        "Developed and maintained multiple client web applications from concept to deployment",
-        "Built RESTful APIs and integrated third-party services",
-        "Optimized database queries resulting in 30% faster page loads",
-        "Collaborated with UX/UI designers to implement responsive designs"
+        "Developed a document management system to organize, classify, and search legal and administrative files",
+        "Implemented CRUD operations in Java Swing with JDBC for multi-user interaction",
+        "Built authentication and authorization layer with user role management and session handling",
+        "Improved UI/UX by adding Bootstrap-integrated design and real-time PDF preview features",
+        "Delivered a professional software solution for local administration’s digital transition"
       ],
-      technologies: ["JavaScript", "React", "Express", "MongoDB", "Redux"]
+      technologies: ["Java", "Swing", "JDBC", "MySQL", "Bootstrap", "MVC"]
     },
     {
       id: 3,
-      role: "Frontend Developer",
-      company: "WebCraft Studios",
-      location: "Rabat, Morocco",
-      period: "Jun 2018 - Feb 2020",
+      role: "Full Stack Developer – Personal Projects & Freelance",
+      company: "GitHub @oussama-zbair",
+      location: "Remote",
+      period: "2023 – Present",
       description: [
-        "Created interactive web interfaces for client projects",
-        "Implemented responsive designs ensuring cross-browser compatibility",
-        "Participated in Agile development cycles with two-week sprints",
-        "Reduced bundle size by 35% through code splitting and lazy loading"
+        "Built professional full-stack projects such as a Currency Converter (Spring Boot + React) and OCR tool (Flask)",
+        "Developed an image background remover app using U²-Net model with Flask, PyTorch, OpenCV",
+        "Created an animated weather web app with OpenWeatherMap API and Mapbox for location detection",
+        "Configured CI/CD pipelines and deployed apps with Jenkins, Docker, and Ansible on AWS EC2",
+        "Maintained high-quality documentation with Markdown, UML, LaTeX and published projects on GitHub"
       ],
-      technologies: ["HTML5", "CSS3", "JavaScript", "jQuery", "Bootstrap"]
+      technologies: ["Spring Boot", "React", "Flask", "PyTorch", "Docker", "Jenkins", "AWS", "OpenCV", "CI/CD"]
     }
   ];
 
