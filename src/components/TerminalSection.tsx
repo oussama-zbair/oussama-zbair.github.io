@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { Terminal } from 'lucide-react';
 
@@ -59,6 +58,34 @@ Backend: Java, Spring Boot, Microservices, JPA/Hibernate
 Frontend: React, TypeScript, JavaScript, HTML/CSS
 Database: Oracle, PostgreSQL, MongoDB
 DevOps: Docker, Jenkins, Git, AWS`;
+      case 'contact':
+        return `Contact Information:
+Email: oussama.zbair@example.com
+LinkedIn: linkedin.com/in/oussama-zbair
+GitHub: github.com/oussama-zbair
+Location: Available for remote work
+
+Feel free to reach out for opportunities or collaboration!`;
+      case 'projects':
+        return `Featured Projects:
+• Enterprise E-commerce Platform - Spring Boot microservices
+• Real-time Chat Application - WebSocket + React
+• Task Management System - Full-stack web application
+• API Gateway Service - Spring Cloud architecture
+
+Type 'contact' for more details or check the projects section on the website.`;
+      case 'experience':
+        return `Work Experience:
+Senior Full Stack Java Developer (2019-Present)
+• Led development of enterprise applications
+• Architected microservices solutions
+• Mentored junior developers
+• Technologies: Spring Boot, React, Docker, AWS
+
+Full Stack Developer (2017-2019)
+• Built web applications from scratch
+• Implemented RESTful APIs
+• Database design and optimization`;
       case 'clear':
         setTimeout(() => {
           setMessages([{ type: 'response', text: 'Terminal cleared. Type "help" to see available commands.' }]);
