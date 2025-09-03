@@ -15,49 +15,48 @@ const ExperienceSection: React.FC = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 1,
-      role: "Software Engineering Intern – Web Full Stack Developer",
-      company: "Skills Conseil Dev (Skills & Smart Group)",
+      role: "Software Engineer (Final Year Internship)",
+      company: "Skills & Smart Group",
       location: "Casablanca, Morocco",
-      period: "Feb 2025 – Jul 2025",
+      period: "Mar 2025 – Aug 2025",
       description: [
-        "Designed and developed a full-stack insurance web platform for mobile and electronic device coverage",
-        "Built secure REST APIs in Spring Boot 3 for user authentication, policy management, and claims processing",
-        "Integrated advanced features: Google 2FA, Firebase email verification, file uploads, JWT security, reCAPTCHA",
-        "Developed fully responsive dashboards with React (Vite) for clients, admins, managers, and providers",
-        "Implemented PostgreSQL database schema with complex relations for users, contracts, claims, and devices",
-        "Followed agile methodology and managed source code via Bitbucket, with CI/CD delivery using Docker"
+        "Designed and implemented secure REST APIs with authentication and user management for web-based insurance management platform",
+        "Developed interactive web dashboards and forms for multiple user roles with comprehensive functionality",
+        "Set up automated CI/CD pipelines with integrated testing and deployment processes",
+        "Improved code quality through comprehensive unit testing and detailed technical documentation",
+        "Implemented secure user authentication, authorization systems, and data protection measures"
       ],
-      technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker", "Firebase", "Google Authenticator", "Tailwind CSS"]
+      technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker", "CI/CD", "REST APIs", "Unit Testing"]
     },
     {
       id: 2,
-      role: "Java Software Engineering Intern",
-      company: "Prefecture of Inzegane Ait Melloul – Ministry of Interior",
-      location: "Agadir, Morocco",
-      period: "Jul 2023 – Sep 2023",
+      role: "Software Development Intern",
+      company: "Ministry of Interior",
+      location: "Rabat, Morocco",
+      period: "Jun 2024 – Sept 2024",
       description: [
-        "Developed a document management system to organize, classify, and search legal and administrative files",
-        "Implemented CRUD operations in Java Swing with JDBC for multi-user interaction",
-        "Built authentication and authorization layer with user role management and session handling",
-        "Improved UI/UX by adding Bootstrap-integrated design and real-time PDF preview features",
-        "Delivered a professional software solution for local administration’s digital transition"
+        "Developed comprehensive modules for user management, advanced search functionality, and activity tracking",
+        "Created internal document management desktop application for efficient file organization and retrieval",
+        "Optimized search performance through advanced indexing and caching techniques implementation",
+        "Documented complete system architecture and workflows for effective knowledge transfer",
+        "Delivered robust desktop solution for government document management and processing"
       ],
-      technologies: ["Java", "Swing", "JDBC", "MySQL", "Bootstrap", "MVC"]
+      technologies: ["Java", "Desktop Development", "Database Optimization", "Search Algorithms", "Documentation"]
     },
     {
       id: 3,
-      role: "Full Stack Developer – Personal Projects & Freelance",
-      company: "GitHub @oussama-zbair",
-      location: "Remote",
-      period: "2023 – Present",
+      role: "Teaching Intern – Mathematics and Computer Science",
+      company: "Ministry of National Education",
+      location: "Agadir, Morocco",
+      period: "Jan 2023 – May 2023",
       description: [
-        "Built professional full-stack projects such as a Currency Converter (Spring Boot + React) and OCR tool (Flask)",
-        "Developed an image background remover app using U²-Net model with Flask, PyTorch, OpenCV",
-        "Created an animated weather web app with OpenWeatherMap API and Mapbox for location detection",
-        "Configured CI/CD pipelines and deployed apps with Jenkins, Docker, and Ansible on AWS EC2",
-        "Maintained high-quality documentation with Markdown, UML, LaTeX and published projects on GitHub"
+        "Provided comprehensive support to students in applied mathematics and computer science subjects",
+        "Delivered interactive workshops on programming fundamentals, networking concepts, and cybersecurity principles",
+        "Developed engaging educational content and practical exercises for enhanced learning outcomes",
+        "Mentored students in technical problem-solving and critical thinking methodologies",
+        "Collaborated with faculty to improve curriculum delivery and student engagement strategies"
       ],
-      technologies: ["Spring Boot", "React", "Flask", "PyTorch", "Docker", "Jenkins", "AWS", "OpenCV", "CI/CD"]
+      technologies: ["Teaching", "Programming", "Networking", "Cybersecurity", "Educational Technology"]
     }
   ];
 
@@ -65,7 +64,7 @@ const ExperienceSection: React.FC = () => {
     <section id="experience" className="section-container bg-dark-200">
       <div className="flex items-center justify-center mb-12">
         <Briefcase size={24} className="text-neon mr-3 animate-pulse-neon" />
-        <h2 className="section-title mb-0">Work Experience</h2>
+        <h2 className="section-title mb-0">Professional Experience</h2>
       </div>
 
       <div className="relative">
