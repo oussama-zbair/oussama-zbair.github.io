@@ -15,10 +15,24 @@ const ExperienceSection: React.FC = () => {
   const experiences: ExperienceItem[] = [
     {
       id: 1,
+      role: "Java Software Engineer",
+      company: "Confidential",
+      location: "Rabat, Morocco",
+      period: "Jan 2023 – Present",
+      description: [
+        "Developed robust backend solutions using Java and Spring Boot frameworks",
+        "Implemented secure RESTful APIs with JWT authentication and RBAC authorization",
+        "Refactored and optimized legacy codebase to enhance maintainability and performance",
+        "Contributed to clean technical documentation and improved developer onboarding",
+      ],
+      technologies: ["Java", "Spring Boot", "JWT", "RBAC", "REST APIs", "Code Refactoring"]
+    },
+    {
+      id: 2,
       role: "Software Engineer (Final Year Internship)",
       company: "Skills & Smart Group",
       location: "Casablanca, Morocco",
-      period: "Mar 2025 – Aug 2025",
+      period: "Mar 2025 – Sept 2025",
       description: [
         "Designed and implemented secure REST APIs with authentication and user management for web-based insurance management platform",
         "Developed interactive web dashboards and forms for multiple user roles with comprehensive functionality",
@@ -29,22 +43,21 @@ const ExperienceSection: React.FC = () => {
       technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker", "CI/CD", "REST APIs", "Unit Testing"]
     },
     {
-      id: 2,
-      role: "Software Development Intern",
+      id: 3,
+      role: "Full Stack Developer Intern",
       company: "Ministry of Interior",
       location: "Rabat, Morocco",
-      period: "Jun 2024 – Sept 2024",
+      period: "Jun 2024 – Oct 2024",
       description: [
-        "Developed comprehensive modules for user management, advanced search functionality, and activity tracking",
-        "Created internal document management desktop application for efficient file organization and retrieval",
-        "Optimized search performance through advanced indexing and caching techniques implementation",
-        "Documented complete system architecture and workflows for effective knowledge transfer",
-        "Delivered robust desktop solution for government document management and processing"
+        "Built an internal desktop document management application using Electron.js and React",
+        "Integrated advanced user management, real-time activity tracking, and search features",
+        "Boosted performance with indexing and caching strategies",
+        "Documented system architecture and user workflows for effective handover"
       ],
-      technologies: ["Java", "Desktop Development", "Database Optimization", "Search Algorithms", "Documentation"]
+      technologies: ["Electron.js", "React", "Node.js", "Desktop App", "Search Indexing", "System Documentation"]
     },
     {
-      id: 3,
+      id: 4,
       role: "Teaching Intern – Mathematics and Computer Science",
       company: "Ministry of National Education",
       location: "Agadir, Morocco",

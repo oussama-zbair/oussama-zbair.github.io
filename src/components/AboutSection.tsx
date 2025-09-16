@@ -70,7 +70,7 @@ const AboutSection: React.FC = () => {
               </li>
               <li className="flex items-center text-gray-300">
                 <span className="font-semibold mr-2 text-gray-400 w-24">Experience:</span>
-                <span>5+ years</span>
+                <span>2+ years</span>
               </li>
               <li className="flex items-center text-gray-300">
                 <span className="font-semibold mr-2 text-gray-400 w-24">Freelance:</span>
