@@ -80,20 +80,6 @@ const ContactSection: React.FC = () => {
             Feel free to reach out using the form or through social links.
           </p>
 
-          <div className="glass-card p-6 mb-6">
-            <h4 className="text-lg font-bold text-white mb-4">Contact Information</h4>
-            <div className="space-y-4">
-              <div>
-                <p className="text-gray-400">Email</p>
-                <p className="text-neon">contact@oussamazbair.com</p>
-              </div>
-              <div>
-                <p className="text-gray-400">Location</p>
-                <p className="text-white">Morocco</p>
-              </div>
-            </div>
-          </div>
-
           <div className="glass-card p-6">
             <h4 className="text-lg font-bold text-white mb-4">Schedule a Meeting</h4>
             <p className="text-gray-300 mb-4">
