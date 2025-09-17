@@ -17,59 +17,50 @@ const ProjectsSection: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: "E-commerce Platform",
-      description: "A full-featured e-commerce platform with user authentication, product management, cart functionality, and payment integration.",
-      image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["React", "Node.js", "MongoDB", "Express", "Redux"],
-      demoUrl: "https://demo.example.com",
-      githubUrl: "https://github.com/oussama-zbair/ecommerce-platform",
-      category: ["Web", "Full-Stack"]
+      title: "Insurance Management Platform",
+      description: "Web-based insurance platform supporting multiple user roles (admin, client, provider, manager) with secure authentication, subscriptions, claims, and analytics.",
+      image: "https://images.unsplash.com/photo-1611645149402-b7f87a1f158f?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker", "CI/CD"],
+      githubUrl: "",
+      category: ["Full-Stack", "Web"]
     },
     {
       id: 2,
-      title: "Task Management App",
-      description: "A collaborative task management application with real-time updates, task assignments, and project tracking.",
-      image: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["React", "Firebase", "Tailwind CSS", "TypeScript"],
-      githubUrl: "https://github.com/oussama-zbair/task-manager",
-      category: ["Web", "Frontend"]
+      title: "Document Management System (Desktop)",
+      description: "Internal desktop application for user management, document indexing, and real-time tracking built for a government organization.",
+      image: "https://images.unsplash.com/photo-1537498425277-c283d32ef9db?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Electron.js", "React", "Node.js", "IndexedDB", "Desktop App"],
+      githubUrl: "",
+      category: ["Desktop", "Full-Stack"]
     },
     {
       id: 3,
-      title: "Real Estate Analytics",
-      description: "A data visualization dashboard for real estate metrics with market trends analysis.",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["Next.js", "D3.js", "PostgreSQL", "Express"],
-      demoUrl: "https://real-estate-analytics.example.com",
-      category: ["Data", "Web"]
+      title: "ImgBGRemoval – AI Image Background Remover",
+      description: "AI web app for automatic background removal using the U²-Net deep learning model. Built with Flask and OpenCV.",
+      image: "https://images.unsplash.com/photo-1549921296-3a6b1525cbe4?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Python", "Flask", "OpenCV", "PyTorch", "Deep Learning"],
+      githubUrl: "https://github.com/oussama-zbair/ImgBGRemoval",
+      demoUrl: "https://imgbgremoval.vercel.app",
+      category: ["AI", "Web"]
     },
     {
       id: 4,
-      title: "Social Media API",
-      description: "A RESTful API for social media applications with authentication, feed generation, and content management.",
-      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["Node.js", "Express", "MongoDB", "JWT", "Socket.io"],
-      githubUrl: "https://github.com/oussama-zbair/social-media-api",
-      category: ["Backend", "API"]
+      title: "Real-Time Currency Converter",
+      description: "Real-time currency converter with geolocation detection, exchange rate API, and interactive UI.",
+      image: "https://images.unsplash.com/photo-1611974789855-9c1fafeebf6b?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Spring Boot", "React", "REST API", "Geolocation"],
+      githubUrl: "https://github.com/oussama-zbair/CurrencyXchange-Backend",
+      category: ["Web", "Finance", "Full-Stack"]
     },
     {
       id: 5,
-      title: "Weather Forecast App",
-      description: "A mobile-friendly weather application with location detection and 5-day forecasts.",
-      image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["React", "OpenWeather API", "Geolocation API", "CSS Animations"],
-      demoUrl: "https://weather.example.com",
+      title: "Weather App",
+      description: "Weather forecast application using Mapbox and OpenWeatherMap APIs. Supports location-based forecasts and animated display.",
+      image: "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Next.js", "OpenWeatherMap", "Mapbox", "Tailwind"],
       githubUrl: "https://github.com/oussama-zbair/weather-app",
-      category: ["Web", "Frontend"]
-    },
-    {
-      id: 6,
-      title: "DevOps Toolkit",
-      description: "A collection of automation scripts and tools for streamlining development workflows and CI/CD pipelines.",
-      image: "https://images.unsplash.com/photo-1607799279861-4dd421887fb3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
-      technologies: ["Python", "Bash", "Docker", "Terraform", "GitHub Actions"],
-      githubUrl: "https://github.com/oussama-zbair/devops-toolkit",
-      category: ["DevOps", "Tools"]
+      demoUrl: "https://weather-world-view.vercel.app/",
+      category: ["Frontend", "Web"]
     }
   ];
 
