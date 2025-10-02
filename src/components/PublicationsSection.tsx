@@ -1,281 +1,168 @@
-
 import React, { useState } from 'react';
-import { BookOpen, Heart, MessageSquare, Star } from 'lucide-react';
+import { Code, ExternalLink, Github } from 'lucide-react';
 import { Button } from './ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
-import { Avatar } from './ui/avatar';
 
-interface Comment {
-  id: number;
-  author: string;
-  avatar: string;
-  content: string;
-  date: string;
-}
-
-interface Publication {
+interface Project {
   id: number;
   title: string;
-  excerpt: string;
-  content: string;
+  description: string;
   image: string;
-  author: string;
-  date: string;
-  readTime: string;
-  category: string;
-  likes: number;
-  userLiked: boolean;
-  comments: Comment[];
+  technologies: string[];
+  demoUrl?: string;
+  githubUrl?: string;
+  category: string[];
 }
 
-const PublicationsSection: React.FC = () => {
-  const publicationsData: Publication[] = [
+const ProjectsSection: React.FC = () => {
+  const projects: Project[] = [
     {
       id: 1,
-      title: "Building Scalable React Applications with Redux",
-      excerpt: "Learn how to effectively manage state in large React applications using Redux, with practical examples and best practices.",
-      content: "Redux is a powerful state management library that helps solve many common problems in React applications. In this article, we explore...",
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      author: "Oussama Zbair",
-      date: "May 15, 2023",
-      readTime: "10 min read",
-      category: "Frontend",
-      likes: 42,
-      userLiked: false,
-      comments: [
-        {
-          id: 1,
-          author: "Sarah Johnson",
-          avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-          content: "Great article! I've been struggling with state management in my app and this helped clarify a lot.",
-          date: "May 16, 2023"
-        },
-        {
-          id: 2,
-          author: "Michael Chen",
-          avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-          content: "Do you think Redux is still relevant with the Context API and other state management solutions?",
-          date: "May 17, 2023"
-        }
-      ]
+      title: "Insurance Management Platform",
+      description: "Full-stack insurance platform with user roles, subscriptions, claims, and admin dashboards. Developed for real-world business needs during final-year internship.",
+      image: "https://images.unsplash.com/photo-1611645149402-b7f87a1f158f?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Spring Boot", "React", "PostgreSQL", "JWT", "Docker"],
+      githubUrl: "https://github.com/oussama-zbair/insurance-platform",
+      category: ["Full-Stack", "Web"]
     },
     {
       id: 2,
-      title: "Microservices Architecture: Pros and Cons",
-      excerpt: "An in-depth analysis of microservices architecture, when to use it, and potential pitfalls to avoid.",
-      content: "Microservices have become increasingly popular in recent years, but are they always the right choice? This article examines...",
-      image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      author: "Oussama Zbair",
-      date: "March 8, 2023",
-      readTime: "15 min read",
-      category: "Backend",
-      likes: 37,
-      userLiked: false,
-      comments: [
-        {
-          id: 1,
-          author: "David Williams",
-          avatar: "https://randomuser.me/api/portraits/men/86.jpg",
-          content: "I've been considering refactoring our monolithic app to microservices. This gave me a lot to think about!",
-          date: "March 10, 2023"
-        }
-      ]
+      title: "Document Management System (Desktop App)",
+      description: "Internal tool for managing user access and organizing government documents with search and activity tracking features.",
+      image: "https://images.unsplash.com/photo-1517433456452-f9633a875f6f?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Electron.js", "React", "Node.js"],
+      githubUrl: "https://github.com/oussama-zbair/desktop-doc-manager",
+      category: ["Desktop", "Full-Stack"]
     },
     {
       id: 3,
-      title: "Optimizing CI/CD Pipelines for Modern Web Apps",
-      excerpt: "Best practices for creating efficient CI/CD pipelines that save time and improve code quality.",
-      content: "Continuous Integration and Continuous Deployment are essential practices for modern development teams. In this guide...",
-      image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
-      author: "Oussama Zbair",
-      date: "January 22, 2023",
-      readTime: "12 min read",
-      category: "DevOps",
-      likes: 28,
-      userLiked: false,
-      comments: []
+      title: "ImgBGRemoval – AI Background Remover",
+      description: "AI web app that removes image backgrounds using U²-Net deep learning model. Built with Flask and OpenCV.",
+      image: "https://images.unsplash.com/photo-1549921296-3a6b1525cbe4?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Python", "Flask", "PyTorch", "OpenCV"],
+      demoUrl: "",
+      githubUrl: "https://github.com/oussama-zbair/ImgBGRemoval",
+      category: ["AI", "Web"]
+    },
+    {
+      id: 4,
+      title: "CurrencyXchange – Real-Time Converter",
+      description: "Real-time currency converter with geolocation, country flag support, and exchange rate API integration.",
+      image: "https://images.unsplash.com/photo-1588776814546-0fef3d9a6d67?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Spring Boot", "React", "REST API", "Geolocation"],
+      githubUrl: "https://github.com/oussama-zbair/RealTime-CurrencyConverter",
+      category: ["Web", "Finance", "Full-Stack"],
+      demoUrl: "https://green-sea-0ad5cce03.1.azurestaticapps.net/",
+    
+
+    },
+    {
+      id: 5,
+      title: "Weather App",
+      description: "Modern weather forecast app using OpenWeatherMap and Mapbox for geolocation, weather data, and visuals.",
+      image: "https://images.unsplash.com/photo-1557683316-973673baf926?auto=format&fit=crop&w=600&q=80",
+      technologies: ["Next.js", "Tailwind", "OpenWeatherMap", "Mapbox"],
+      githubUrl: "https://github.com/oussama-zbair/weather-app",
+      category: ["Frontend", "Web"],
+      demoUrl: "https://weather-app-rouge.vercel.app/"
     }
   ];
 
-  const categories = ["All", "Frontend", "Backend", "DevOps", "Career"];
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [publications, setPublications] = useState(publicationsData);
-  const [expandedPost, setExpandedPost] = useState<number | null>(null);
-  const [newComment, setNewComment] = useState("");
-  
-  const filteredPublications = activeCategory === "All" 
-    ? publications 
-    : publications.filter(pub => pub.category === activeCategory);
+  const allCategories = Array.from(new Set(projects.flatMap(project => project.category)));
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [visibleProjects, setVisibleProjects] = useState(projects);
 
-  const handleLike = (id: number) => {
-    setPublications(prevPubs => prevPubs.map(pub => {
-      if (pub.id === id) {
-        return {
-          ...pub,
-          likes: pub.userLiked ? pub.likes - 1 : pub.likes + 1,
-          userLiked: !pub.userLiked
-        };
-      }
-      return pub;
-    }));
-  };
-
-  const handleComment = (id: number) => {
-    if (!newComment.trim()) return;
-    
-    const newCommentObj = {
-      id: Math.random(),
-      author: "You",
-      avatar: "https://randomuser.me/api/portraits/lego/1.jpg",
-      content: newComment,
-      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
-    };
-
-    setPublications(prevPubs => prevPubs.map(pub => {
-      if (pub.id === id) {
-        return {
-          ...pub,
-          comments: [...pub.comments, newCommentObj]
-        };
-      }
-      return pub;
-    }));
-
-    setNewComment("");
+  const filterProjects = (category: string | null) => {
+    setActiveCategory(category);
+    setVisibleProjects(category ? projects.filter(p => p.category.includes(category)) : projects);
   };
 
   return (
-    <section id="publications" className="section-container">
+    <section id="projects" className="section-container">
       <div className="flex items-center justify-center mb-12">
-        <BookOpen size={24} className="text-neon mr-3 animate-pulse-neon" />
-        <h2 className="section-title mb-0">Publications</h2>
+        <Code size={24} className="text-neon mr-3 animate-pulse-neon" />
+        <h2 className="section-title mb-0">Featured Projects</h2>
       </div>
 
-      <Tabs defaultValue={activeCategory} onValueChange={value => setActiveCategory(value)}>
-        <TabsList className="flex flex-wrap justify-center mb-8">
-          {categories.map(category => (
-            <TabsTrigger 
-              key={category} 
-              value={category}
-              className="data-[state=active]:border-neon data-[state=active]:text-neon"
-            >
-              {category}
-            </TabsTrigger>
-          ))}
-        </TabsList>
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
+        <Button
+          variant={activeCategory === null ? "default" : "outline"}
+          className={activeCategory === null ? "bg-neon text-dark-300" : "text-gray-300"}
+          onClick={() => filterProjects(null)}
+        >
+          All
+        </Button>
+        {allCategories.map((category) => (
+          <Button
+            key={category}
+            variant={activeCategory === category ? "default" : "outline"}
+            className={activeCategory === category ? "bg-neon text-dark-300" : "text-gray-300"}
+            onClick={() => filterProjects(category)}
+          >
+            {category}
+          </Button>
+        ))}
+      </div>
 
-        <TabsContent value={activeCategory} className="pt-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredPublications.map(publication => (
-              <div key={publication.id} className="glass-card overflow-hidden hover:border-neon/30 transition-all">
-                <div className="h-48 overflow-hidden relative">
-                  <img
-                    src={publication.image}
-                    alt={publication.title}
-                    className="w-full h-full object-cover transition-all duration-500 hover:scale-105"
-                  />
-                  <div className="absolute top-2 right-2">
-                    <span className="bg-neon text-dark-300 text-xs px-2 py-1 rounded">
-                      {publication.category}
-                    </span>
-                  </div>
-                </div>
-                
-                <div className="p-5">
-                  <div className="flex items-center text-gray-400 text-xs mb-3">
-                    <span>{publication.date}</span>
-                    <span className="mx-2">•</span>
-                    <span>{publication.readTime}</span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">
-                    {publication.title}
-                  </h3>
-                  
-                  <p className="text-gray-300 mb-4 line-clamp-3">
-                    {publication.excerpt}
-                  </p>
-                  
-                  {expandedPost === publication.id ? (
-                    <div className="mt-4 border-t border-dark-100 pt-4">
-                      <p className="text-gray-300 mb-6">{publication.content}</p>
-                      
-                      <div className="space-y-4 mb-6">
-                        <h4 className="font-bold text-white">Comments ({publication.comments.length})</h4>
-                        
-                        {publication.comments.map(comment => (
-                          <div key={comment.id} className="p-3 bg-dark-300 rounded">
-                            <div className="flex items-center mb-2">
-                              <Avatar>
-                                <img src={comment.avatar} alt={comment.author} />
-                              </Avatar>
-                              <div className="ml-2">
-                                <p className="text-sm font-semibold text-white">{comment.author}</p>
-                                <p className="text-xs text-gray-400">{comment.date}</p>
-                              </div>
-                            </div>
-                            <p className="text-sm text-gray-300">{comment.content}</p>
-                          </div>
-                        ))}
-                        
-                        <div className="flex mt-4">
-                          <input
-                            type="text"
-                            value={newComment}
-                            onChange={(e) => setNewComment(e.target.value)}
-                            placeholder="Add a comment..."
-                            className="flex-1 bg-dark-300 border border-dark-100 rounded-l px-3 py-2 text-white"
-                          />
-                          <Button 
-                            className="bg-neon text-dark-300 rounded-l-none" 
-                            onClick={() => handleComment(publication.id)}
-                          >
-                            Post
-                          </Button>
-                        </div>
-                      </div>
-                      
-                      <Button
-                        variant="outline"
-                        className="w-full border-gray-600 text-gray-300"
-                        onClick={() => setExpandedPost(null)}
-                      >
-                        Close
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="flex justify-between items-center mt-4">
-                      <div className="flex items-center space-x-4">
-                        <button
-                          onClick={() => handleLike(publication.id)}
-                          className="flex items-center space-x-1 text-gray-300 hover:text-neon transition-colors"
-                        >
-                          <Heart size={16} className={publication.userLiked ? "fill-neon text-neon" : ""} />
-                          <span>{publication.likes}</span>
-                        </button>
-                        <div className="flex items-center space-x-1 text-gray-300">
-                          <MessageSquare size={16} />
-                          <span>{publication.comments.length}</span>
-                        </div>
-                      </div>
-                      
-                      <Button
-                        variant="link"
-                        className="text-neon p-0 h-auto"
-                        onClick={() => setExpandedPost(publication.id)}
-                      >
-                        Read More
-                      </Button>
-                    </div>
-                  )}
-                </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {visibleProjects.map((project) => (
+          <div key={project.id} className="glass-card overflow-hidden group transition-all duration-300 hover:border-neon">
+            <div className="h-48 overflow-hidden relative">
+              <div className="absolute inset-0 bg-gradient-to-t from-dark-300 to-transparent z-10"></div>
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
+
+            <div className="p-5">
+              <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+              <p className="text-gray-400 text-sm mb-4 h-16 overflow-hidden">{project.description}</p>
+
+              <div className="flex flex-wrap gap-2 mb-4">
+                {project.technologies.map((tech, index) => (
+                  <span key={index} className="px-2 py-1 text-xs font-mono bg-dark-300 text-neon rounded">
+                    {tech}
+                  </span>
+                ))}
               </div>
-            ))}
+
+              <div className="flex space-x-3">
+                {project.demoUrl && (
+                  <a
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-white bg-neon hover:bg-neon/80 px-3 py-2 rounded text-sm transition-colors"
+                  >
+                    <ExternalLink size={14} className="mr-1" />
+                    Live Demo
+                  </a>
+                )}
+                {project.githubUrl && (
+                  <a
+                    href={project.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-white bg-dark-300 hover:bg-dark-200 px-3 py-2 rounded text-sm transition-colors"
+                  >
+                    <Github size={14} className="mr-1" />
+                    Code
+                  </a>
+                )}
+              </div>
+            </div>
           </div>
-        </TabsContent>
-      </Tabs>
+        ))}
+      </div>
+
+      <div className="flex justify-center mt-10">
+        <Button variant="outline" className="border-neon text-neon hover:bg-neon/10">
+          View All Projects
+        </Button>
+      </div>
     </section>
   );
 };
 
-export default PublicationsSection;
+export default ProjectsSection;
