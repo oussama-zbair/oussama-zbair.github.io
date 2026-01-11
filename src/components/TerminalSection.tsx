@@ -68,10 +68,11 @@ Location: Available for remote work
 Feel free to reach out for opportunities or collaboration!`;
       case 'projects':
         return `Featured Projects:
-• Enterprise E-commerce Platform - Spring Boot microservices
-• Real-time Chat Application - WebSocket + React
-• Task Management System - Full-stack web application
-• API Gateway Service - Spring Cloud architecture
+• Ethera - Audio harmony platform (440Hz to 432Hz conversion)
+• Insurance Management Platform - Multi-role enterprise system
+• Document Management System - Desktop app for Ministry of Interior
+• CurrencyXchange - Real-time currency converter with geolocation
+• AI Background Remover - Deep learning image processing
 
 Type 'contact' for more details or check the projects section on the website.`;
       case 'experience':
