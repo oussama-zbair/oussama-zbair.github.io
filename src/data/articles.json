@@ -1,0 +1,54 @@
+{
+  "articles": [
+    {
+      "id": "microservices-spring-boot-docker",
+      "title": "Building Scalable Microservices with Spring Boot and Docker",
+      "slug": "microservices-spring-boot-docker",
+      "excerpt": "Learn how to architect and deploy microservices that can handle millions of requests while maintaining high availability and performance. This comprehensive guide covers everything from service discovery to container orchestration.",
+      "publishedDate": "2024-01-15",
+      "tags": ["Spring Boot", "Docker", "Microservices", "Java", "Architecture"],
+      "coverImage": "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1200&q=80",
+      "featured": true
+    },
+    {
+      "id": "react-performance-patterns",
+      "title": "Modern React Performance Patterns: From Hooks to Concurrent Features",
+      "slug": "react-performance-patterns",
+      "excerpt": "Explore advanced React patterns that will make your applications more maintainable, performant, and developer-friendly. Dive deep into hooks, context optimization, and the latest concurrent features.",
+      "publishedDate": "2024-01-10",
+      "tags": ["React", "JavaScript", "Performance", "Hooks", "Patterns"],
+      "coverImage": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&w=1200&q=80",
+      "featured": false
+    },
+    {
+      "id": "devops-cicd-jenkins-docker",
+      "title": "DevOps Best Practices: Building Robust CI/CD Pipelines",
+      "slug": "devops-cicd-jenkins-docker",
+      "excerpt": "Streamline your development workflow with automated testing, building, and deployment pipelines that scale with your team. Learn industry-standard practices for modern DevOps.",
+      "publishedDate": "2024-01-05",
+      "tags": ["DevOps", "CI/CD", "Jenkins", "Docker", "Automation"],
+      "coverImage": "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=1200&q=80",
+      "featured": true
+    },
+    {
+      "id": "database-optimization-guide",
+      "title": "Database Optimization: From Slow Queries to Lightning Fast Performance",
+      "slug": "database-optimization-guide",
+      "excerpt": "Transform your database performance with proven indexing strategies, query optimization techniques, and caching solutions that actually work in production environments.",
+      "publishedDate": "2023-12-28",
+      "tags": ["Database", "PostgreSQL", "Performance", "SQL", "Optimization"],
+      "coverImage": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=1200&q=80",
+      "featured": false
+    },
+    {
+      "id": "typescript-advanced-patterns",
+      "title": "Advanced TypeScript Patterns for Enterprise Applications",
+      "slug": "typescript-advanced-patterns",
+      "excerpt": "Master advanced TypeScript patterns including conditional types, mapped types, and template literal types. Build type-safe, maintainable enterprise applications.",
+      "publishedDate": "2023-12-20",
+      "tags": ["TypeScript", "JavaScript", "Patterns", "Enterprise", "Types"],
+      "coverImage": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?auto=format&fit=crop&w=1200&q=80",
+      "featured": false
+    }
+  ]
+}

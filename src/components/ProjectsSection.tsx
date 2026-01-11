@@ -17,6 +17,16 @@ const ProjectsSection: React.FC = () => {
   const projects: Project[] = [
     {
       id: 1,
+      title: "Ethera - Audio Harmony Platform",
+      description:
+        "Full-stack audio conversion platform that transforms standard 440 Hz tuning to natural 432 Hz frequency. Features YouTube video conversion, local file upload (MP3/WAV/FLAC), real-time audio visualization, and secure download endpoints.",
+      image: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80",
+      technologies: ["React 19", "TypeScript", "Spring Boot 3.x", "Java 17", "FFmpeg", "yt-dlp", "Web Audio API", "Tailwind CSS"],
+      githubUrl: "https://github.com/oussama-zbair/Ethera-backend",
+      category: ["Audio", "Full-Stack", "Microservices", "Web"]
+    },
+    {
+      id: 2,
       title: "Insurance Management Platform (PFE)",
       description:
         "Multi-role insurance management platform for electronic and appliance coverage. Features JWT auth, 2FA, device registration, claims, admin dashboard, and secure CI/CD deployment.",
@@ -26,7 +36,7 @@ const ProjectsSection: React.FC = () => {
       category: ["Full-Stack", "Security", "DevOps"]
     },
     {
-      id: 2,
+      id: 3,
       title: "Document Management System (DMS)",
       description:
         "Desktop app for document workflow, advanced search, and user access control. Developed for the Moroccan Ministry of Interior using Electron.js and deployed on Windows servers.",
@@ -36,7 +46,7 @@ const ProjectsSection: React.FC = () => {
       category: ["Desktop", "Full-Stack"]
     },
     {
-      id: 3,
+      id: 4,
       title: "CurrencyXchange",
       description:
         "Real-time currency converter with geolocation and dynamic exchange rate data. Frontend built with React, backend Spring Boot WebFlux, deployed on Azure with CI/CD.",
@@ -47,7 +57,7 @@ const ProjectsSection: React.FC = () => {
       category: ["Finance", "Full-Stack"]
     },
     {
-      id: 4,
+      id: 5,
       title: "ImgBGRemoval",
       description:
         "AI-powered image background remover using Flask and U²-Net deep learning. Upload an image, remove the background, and download the result instantly.",
@@ -58,7 +68,7 @@ const ProjectsSection: React.FC = () => {
       category: ["AI", "Web"]
     },
     {
-      id: 5,
+      id: 6,
       title: "QuizMaster",
       description:
         "Gamified quiz app with real-time scoring and category-based learning. Built with modern React stack and animated UI. Future plans: backend quiz builder.",
@@ -69,7 +79,7 @@ const ProjectsSection: React.FC = () => {
       category: ["Frontend", "Learning"]
     },
     {
-      id: 6,
+      id: 7,
       title: "ClassroomLite",
       description:
         "Student-teacher assignment submission and grading system developed using Django and SQLite. Clean UI, secure role-based access, and feedback workflows.",
@@ -79,7 +89,7 @@ const ProjectsSection: React.FC = () => {
       category: ["Education", "Full-Stack"]
     },
     {
-      id: 7,
+      id: 8,
       title: "Vulnerability Score Prediction (ML)",
       description:
         "Machine learning project predicting vulnerability scores using Random Forest, SVM, and Neural Networks. Includes Jupyter notebooks and visual analysis.",
@@ -89,7 +99,7 @@ const ProjectsSection: React.FC = () => {
       category: ["ML", "Security"]
     },
     {
-      id: 8,
+      id: 9,
       title: "Weather App",
       description:
         "Interactive weather forecast platform using Next.js, Mapbox and OpenWeatherMap. Explore weather worldwide via geolocation and dynamic maps.",
@@ -194,7 +204,18 @@ const ProjectsSection: React.FC = () => {
                     className="inline-flex items-center text-white bg-dark-300 hover:bg-dark-200 px-3 py-2 rounded text-sm transition-colors"
                   >
                     <Github size={14} className="mr-1" />
-                    Code
+                    {project.title.includes('Ethera') ? 'Backend' : 'Code'}
+                  </a>
+                )}
+                {project.title.includes('Ethera') && (
+                  <a
+                    href="https://github.com/oussama-zbair/Ethera-frontend"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-sm transition-colors"
+                  >
+                    <Github size={14} className="mr-1" />
+                    Frontend
                   </a>
                 )}
               </div>
