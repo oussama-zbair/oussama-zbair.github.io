@@ -13,10 +13,15 @@ export const sendViaEmailJS = async (data: {
   timestamp: string;
 }) => {
   const emailJSConfig = {
-    serviceId: 'service_ljnhm2b', 
-    templateId: 'template_031szni', 
-    publicKey: 'YHu-xLWYyuHa47tLq', 
+    serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID, 
+    templateId: import.meta.env.VITE_EMAILJS_TEMPLATE_ID, 
+    publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY, 
   };
+
+  // Validate environment variables
+  if (!emailJSConfig.serviceId || !emailJSConfig.templateId || !emailJSConfig.publicKey) {
+    throw new Error('EmailJS configuration missing. Please check environment variables.');
+  }
 
   try {
     const templateParams = {
@@ -24,7 +29,7 @@ export const sendViaEmailJS = async (data: {
       visitor_email: data.email,
       visitor_role: data.role,
       download_time: new Date(data.timestamp).toLocaleString(),
-      to_email: 'oussama.zbair9@gmail.com', 
+      to_email: import.meta.env.VITE_RECIPIENT_EMAIL, 
     };
 
     const response = await emailjs.send(
