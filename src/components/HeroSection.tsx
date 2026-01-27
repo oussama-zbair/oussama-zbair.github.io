@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { ArrowDown, Terminal } from 'lucide-react';
 import { Button } from './ui/button';
 import SpaceIllustration from './SpaceIllustration';
+import SpaceNameEffect from './SpaceNameEffect';
 
 const HeroSection: React.FC = () => {
   const [text, setText] = useState("");
@@ -34,10 +35,13 @@ const HeroSection: React.FC = () => {
             </span>
           </div>
           
-          <h1 className="text-4xl md:text-6xl font-bold mb-6">
-            <span className="text-white">Oussama</span>
-            <span className="text-neon ml-4 neon-glow">Zbair</span>
-          </h1>
+          {/* Enhanced name with space effects */}
+          <SpaceNameEffect className="mb-6">
+            <h1 className="text-4xl md:text-6xl font-bold relative z-10 px-8 py-4">
+              <span className="text-white drop-shadow-lg">Oussama</span>
+              <span className="text-neon ml-4 neon-glow drop-shadow-2xl">Zbair</span>
+            </h1>
+          </SpaceNameEffect>
           
           <div className="h-8 mb-8">
             <h2 className="font-mono text-sm md:text-lg typewriter text-gray-300">

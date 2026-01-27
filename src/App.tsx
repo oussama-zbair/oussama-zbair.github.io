@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
-import DownloadStats from "./components/admin/DownloadStats";
 
 const queryClient = new QueryClient();
 
@@ -20,8 +19,6 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-        {/* Admin panel - accessible via Ctrl+Shift+A or bottom-right button */}
-        <DownloadStats />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
