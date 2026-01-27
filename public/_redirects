@@ -1,0 +1,8 @@
+# Netlify redirects file
+/*    /index.html   200
+
+# Security headers (backup for _headers file)
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

@@ -1,39 +1,81 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    
+    <!-- Primary Meta Tags -->
     <title>Oussama Zbair | Software Engineer & Full Stack Developer</title>
-
-    <meta name="description" content="Portfolio website of Oussama Zbair, Software Engineer and Full Stack Developer specializing in modern web applications." />
+    <meta name="title" content="Oussama Zbair | Software Engineer & Full Stack Developer" />
+    <meta name="description" content="Passionate Software Engineer specializing in Java, Spring Boot, React, and cloud architecture. Building scalable, performant applications with modern technologies." />
     <meta name="author" content="Oussama Zbair" />
+    <meta name="keywords" content="Oussama Zbair, Software Engineer, Full Stack Developer, Java Developer, Spring Boot, React, TypeScript, Morocco, Portfolio" />
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://oussamazbair.me" />
+
+    <!-- Referrer Policy - Control referrer information -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://oussamazbair.me" />
     <meta property="og:title" content="Oussama Zbair | Software Engineer & Full Stack Developer" />
-    <meta property="og:description" content="Discover the projects and skills of Oussama Zbair, passionate about web development and software engineering." />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1531497865144-0464ef8fb9c0?fit=crop&w=1200&q=80" />
+    <meta property="og:description" content="Passionate Software Engineer specializing in Java, Spring Boot, React, and cloud architecture. Building scalable, performant applications with modern technologies." />
+    <meta property="og:image" content="https://oussamazbair.me/og-image.png" />
+    <meta property="og:site_name" content="Oussama Zbair Portfolio" />
+    <meta property="og:locale" content="en_US" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://oussamazbair.me" />
     <meta name="twitter:title" content="Oussama Zbair | Software Engineer & Full Stack Developer" />
-    <meta name="twitter:description" content="Discover the projects and skills of Oussama Zbair, passionate about web development and software engineering." />
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1531497865144-0464ef8fb9c0?fit=crop&w=1200&q=80" />
+    <meta name="twitter:description" content="Passionate Software Engineer specializing in Java, Spring Boot, React, and cloud architecture." />
+    <meta name="twitter:image" content="https://oussamazbair.me/og-image.png" />
 
-    <!-- Favicon (optional) -->
-    <link rel="icon" type="image/png" href="/favicon.png" />
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16x16.svg" />
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32x32.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- Fallback for older browsers - convert favicon.svg to .ico if needed -->
+    
+    <!-- Theme Color -->
+    <meta name="theme-color" content="#0a0b0f" />
+    <meta name="msapplication-TileColor" content="#0a0b0f" />
+    
+    <!-- Robots -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Oussama Zbair",
+        "url": "https://oussamazbair.me",
+        "image": "https://oussamazbair.me/og-image.png",
+        "jobTitle": "Software Engineer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Confidential"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "Morocco"
+        },
+        "sameAs": [
+          "https://github.com/oussama-zbair",
+          "https://www.linkedin.com/in/oussama-zbair"
+        ],
+        "knowsAbout": ["Java", "Spring Boot", "React", "TypeScript", "Cloud Architecture", "DevOps"]
+      }
+    </script>
   </head>
 
-  <body class="bg-white text-gray-900">
+  <body>
     <div id="root"></div>
-
-    <!-- Your main React app entry point -->
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
