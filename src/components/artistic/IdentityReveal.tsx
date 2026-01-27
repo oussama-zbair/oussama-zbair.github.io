@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { personalInfo } from '@/data/portfolio';
 import ResumeDownloadButton from './ResumeDownloadButton';
+import SpaceNameEffect from '../SpaceNameEffect';
 
 const IdentityReveal: React.FC = () => {
   const [phase, setPhase] = useState(0);
@@ -34,32 +35,63 @@ const IdentityReveal: React.FC = () => {
           )}
         </AnimatePresence>
 
-        {/* Phase 2 & 3: Name reveal */}
+        {/* Phase 2 & 3: Name reveal with space effects */}
         <AnimatePresence>
           {phase >= 2 && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="relative"
             >
-              <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tight">
-                <motion.span
-                  initial={{ opacity: 0, x: -50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2, duration: 0.8 }}
-                  className="block text-foreground"
-                >
-                  {personalInfo.firstName}
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5, duration: 0.8 }}
-                  className="block gradient-text"
-                >
-                  {personalInfo.lastName}
-                </motion.span>
-              </h1>
+              {/* Immediate visible space effects */}
+              <div className="absolute inset-0 pointer-events-none">
+                {/* Glowing background */}
+                <div className="absolute inset-0 bg-gradient-to-r from-purple-500/40 via-cyan-500/40 to-purple-500/40 rounded-full blur-3xl animate-pulse" />
+                
+                {/* Rotating rings */}
+                <div className="absolute inset-0 border-2 border-cyan-400/60 rounded-full animate-spin" style={{ animationDuration: '20s' }} />
+                <div className="absolute inset-8 border border-purple-500/50 rounded-full animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
+                
+                {/* Floating particles */}
+                {[...Array(16)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="absolute w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full animate-pulse"
+                    style={{
+                      left: `${10 + (i * 5) % 80}%`,
+                      top: `${15 + (i * 7) % 70}%`,
+                      animationDelay: `${i * 0.2}s`,
+                      animationDuration: `${1 + Math.random()}s`,
+                      boxShadow: '0 0 10px currentColor',
+                    }}
+                  />
+                ))}
+              </div>
+              
+              <SpaceNameEffect className="relative">
+                <h1 className="text-5xl md:text-8xl lg:text-9xl font-bold tracking-tight relative z-10">
+                  <motion.span
+                    initial={{ opacity: 0, x: -50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.2, duration: 0.8 }}
+                    className="block text-foreground drop-shadow-lg"
+                  >
+                    {personalInfo.firstName}
+                  </motion.span>
+                  <motion.span
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.5, duration: 0.8 }}
+                    className="block gradient-text drop-shadow-2xl"
+                    style={{
+                      textShadow: '0 0 20px hsl(var(--primary)), 0 0 40px hsl(var(--primary))'
+                    }}
+                  >
+                    {personalInfo.lastName}
+                  </motion.span>
+                </h1>
+              </SpaceNameEffect>
             </motion.div>
           )}
         </AnimatePresence>

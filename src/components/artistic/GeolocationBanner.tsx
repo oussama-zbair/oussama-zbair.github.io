@@ -167,10 +167,10 @@ const GeolocationBanner: React.FC = () => {
 
     fetchLocation();
 
-    // Auto-hide after 3 seconds
+    // Auto-hide after 5 seconds (longer for mobile users)
     const timer = setTimeout(() => {
       setIsVisible(false);
-    }, 3000);
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, [isDevelopment]);
@@ -256,12 +256,12 @@ const GeolocationBanner: React.FC = () => {
             ease: [0.25, 0.46, 0.45, 0.94], 
             delay: 1.5 
           }}
-          className="fixed top-20 md:top-6 right-4 z-50"
+          className="fixed top-4 right-4 z-50 max-w-[calc(100vw-2rem)] sm:max-w-sm"
         >
           <motion.div 
             className="relative bg-gradient-to-br from-background/95 via-background/90 to-background/95 
                        backdrop-blur-xl border border-primary/20 rounded-2xl shadow-2xl shadow-primary/10 
-                       max-w-sm overflow-hidden"
+                       overflow-hidden"
             whileHover={{ 
               scale: 1.02,
               boxShadow: "0 25px 50px -12px rgba(var(--primary), 0.25)"
@@ -272,9 +272,9 @@ const GeolocationBanner: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 animate-pulse" />
             
             {/* Content */}
-            <div className="relative p-4">
+            <div className="relative p-3 sm:p-4">
               {/* Header with flag and greeting */}
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
@@ -284,20 +284,20 @@ const GeolocationBanner: React.FC = () => {
                     stiffness: 300,
                     damping: 15
                   }}
-                  className="text-4xl filter drop-shadow-lg"
+                  className="text-3xl sm:text-4xl filter drop-shadow-lg flex-shrink-0"
                 >
                   {getFlagEmoji(geoData.countryCode)}
                 </motion.div>
 
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 2.2 }}
                     className="flex items-center gap-1.5 text-xs text-muted-foreground mb-1"
                   >
-                    <Sparkles className="w-3 h-3 text-primary animate-pulse" />
-                    <span className="font-medium">{getGreeting()}</span>
+                    <Sparkles className="w-3 h-3 text-primary animate-pulse flex-shrink-0" />
+                    <span className="font-medium truncate">{getGreeting()}</span>
                   </motion.div>
                   
                   <motion.div
@@ -306,8 +306,8 @@ const GeolocationBanner: React.FC = () => {
                     transition={{ delay: 2.4 }}
                     className="flex items-center gap-1.5"
                   >
-                    <MapPin className="w-3.5 h-3.5 text-primary" />
-                    <span className="text-sm font-semibold text-foreground">
+                    <MapPin className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                    <span className="text-sm font-semibold text-foreground truncate">
                       {getLocationString()}
                     </span>
                   </motion.div>
@@ -317,9 +317,9 @@ const GeolocationBanner: React.FC = () => {
                 <motion.div
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                  className="text-primary/60"
+                  className="text-primary/60 flex-shrink-0"
                 >
-                  <Globe className="w-6 h-6" />
+                  <Globe className="w-5 h-5 sm:w-6 sm:h-6" />
                 </motion.div>
               </div>
 
@@ -329,10 +329,10 @@ const GeolocationBanner: React.FC = () => {
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 2.6 }}
-                  className="flex items-center gap-2 px-3 py-2 bg-primary/10 rounded-lg border border-primary/20"
+                  className="flex items-center gap-2 px-2 sm:px-3 py-2 bg-primary/10 rounded-lg border border-primary/20"
                 >
-                  <Clock className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-mono font-semibold text-foreground">
+                  <Clock className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-xs sm:text-sm font-mono font-semibold text-foreground truncate">
                     Your local time: {currentTime}
                   </span>
                 </motion.div>
