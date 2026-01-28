@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Download, FileText } from 'lucide-react';
 import ResumeDownloadModal from './ResumeDownloadModal';

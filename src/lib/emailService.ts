@@ -10,6 +10,7 @@ export const sendViaEmailJS = async (data: {
   name: string;
   email: string;
   role: string;
+  language: string;
   timestamp: string;
 }) => {
   const emailJSConfig = {
@@ -28,6 +29,7 @@ export const sendViaEmailJS = async (data: {
       visitor_name: data.name,
       visitor_email: data.email,
       visitor_role: data.role,
+      preferred_language: data.language,
       download_time: new Date(data.timestamp).toLocaleString(),
       to_email: import.meta.env.VITE_RECIPIENT_EMAIL, 
     };
@@ -52,6 +54,7 @@ export const sendVisitorInfo = async (data: {
   name: string;
   email: string;
   role: string;
+  language: string;
   timestamp: string;
 }) => {
   try {
