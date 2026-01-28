@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, User, Mail, Briefcase, Loader2, Check, AlertCircle } from 'lucide-react';
+import { X, Download, User, Mail, Briefcase, Loader2, Check, AlertCircle, Globe } from 'lucide-react';
 import { z } from 'zod';
-import { generateResumePDF } from '@/lib/generateResume';
+import { generateResumePDF, generateResumePDF_FR } from '@/lib/generateResume';
 import { sendVisitorInfo } from '@/lib/emailService';
 import MathCaptcha from './MathCaptcha';
 
@@ -86,6 +86,9 @@ const downloadFormSchema = z.object({
   role: z.enum(['recruiter', 'hr', 'hiring_manager', 'developer', 'other'], {
     errorMap: () => ({ message: 'Please select your role' }),
   }),
+  language: z.enum(['en', 'fr'], {
+    errorMap: () => ({ message: 'Please select your preferred language' }),
+  }),
 });
 
 type DownloadFormData = z.infer<typeof downloadFormSchema>;
@@ -101,6 +104,11 @@ const roleOptions = [
   { value: 'hiring_manager', label: 'Hiring Manager', icon: '📋' },
   { value: 'developer', label: 'Fellow Developer', icon: '💻' },
   { value: 'other', label: 'Other', icon: '👤' },
+];
+
+const languageOptions = [
+  { value: 'en', label: 'English', icon: '🇺🇸', description: 'Download English version' },
+  { value: 'fr', label: 'Français', icon: '🇫🇷', description: 'Télécharger la version française' },
 ];
 
 const ResumeDownloadModal: React.FC<ResumeDownloadModalProps> = ({ isOpen, onClose }) => {
@@ -153,11 +161,17 @@ const ResumeDownloadModal: React.FC<ResumeDownloadModalProps> = ({ isOpen, onClo
         name: result.data.fullName,
         email: result.data.email,
         role: result.data.role,
+        language: result.data.language,
         timestamp: new Date().toISOString(),
       });
 
-      // Generate and download the PDF
-      generateResumePDF();
+      // Generate and download the PDF based on selected language
+      if (result.data.language === 'fr') {
+        generateResumePDF_FR();
+      } else {
+        generateResumePDF();
+      }
+      
       setIsComplete(true);
       
       // Close modal after showing success
@@ -174,7 +188,11 @@ const ResumeDownloadModal: React.FC<ResumeDownloadModalProps> = ({ isOpen, onClo
       
       // Still allow download even if notification fails
       try {
-        generateResumePDF();
+        if (result.data.language === 'fr') {
+          generateResumePDF_FR();
+        } else {
+          generateResumePDF();
+        }
         setIsComplete(true);
         
         setTimeout(() => {
@@ -265,9 +283,20 @@ const ResumeDownloadModal: React.FC<ResumeDownloadModalProps> = ({ isOpen, onClo
                         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-green-500/20 flex items-center justify-center">
                           <Check className="w-8 h-8 text-green-500" />
                         </div>
-                        <h3 className="text-lg font-semibold text-foreground">Download Started!</h3>
+                        <h3 className="text-lg font-semibold text-foreground">
+                          {formData.language === 'fr' ? 'Téléchargement commencé!' : 'Download Started!'}
+                        </h3>
                         <p className="text-sm text-muted-foreground mt-1">
-                          Thank you for your interest
+                          {formData.language === 'fr' 
+                            ? 'Merci pour votre intérêt' 
+                            : 'Thank you for your interest'
+                          }
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {formData.language === 'fr' 
+                            ? 'Version française téléchargée' 
+                            : 'English version downloaded'
+                          }
                         </p>
                       </motion.div>
                     ) : (
@@ -354,6 +383,45 @@ const ResumeDownloadModal: React.FC<ResumeDownloadModalProps> = ({ isOpen, onClo
                               {errors.role}
                             </p>
                           )}
+                        </div>
+
+                        {/* Language Selection */}
+                        <div className="space-y-2">
+                          <label className="text-sm font-medium text-foreground flex items-center gap-2">
+                            <Globe className="w-4 h-4 text-muted-foreground" />
+                            Preferred Language
+                          </label>
+                          <div className="grid grid-cols-2 gap-3">
+                            {languageOptions.map((option) => (
+                              <button
+                                key={option.value}
+                                type="button"
+                                onClick={() => handleInputChange('language', option.value)}
+                                disabled={isSubmitting}
+                                className={`flex flex-col items-center gap-2 px-4 py-3 rounded-lg border text-sm transition-all
+                                  disabled:opacity-50 ${
+                                    formData.language === option.value
+                                      ? 'border-primary bg-primary/10 text-primary ring-2 ring-primary/20'
+                                      : 'border-input bg-background text-foreground hover:border-primary/50 hover:bg-primary/5'
+                                  }`}
+                              >
+                                <span className="text-2xl">{option.icon}</span>
+                                <div className="text-center">
+                                  <div className="font-medium">{option.label}</div>
+                                  <div className="text-xs text-muted-foreground mt-1">{option.description}</div>
+                                </div>
+                              </button>
+                            ))}
+                          </div>
+                          {errors.language && (
+                            <p className="text-sm text-destructive flex items-center gap-1">
+                              <AlertCircle className="w-3 h-3" />
+                              {errors.language}
+                            </p>
+                          )}
+                          <p className="text-xs text-muted-foreground text-center">
+                            Choose your preferred resume language
+                          </p>
                         </div>
 
                         {/* CAPTCHA Verification */}
