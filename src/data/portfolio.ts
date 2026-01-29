@@ -106,6 +106,7 @@ export const skillCategories: SkillCategory[] = [
     title: 'Frontend',
     skills: [
       { name: 'React', level: 95 },
+      { name: 'Angular', level: 85 },
       { name: 'TypeScript', level: 90 },
       { name: 'JavaScript', level: 95 },
       { name: 'HTML/CSS', level: 95 },
@@ -118,6 +119,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: 'Oracle', level: 85 },
       { name: 'PostgreSQL', level: 85 },
+      { name: 'MySQL', level: 85 },
       { name: 'MongoDB', level: 80 },
       { name: 'Docker', level: 85 },
       { name: 'Jenkins', level: 80 },
