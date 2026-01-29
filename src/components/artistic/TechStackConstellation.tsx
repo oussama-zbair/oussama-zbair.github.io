@@ -24,7 +24,6 @@ const techStack: TechCategory[] = [
       { name: 'TypeScript', logo: 'typescript', color: '#007ACC', textColor: 'white' },
       { name: 'Python', logo: 'python', color: '#3776AB', textColor: 'white' },
       { name: 'Java', logo: 'openjdk', color: '#007396', textColor: 'white' },
-      { name: 'C++', logo: 'c%2B%2B', color: '#00599C', textColor: 'white' },
       { name: 'PHP', logo: 'php', color: '#777BB4', textColor: 'white' },
       { name: 'Kotlin', logo: 'kotlin', color: '#0095D5', textColor: 'white' },
       { name: 'Shell', logo: 'gnu-bash', color: '#121011', textColor: 'white' },
