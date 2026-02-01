@@ -39,6 +39,7 @@ export interface Project {
   codeUrl?: string;
   backendUrl?: string;
   frontendUrl?: string;
+  confidential?: boolean;
 }
 
 export interface Experience {
@@ -152,7 +153,7 @@ export const projects: Project[] = [
     image: 'https://images.unsplash.com/photo-1605902711622-cfb43c4437d2?auto=format&fit=crop&w=600&q=80',
     tags: ['Spring Boot', 'React', 'JWT', 'Firebase', 'Docker', 'PostgreSQL'],
     category: ['Full-Stack', 'Security'],
-    codeUrl: 'https://github.com/oussama-zbair/insurance-platform',
+    confidential: true,
   },
   {
     title: 'Document Management System (DMS)',
@@ -160,7 +161,7 @@ export const projects: Project[] = [
     image: 'https://images.unsplash.com/photo-1537432376769-00a5f1be3cbb?auto=format&fit=crop&w=600&q=80',
     tags: ['Electron.js', 'React', 'Node.js', 'MySQL', 'Socket.io'],
     category: ['Desktop', 'Full-Stack'],
-    codeUrl: 'https://github.com/oussama-zbair/desktop-doc-manager',
+    confidential: true,
   },
   {
     title: 'CurrencyXchange',

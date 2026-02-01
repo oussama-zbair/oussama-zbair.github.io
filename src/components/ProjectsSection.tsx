@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Code, ExternalLink, Github } from 'lucide-react';
+import { Code, ExternalLink, Github, Shield } from 'lucide-react';
 import { Button } from './ui/button';
 
 interface Project {
@@ -11,6 +11,7 @@ interface Project {
   demoUrl?: string;
   githubUrl?: string;
   category: string[];
+  confidential?: boolean;
 }
 
 const ProjectsSection: React.FC = () => {
@@ -32,8 +33,8 @@ const ProjectsSection: React.FC = () => {
         "Multi-role insurance management platform for electronic and appliance coverage. Features JWT auth, 2FA, device registration, claims, admin dashboard, and secure CI/CD deployment.",
       image: "https://images.unsplash.com/photo-1605902711622-cfb43c4437d2?auto=format&fit=crop&w=600&q=80",
       technologies: ["Spring Boot", "React", "JWT", "Firebase", "Docker", "PostgreSQL"],
-      githubUrl: "https://github.com/oussama-zbair/insurance-platform",
-      category: ["Full-Stack", "Security", "DevOps"]
+      category: ["Full-Stack", "Security", "DevOps"],
+      confidential: true
     },
     {
       id: 3,
@@ -42,8 +43,8 @@ const ProjectsSection: React.FC = () => {
         "Desktop app for document workflow, advanced search, and user access control. Developed for the Moroccan Ministry of Interior using Electron.js and deployed on Windows servers.",
       image: "https://images.unsplash.com/photo-1537432376769-00a5f1be3cbb?auto=format&fit=crop&w=600&q=80",
       technologies: ["Electron.js", "React", "Node.js", "MySQL", "Socket.io"],
-      githubUrl: "https://github.com/oussama-zbair/desktop-doc-manager",
-      category: ["Desktop", "Full-Stack"]
+      category: ["Desktop", "Full-Stack"],
+      confidential: true
     },
     {
       id: 4,
@@ -170,7 +171,15 @@ const ProjectsSection: React.FC = () => {
             </div>
 
             <div className="p-5">
-              <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
+              <div className="flex items-start justify-between mb-2 gap-2">
+                <h3 className="text-xl font-bold text-white flex-1">{project.title}</h3>
+                {project.confidential && (
+                  <div className="flex items-center gap-1 px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full flex-shrink-0">
+                    <Shield size={12} className="text-amber-400" />
+                    <span className="text-xs font-medium text-amber-400">Confidential</span>
+                  </div>
+                )}
+              </div>
               <p className="text-gray-400 text-sm mb-4 h-16 overflow-hidden">{project.description}</p>
 
               <div className="flex flex-wrap gap-2 mb-4">
@@ -184,39 +193,48 @@ const ProjectsSection: React.FC = () => {
                 ))}
               </div>
 
-              <div className="flex space-x-3">
-                {project.demoUrl && (
-                  <a
-                    href={project.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-white bg-neon hover:bg-neon/80 px-3 py-2 rounded text-sm transition-colors"
-                  >
-                    <ExternalLink size={14} className="mr-1" />
-                    Live Demo
-                  </a>
-                )}
-                {project.githubUrl && (
-                  <a
-                    href={project.githubUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-white bg-dark-300 hover:bg-dark-200 px-3 py-2 rounded text-sm transition-colors"
-                  >
-                    <Github size={14} className="mr-1" />
-                    {project.title.includes('Ethera') ? 'Backend' : 'Code'}
-                  </a>
-                )}
-                {project.title.includes('Ethera') && (
-                  <a
-                    href="https://github.com/oussama-zbair/Ethera-frontend"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-sm transition-colors"
-                  >
-                    <Github size={14} className="mr-1" />
-                    Frontend
-                  </a>
+              <div className="flex flex-col space-y-3">
+                {project.confidential ? (
+                  <div className="flex items-center gap-2 text-amber-400 text-sm p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                    <Shield size={16} className="flex-shrink-0" />
+                    <span>Source code not available due to confidentiality</span>
+                  </div>
+                ) : (
+                  <div className="flex flex-wrap gap-2">
+                    {project.demoUrl && (
+                      <a
+                        href={project.demoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-white bg-neon hover:bg-neon/80 px-3 py-2 rounded text-sm transition-colors"
+                      >
+                        <ExternalLink size={14} className="mr-1" />
+                        Live Demo
+                      </a>
+                    )}
+                    {project.githubUrl && (
+                      <a
+                        href={project.githubUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-white bg-dark-300 hover:bg-dark-200 px-3 py-2 rounded text-sm transition-colors"
+                      >
+                        <Github size={14} className="mr-1" />
+                        {project.title.includes('Ethera') ? 'Backend' : 'Code'}
+                      </a>
+                    )}
+                    {project.title.includes('Ethera') && (
+                      <a
+                        href="https://github.com/oussama-zbair/Ethera-frontend"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-white bg-gray-600 hover:bg-gray-500 px-3 py-2 rounded text-sm transition-colors"
+                      >
+                        <Github size={14} className="mr-1" />
+                        Frontend
+                      </a>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

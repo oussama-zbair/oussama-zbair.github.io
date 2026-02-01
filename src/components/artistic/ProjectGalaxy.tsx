@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Shield } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import FloatingSection from './FloatingSection';
 import GlassCard from './GlassCard';
@@ -44,11 +44,26 @@ const ProjectGalaxy: React.FC = () => {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <span className="text-4xl opacity-50">🚀</span>
                   </div>
+                  {/* Confidential badge overlay */}
+                  {project.confidential && (
+                    <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-amber-500/90 backdrop-blur-sm border border-amber-400/50 rounded-full">
+                      <Shield size={10} className="text-amber-900" />
+                      <span className="text-xs font-medium text-amber-900">Confidential</span>
+                    </div>
+                  )}
                 </div>
 
-                <h3 className="text-xl font-semibold text-foreground mb-2">
-                  {project.title}
-                </h3>
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="text-xl font-semibold text-foreground flex-1">
+                    {project.title}
+                  </h3>
+                  {project.confidential && (
+                    <div className="flex items-center gap-1 px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full ml-2 flex-shrink-0">
+                      <Shield size={10} className="text-amber-400" />
+                      <span className="text-xs font-medium text-amber-400">Confidential</span>
+                    </div>
+                  )}
+                </div>
                 
                 <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                   {project.description}
@@ -67,28 +82,37 @@ const ProjectGalaxy: React.FC = () => {
                 </div>
 
                 {/* Links */}
-                <div className="flex gap-4">
-                  {project.liveUrl && (
-                    <a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                    >
-                      <ExternalLink className="w-4 h-4" />
-                      Live Demo
-                    </a>
-                  )}
-                  {(project.codeUrl || project.frontendUrl) && (
-                    <a
-                      href={project.codeUrl || project.frontendUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-                    >
-                      <Github className="w-4 h-4" />
-                      Source
-                    </a>
+                <div className="flex flex-col gap-2">
+                  {project.confidential ? (
+                    <div className="flex items-center gap-2 text-amber-400 text-sm p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+                      <Shield size={14} className="flex-shrink-0" />
+                      <span className="text-xs">Source code not available due to confidentiality</span>
+                    </div>
+                  ) : (
+                    <div className="flex gap-4">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                          Live Demo
+                        </a>
+                      )}
+                      {(project.codeUrl || project.frontendUrl) && (
+                        <a
+                          href={project.codeUrl || project.frontendUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
+                        >
+                          <Github className="w-4 h-4" />
+                          Source
+                        </a>
+                      )}
+                    </div>
                   )}
                 </div>
               </GlassCard>

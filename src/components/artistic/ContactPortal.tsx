@@ -13,7 +13,7 @@ import FloatingSection from './FloatingSection';
 import GlassCard from './GlassCard';
 import { InlineWidget } from 'react-calendly';
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xdkgbznv';
+const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT || 'https://formspree.io/f/mzdvrrww';
 
 const ContactPortal: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -55,6 +55,10 @@ const ContactPortal: React.FC = () => {
         message: sanitizeText(data.message),
       };
 
+      console.log('🔧 Contact Form Debug:');
+      console.log('Formspree Endpoint:', FORMSPREE_ENDPOINT);
+      console.log('Form Data:', sanitizedData);
+
       // Send via Formspree
       const response = await fetch(FORMSPREE_ENDPOINT, {
         method: 'POST',
@@ -64,13 +68,18 @@ const ContactPortal: React.FC = () => {
         body: JSON.stringify(sanitizedData),
       });
 
+      console.log('📧 Formspree Response:', response.status, response.statusText);
+
       if (response.ok) {
+        console.log('✅ Contact form sent successfully');
         toast({
           title: '✅ Message Sent!',
           description: "Thank you! I'll get back to you soon.",
         });
         reset();
       } else {
+        const errorText = await response.text();
+        console.error('❌ Formspree error:', errorText);
         toast({
           title: '❌ Failed to Send',
           description: 'Please try again or contact me directly.',
@@ -78,6 +87,7 @@ const ContactPortal: React.FC = () => {
         });
       }
     } catch (error) {
+      console.error('❌ Network error:', error);
       toast({
         title: '❌ Network Error',
         description: 'Please check your connection or try again later.',
