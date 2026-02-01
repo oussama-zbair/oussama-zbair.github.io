@@ -19,9 +19,22 @@ export const sendViaEmailJS = async (data: {
     publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY, 
   };
 
+  // Debug logging
+  console.log('🔧 EmailJS Debug Info:');
+  console.log('Service ID:', emailJSConfig.serviceId ? '✅ Set' : '❌ Missing');
+  console.log('Template ID:', emailJSConfig.templateId ? '✅ Set' : '❌ Missing');
+  console.log('Public Key:', emailJSConfig.publicKey ? '✅ Set' : '❌ Missing');
+  console.log('Recipient Email:', import.meta.env.VITE_RECIPIENT_EMAIL ? '✅ Set' : '❌ Missing');
+
   // Validate environment variables
   if (!emailJSConfig.serviceId || !emailJSConfig.templateId || !emailJSConfig.publicKey) {
-    throw new Error('EmailJS configuration missing. Please check environment variables.');
+    const missing = [];
+    if (!emailJSConfig.serviceId) missing.push('VITE_EMAILJS_SERVICE_ID');
+    if (!emailJSConfig.templateId) missing.push('VITE_EMAILJS_TEMPLATE_ID');
+    if (!emailJSConfig.publicKey) missing.push('VITE_EMAILJS_PUBLIC_KEY');
+    
+    console.error('❌ Missing environment variables:', missing.join(', '));
+    throw new Error(`EmailJS configuration missing: ${missing.join(', ')}`);
   }
 
   try {
@@ -33,6 +46,8 @@ export const sendViaEmailJS = async (data: {
       download_time: new Date(data.timestamp).toLocaleString(),
       to_email: import.meta.env.VITE_RECIPIENT_EMAIL, 
     };
+
+    console.log('📧 Sending email with params:', templateParams);
 
     const response = await emailjs.send(
       emailJSConfig.serviceId,

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EmailJS Test</title>
+</head>
+<body>
+    <h1>EmailJS Configuration Test</h1>
+    <button onclick="testEmail()">Test Email</button>
+    <div id="result"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+        function testEmail() {
+            const result = document.getElementById('result');
+            result.innerHTML = 'Testing...';
+
+            // Check if environment variables are loaded
+            console.log('Service ID:', import.meta.env?.VITE_EMAILJS_SERVICE_ID || 'NOT FOUND');
+            console.log('Template ID:', import.meta.env?.VITE_EMAILJS_TEMPLATE_ID || 'NOT FOUND');
+            console.log('Public Key:', import.meta.env?.VITE_EMAILJS_PUBLIC_KEY || 'NOT FOUND');
+            console.log('Recipient:', import.meta.env?.VITE_RECIPIENT_EMAIL || 'NOT FOUND');
+
+            // Test data
+            const testData = {
+                visitor_name: 'Test User',
+                visitor_email: 'test@example.com',
+                visitor_role: 'developer',
+                preferred_language: 'en',
+                download_time: new Date().toLocaleString(),
+                to_email: import.meta.env?.VITE_RECIPIENT_EMAIL || 'your-email@example.com'
+            };
+
+            // Replace these with your actual values for testing
+            const serviceId = 'YOUR_SERVICE_ID';
+            const templateId = 'YOUR_TEMPLATE_ID';
+            const publicKey = 'YOUR_PUBLIC_KEY';
+
+            emailjs.send(serviceId, templateId, testData, publicKey)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    result.innerHTML = '<span style="color: green;">✅ Email sent successfully!</span>';
+                })
+                .catch(function(error) {
+                    console.log('FAILED...', error);
+                    result.innerHTML = '<span style="color: red;">❌ Email failed: ' + error.text + '</span>';
+                });
+        }
+    </script>
+</body>
+</html>
