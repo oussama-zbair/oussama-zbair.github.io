@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Linkedin, Github, MapPin, Calendar, Send, Loader2 } from 'lucide-react';
+import { Mail, Linkedin, Github, MapPin, Calendar, Send, Loader2, Briefcase } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { personalInfo, socialLinks } from '@/data/portfolio';
@@ -231,7 +231,50 @@ const ContactPortal: React.FC = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
+            className="space-y-6"
           >
+            {/* Freelance Availability Banner */}
+            <GlassCard className="p-6 bg-gradient-to-r from-primary/10 to-accent/10 border-primary/30">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-primary/20 rounded-lg">
+                  <Briefcase className="w-6 h-6 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-foreground mb-2 flex items-center gap-2">
+                    Available for Freelance Projects
+                    <span className="px-2 py-0.5 text-xs bg-green-500/20 text-green-400 rounded-full border border-green-500/30">
+                      Open
+                    </span>
+                  </h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    I'm currently accepting freelance projects. All collaborations are protected by professional contracts to ensure:
+                  </p>
+                  <ul className="text-sm text-muted-foreground space-y-1.5 mb-3">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">✓</span>
+                      <span>Clear project scope and deliverables</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">✓</span>
+                      <span>Milestone-based payment protection</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">✓</span>
+                      <span>Intellectual property rights agreement</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">✓</span>
+                      <span>Mutual confidentiality and non-disclosure</span>
+                    </li>
+                  </ul>
+                  <p className="text-xs text-muted-foreground italic">
+                    Professional contracts protect both parties and ensure successful project delivery.
+                  </p>
+                </div>
+              </div>
+            </GlassCard>
+
+            {/* Contact Form */}
             <GlassCard className="p-8">
               <h3 className="text-2xl font-semibold text-foreground mb-6">Send a Message</h3>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

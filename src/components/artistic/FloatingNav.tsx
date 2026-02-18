@@ -37,17 +37,27 @@ const FloatingNav: React.FC = () => {
       const scrollThreshold = window.innerHeight * 0.8;
       setIsVisible(window.scrollY > scrollThreshold);
 
-      // Detect active section
+      // Detect active section with improved logic
       const sections = navItems.map(item => document.getElementById(item.id)).filter(Boolean);
-      const scrollPosition = window.scrollY + window.innerHeight / 3;
+      const scrollPosition = window.scrollY + 100; // Add offset for better detection
 
-      for (let i = sections.length - 1; i >= 0; i--) {
+      let currentSection = 'hero'; // Default to hero
+
+      for (let i = 0; i < sections.length; i++) {
         const section = sections[i];
-        if (section && section.offsetTop <= scrollPosition) {
-          setActiveSection(navItems[i].id);
-          break;
+        if (section) {
+          const sectionTop = section.offsetTop;
+          const sectionBottom = sectionTop + section.offsetHeight;
+          
+          // Check if we're within this section
+          if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+            currentSection = navItems[i].id;
+            break;
+          }
         }
       }
+
+      setActiveSection(currentSection);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -59,9 +69,18 @@ const FloatingNav: React.FC = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const offset = id === 'hero' ? 0 : 80;
+      // Calculate proper offset based on section
+      let offset = 80; // Default offset for fixed nav
+      
+      if (id === 'hero') {
+        offset = 0; // No offset for hero section
+      }
+      
       const top = element.offsetTop - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
+      window.scrollTo({ 
+        top: Math.max(0, top), // Ensure we don't scroll to negative position
+        behavior: 'smooth' 
+      });
     }
   };
 

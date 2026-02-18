@@ -31,12 +31,24 @@ const Index: React.FC = () => {
 
         {/* Content Sections */}
         <div className="relative z-10">
-          <div id="tech-stack"><TechStackConstellation /></div>
-          <div id="projects"><ProjectGalaxy /></div>
-          <div id="certifications"><CertificationsGalaxy /></div>
-          <div id="experience"><ExperienceTimeline /></div>
-          <div id="blog"><BlogSection /></div>
-          <div id="contact"><ContactPortal /></div>
+          <section id="tech-stack" className="min-h-screen">
+            <TechStackConstellation />
+          </section>
+          <section id="projects" className="min-h-screen">
+            <ProjectGalaxy />
+          </section>
+          <section id="certifications" className="min-h-screen">
+            <CertificationsGalaxy />
+          </section>
+          <section id="experience" className="min-h-screen">
+            <ExperienceTimeline />
+          </section>
+          <section id="blog" className="min-h-screen">
+            <BlogSection />
+          </section>
+          <section id="contact" className="min-h-screen">
+            <ContactPortal />
+          </section>
         </div>
       </div>
     </SecurityWrapper>
