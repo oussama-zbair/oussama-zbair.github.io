@@ -66,12 +66,12 @@ export const personalInfo: PersonalInfo = {
   name: 'Oussama Zbair',
   firstName: 'Oussama',
   lastName: 'Zbair',
-  title: 'Software Engineer & Full Stack Developer',
+  title: 'Software Engineer & Full Stack Developer / AI Solutions Builder',
   location: 'Morocco',
   experience: '2+ years',
   freelance: 'Available',
-  bio: "I'm a passionate Software Engineer with expertise in full-stack development. My journey in programming started with a curiosity about how websites work, and evolved into a deep love for creating elegant, efficient software solutions. With several years of experience in web development, I specialize in building scalable and performant applications using modern technologies. I'm particularly interested in cloud architecture, DevOps practices, and creating smooth user experiences. Currently available for freelance projects with proper contract agreements to ensure mutual protection and successful collaboration. When I'm not coding, I enjoy contributing to open source projects, writing technical articles, and staying updated with the latest industry trends.",
-  shortBio: 'I build modern web applications with a focus on performance, scalability, and exceptional user experiences. Passionate about creating innovative software solutions. Available for freelance projects.',
+  bio: "I'm a passionate Software Engineer with expertise in full-stack development and AI solutions. My journey started with a curiosity about how software works, and evolved into a deep love for building elegant, efficient systems — from robust Java backends to intelligent AI-powered applications. I specialize in building scalable backend services with Spring Boot, and I also design and ship AI/LLM-integrated solutions, leveraging modern tools and APIs to bring smart features to real products. I hold certifications in AWS Cloud, Google AI, and Oracle Java/Cloud, reflecting my commitment to staying sharp across the stack. Currently available for freelance projects with proper contract agreements. When I'm not coding, I enjoy contributing to open source, writing technical articles, and exploring the latest in AI and cloud.",
+  shortBio: 'I build scalable backend systems and AI-powered applications. Java specialist with hands-on experience in LLMs, cloud architecture, and full-stack development. Available for freelance projects.',
   email: 'contact@oussamazbair.me',
   calendlyUrl: 'https://calendly.com/oussama-zbair',
 };
@@ -275,6 +275,15 @@ export const experiences: Experience[] = [
 
 // Certifications Data
 export const certifications: Certification[] = [
+  {
+    title: 'Google AI Professional Certificate',
+    issuer: 'Google',
+    date: 'Mar 2026',
+    id: 'GOOGLE-AI-PRO-2026',
+    verifyUrl: 'https://www.credly.com/badges/03a42faa-1d7b-4349-ba16-c138d9fb4eb8/',
+    badge: 'google',
+    isLatest: true,
+  },
   {
     title: 'AWS Certified Cloud Practitioner',
     issuer: 'Amazon Web Services (AWS)',

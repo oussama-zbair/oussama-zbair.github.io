@@ -16,6 +16,26 @@ const CertificationsSection: React.FC = () => {
   const certifications: Certification[] = [
     {
       id: 1,
+      title: "Google AI Professional Certificate",
+      issuer: "Google",
+      date: "Mar 2026",
+      credentialId: "GOOGLE-AI-PRO-2026",
+      credentialUrl: "https://www.credly.com/badges/03a42faa-1d7b-4349-ba16-c138d9fb4eb8/",
+      image: "https://media.licdn.com/dms/image/v2/C4D0BAQHiNSL4Or29cg/company-logo_200_200/company-logo_200_200/0/1631311446380?e=1750896000&v=beta&t=RwIUDVm8bSK8s4zH7QCU2huXL124REnJ7oQg4Ihaj3c",
+      featured: true
+    },
+    {
+      id: 2,
+      title: "AWS Certified Cloud Practitioner",
+      issuer: "Amazon Web Services (AWS)",
+      date: "Feb 2026",
+      credentialId: "AWS-CCP-2026",
+      credentialUrl: "https://www.credly.com/badges/60321721-2f78-437b-b0e9-d4699c1538a6/",
+      image: "https://media.licdn.com/dms/image/v2/D4E0BAQE0fp2sCqnVLg/company-logo_200_200/company-logo_200_200/0/1738855736997/amazon_web_services_logo?e=1750896000&v=beta&t=0QhDsH0AB1AMui_htwOmtO0unEN0ycVMesxgPz-YQDA",
+      featured: true
+    },
+    {
+      id: 3,
       title: "Oracle Certified Professional: Java SE 17 Developer",
       issuer: "Oracle",
       date: "Aug 2025",
@@ -25,7 +45,7 @@ const CertificationsSection: React.FC = () => {
       featured: true
     },
     {
-      id: 2,
+      id: 4,
       title: "Oracle Certified Professional, Java EE 7 Application Developer",
       issuer: "Oracle",
       date: "Jul 2025",
@@ -35,7 +55,7 @@ const CertificationsSection: React.FC = () => {
       featured: true
     },
     {
-      id: 3,
+      id: 5,
       title: "Oracle Cloud Infrastructure 2025 Certified Generative AI Professional",
       issuer: "Oracle",
       date: "Jul 2025",
@@ -45,7 +65,7 @@ const CertificationsSection: React.FC = () => {
       featured: true
     },
     {
-      id: 4,
+      id: 6,
       title: "Oracle Cloud Infrastructure 2024 Certified Associate",
       issuer: "Oracle",
       date: "Feb 2025",
@@ -55,7 +75,7 @@ const CertificationsSection: React.FC = () => {
       featured: true
     },
     {
-      id: 5,
+      id: 7,
       title: "Scrum Foundation Professional Certificate (SFPC)",
       issuer: "CertiProf",
       date: "Aug 2024",
@@ -64,7 +84,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://media.licdn.com/dms/image/v2/D4E2DAQGFWkczN-v6lg/profile-treasury-document-cover-images_480/profile-treasury-document-cover-images_480/0/1724410428718?e=1746291600&v=beta&t=CcmU612GGtjq-vmvEHH7Sh9CtmGOJFEgb3ANOKzSeEk"
     },
     {
-      id: 6,
+      id: 8,
       title: "Certified Software Engineer",
       issuer: "HackerRank",
       date: "Aug 2024",
@@ -73,7 +93,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://hrcdn.net/fcore/assets/brand/logo-new-white-green-a5cb16e0ae.svg"
     },
     {
-      id: 7,
+      id: 9,
       title: "AWS Technical Essentials",
       issuer: "Amazon Web Services (AWS)",
       date: "2024",
@@ -82,7 +102,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://media.licdn.com/dms/image/v2/D4E0BAQE0fp2sCqnVLg/company-logo_200_200/company-logo_200_200/0/1738855736997/amazon_web_services_logo?e=1750896000&v=beta&t=0QhDsH0AB1AMui_htwOmtO0unEN0ycVMesxgPz-YQDA"
     },
     {
-      id: 8,
+      id: 10,
       title: "AWS Cloud Practitioner Essentials",
       issuer: "Amazon Web Services (AWS)",
       date: "2024",
@@ -91,7 +111,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://media.licdn.com/dms/image/v2/D4E0BAQE0fp2sCqnVLg/company-logo_200_200/company-logo_200_200/0/1738855736997/amazon_web_services_logo?e=1750896000&v=beta&t=0QhDsH0AB1AMui_htwOmtO0unEN0ycVMesxgPz-YQDA"
     },
     {
-      id: 9,
+      id: 11,
       title: "Continuous Integration and Continuous Delivery (CI/CD)",
       issuer: "IBM",
       date: "2024",
@@ -100,7 +120,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://media.licdn.com/dms/image/v2/D560BAQGiz5ecgpCtkA/company-logo_200_200/company-logo_200_200/0/1688684715866/ibm_logo?e=1750896000&v=beta&t=2EYzlHr0aMMYjoavrnbg4-789SRk1pnprPjqZi8EBoU"
     },
     {
-      id: 10,
+      id: 12,
       title: "Software Engineering Specialization",
       issuer: "Coursera - The Hong Kong University of Science and Technology",
       date: "Dec 2023",
@@ -109,7 +129,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://d3njjcbhbojbot.cloudfront.net/api/utilities/v1/imageproxy/https://coursera-university-assets.s3.amazonaws.com/3a/37974779f7ad2a04626183c2f8951b/ustLogo.png?auto=format%2Ccompress&dpr=1&w=80&h=80"
     },
     {
-      id: 11,
+      id: 13,
       title: "Foundations of Cybersecurity",
       issuer: "Google",
       date: "Nov 2023",
@@ -118,7 +138,7 @@ const CertificationsSection: React.FC = () => {
       image: "https://media.licdn.com/dms/image/v2/C4D0BAQHiNSL4Or29cg/company-logo_200_200/company-logo_200_200/0/1631311446380?e=1750896000&v=beta&t=RwIUDVm8bSK8s4zH7QCU2huXL124REnJ7oQg4Ihaj3c"
     },
     {
-      id: 12,
+      id: 14,
       title: "Cybersecurity Fundamentals",
       issuer: "IBM",
       date: "Jan 2021",

@@ -9,6 +9,7 @@ const roles = [
   'FULL STACK DEVELOPER',
   'JAVA SPECIALIST',
   'CLOUD ARCHITECT',
+  'AI SOLUTIONS BUILDER',
 ];
 
 const HeroSection: React.FC = () => {

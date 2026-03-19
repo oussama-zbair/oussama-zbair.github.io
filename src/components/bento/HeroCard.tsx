@@ -5,9 +5,10 @@ import { BentoCard } from './BentoGrid';
 
 const roles = [
   'Software Engineer',
-  'Full Stack Developer', 
+  'Full Stack Developer',
   'Cloud Architect',
   'Java Specialist',
+  'AI Solutions Builder',
 ];
 
 const HeroCard: React.FC = () => {

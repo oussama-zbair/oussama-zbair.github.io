@@ -52,7 +52,7 @@ const CertificationsGalaxy: React.FC = () => {
             Professional <span className="gradient-text">Credentials</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Industry-recognized certifications validating expertise in Java, Cloud, and Software Engineering
+            Industry-recognized certifications validating expertise in Java, Cloud, AI, and Software Engineering
           </p>
         </motion.div>
 
