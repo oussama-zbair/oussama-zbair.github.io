@@ -11,7 +11,13 @@ const config: Config = {
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+
+  // Moved from top-level to markdown.hooks (Docusaurus v4 migration)
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
+  },
 
   i18n: {
     defaultLocale: 'en',
@@ -24,10 +30,10 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          routeBasePath: '/',          // docs at root, not /docs/
+          routeBasePath: '/',
           editUrl: 'https://github.com/oussama-zbair/oussama-zbair.github.io/tree/main/docs/',
         },
-        blog: false,                   // blog lives on the main portfolio
+        blog: false,
         theme: {
           customCss: './src/css/custom.css',
         },
@@ -38,14 +44,12 @@ const config: Config = {
   themeConfig: {
     image: 'img/og-image.png',
 
-    // ---------- Color mode ----------
     colorMode: {
       defaultMode: 'dark',
       disableSwitch: false,
       respectPrefersColorScheme: true,
     },
 
-    // ---------- Navbar ----------
     navbar: {
       title: '',
       logo: {
@@ -77,33 +81,32 @@ const config: Config = {
       ],
     },
 
-    // ---------- Footer ----------
     footer: {
       style: 'dark',
       links: [
         {
           title: 'Knowledge Base',
           items: [
-            { label: 'Java Core', to: '/java/java-core' },
-            { label: 'Spring Boot', to: '/web/spring-boot' },
-            { label: 'AWS Cloud Practitioner', to: '/cloud/aws-cloud-practitioner' },
-            { label: 'Docker', to: '/devops/docker' },
-            { label: 'Kubernetes', to: '/devops/kubernetes' },
+            { label: 'Java Core',              to: '/java/java-core'                   },
+            { label: 'Spring Boot',            to: '/java/spring-boot'                 },
+            { label: 'AWS Cloud Practitioner', to: '/cloud/aws-cloud-practitioner'     },
+            { label: 'Docker',                 to: '/devops/docker'                    },
+            { label: 'Kubernetes',             to: '/devops/kubernetes'                },
           ],
         },
         {
           title: 'Connect',
           items: [
-            { label: 'Portfolio', href: 'https://oussamazbair.engineer' },
-            { label: 'LinkedIn', href: 'https://www.linkedin.com/in/oussama-zbair' },
-            { label: 'GitHub', href: 'https://github.com/oussama-zbair' },
+            { label: 'Portfolio', href: 'https://oussamazbair.engineer'               },
+            { label: 'LinkedIn',  href: 'https://www.linkedin.com/in/oussama-zbair'   },
+            { label: 'GitHub',    href: 'https://github.com/oussama-zbair'            },
+            { label: 'Medium',    href: 'https://oussama-zbair.medium.com'            },
           ],
         },
       ],
       copyright: `© ${new Date().getFullYear()} Oussama Zbair — Personal Engineering Knowledge Base`,
     },
 
-    // ---------- Prism code highlighting ----------
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.oneDark,
@@ -112,13 +115,6 @@ const config: Config = {
         'sql', 'typescript', 'python', 'kotlin',
       ],
     },
-
-    // ---------- Algolia search (configure when ready) ----------
-    // algolia: {
-    //   appId: 'YOUR_APP_ID',
-    //   apiKey: 'YOUR_SEARCH_API_KEY',
-    //   indexName: 'oussamazbair_kb',
-    // },
   } satisfies Preset.ThemeConfig,
 };
 
