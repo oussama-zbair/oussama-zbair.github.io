@@ -33,6 +33,7 @@ export interface Project {
   title: string;
   description: string;
   image: string;
+  images?: string[];
   tags: string[];
   category: string[];
   liveUrl?: string;
@@ -141,7 +142,8 @@ export const projects: Project[] = [
   {
     title: 'Ethera - Audio Harmony Platform',
     description: 'Full-stack audio conversion platform that transforms standard 440 Hz tuning to natural 432 Hz frequency. Features YouTube video conversion, local file upload (MP3/WAV/FLAC), real-time audio visualization, and secure download endpoints.',
-    image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/ethera-1.png',
+    images: ['/projects/ethera-1.png', '/projects/ethera-2.png'],
     tags: ['React 19', 'TypeScript', 'Spring Boot 3.x', 'Java 17', 'FFmpeg', 'yt-dlp', 'Web Audio API', 'Tailwind CSS'],
     category: ['Full-Stack', 'Audio'],
     backendUrl: 'https://github.com/oussama-zbair/Ethera-backend',
@@ -150,7 +152,7 @@ export const projects: Project[] = [
   {
     title: 'Insurance Management Platform (PFE)',
     description: 'Multi-role insurance management platform for electronic and appliance coverage. Features JWT auth, 2FA, device registration, claims, admin dashboard, and secure CI/CD deployment.',
-    image: 'https://images.unsplash.com/photo-1605902711622-cfb43c4437d2?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/pfe.png',
     tags: ['Spring Boot', 'React', 'JWT', 'Firebase', 'Docker', 'PostgreSQL'],
     category: ['Full-Stack', 'Security'],
     confidential: true,
@@ -158,7 +160,7 @@ export const projects: Project[] = [
   {
     title: 'Document Management System (DMS)',
     description: 'Desktop app for document workflow, advanced search, and user access control. Developed for the Moroccan Ministry of Interior using Electron.js and deployed on Windows servers.',
-    image: 'https://images.unsplash.com/photo-1537432376769-00a5f1be3cbb?auto=format&fit=crop&w=600&q=80',
+    image: '',
     tags: ['Electron.js', 'React', 'Node.js', 'MySQL', 'Socket.io'],
     category: ['Desktop', 'Full-Stack'],
     confidential: true,
@@ -166,7 +168,7 @@ export const projects: Project[] = [
   {
     title: 'CurrencyXchange',
     description: 'Real-time currency converter with geolocation and dynamic exchange rate data. Frontend built with React, backend Spring Boot WebFlux, deployed on Azure with CI/CD.',
-    image: 'https://images.unsplash.com/photo-1588776814546-0fef3d9a6d67?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/currencyxchange.png',
     tags: ['Spring Boot', 'React', 'WebFlux', 'REST API', 'Azure'],
     category: ['Full-Stack', 'Finance'],
     liveUrl: 'https://green-sea-0ad5cce03.1.azurestaticapps.net/',
@@ -175,7 +177,7 @@ export const projects: Project[] = [
   {
     title: 'ImgBGRemoval',
     description: 'AI-powered image background remover using Flask and U²-Net deep learning. Upload an image, remove the background, and download the result instantly.',
-    image: 'https://images.unsplash.com/photo-1580894732444-8ecded7900c8?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/imgremoval.png',
     tags: ['Python', 'Flask', 'PyTorch', 'OpenCV'],
     category: ['AI', 'ML'],
     codeUrl: 'https://github.com/oussama-zbair/ImgBGRemoval',
@@ -183,7 +185,8 @@ export const projects: Project[] = [
   {
     title: 'QuizMaster',
     description: 'Gamified quiz app with real-time scoring and category-based learning. Built with modern React stack and animated UI.',
-    image: 'https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/quizmaster-3.png',
+    images: ['/projects/quizmaster-3.png', '/projects/quizmaster-2.png', '/projects/quizmaster-1.png'],
     tags: ['React', 'Vite', 'TypeScript', 'Tailwind', 'Framer Motion'],
     category: ['Frontend', 'Learning', 'Education'],
     liveUrl: 'https://quiz-master-dojo.vercel.app/',
@@ -192,7 +195,8 @@ export const projects: Project[] = [
   {
     title: 'ClassroomLite',
     description: 'Student-teacher assignment submission and grading system developed using Django and SQLite. Clean UI, secure role-based access, and feedback workflows.',
-    image: 'https://images.unsplash.com/photo-1584697964154-33ad5d07ef0e?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/classroom-3.png',
+    images: ['/projects/classroom-3.png', '/projects/classroom-1.png', '/projects/classroom-2.png'],
     tags: ['Django', 'SQLite', 'Bootstrap', 'jQuery'],
     category: ['Full-Stack', 'Education'],
     codeUrl: 'https://github.com/oussama-zbair/ClassroomLite',
@@ -200,15 +204,15 @@ export const projects: Project[] = [
   {
     title: 'Vulnerability Score Prediction (ML)',
     description: 'Machine learning project predicting vulnerability scores using Random Forest, SVM, and Neural Networks. Includes Jupyter notebooks and visual analysis.',
-    image: 'https://images.unsplash.com/photo-1581091870632-2c4464c14299?auto=format&fit=crop&w=600&q=80',
+    image: '',
     tags: ['Python', 'scikit-learn', 'TensorFlow', 'pandas'],
     category: ['ML', 'Security'],
-    codeUrl: 'https://github.com/oussama-zbair/vulnerability-detection-notebook',
+    codeUrl: 'https://github.com/oussama-zbair/vulnerabilty-detection',
   },
   {
     title: 'Weather App',
     description: 'Interactive weather forecast platform using Next.js, Mapbox and OpenWeatherMap. Explore weather worldwide via geolocation and dynamic maps.',
-    image: 'https://images.unsplash.com/photo-1611866098054-1d0858d16d6d?auto=format&fit=crop&w=600&q=80',
+    image: '/projects/weatherapp.png',
     tags: ['Next.js', 'Mapbox', 'OpenWeatherMap', 'Tailwind'],
     category: ['Frontend', 'Full-Stack'],
     liveUrl: 'https://weather-world-view.vercel.app/',

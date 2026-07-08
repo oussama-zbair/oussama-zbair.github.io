@@ -6,11 +6,11 @@ import FloatingSection from './FloatingSection';
 
 // ── Issuer config ─────────────────────────────────────────────────────────────
 const ISSUERS: Record<string, { color: string; bg: string; border: string; logo: string }> = {
-  oracle:          { color: '#F80000', bg: 'rgba(248,0,0,0.08)',    border: 'rgba(248,0,0,0.25)',   logo: 'oracle' },
-  aws:             { color: '#FF9900', bg: 'rgba(255,153,0,0.08)',  border: 'rgba(255,153,0,0.25)', logo: 'amazonaws' },
+  oracle:          { color: '#F80000', bg: 'rgba(248,0,0,0.08)',    border: 'rgba(248,0,0,0.25)',   logo: '' },
+  aws:             { color: '#FF9900', bg: 'rgba(255,153,0,0.08)',  border: 'rgba(255,153,0,0.25)', logo: 'amazonwebservices' },
   google:          { color: '#4285F4', bg: 'rgba(66,133,244,0.08)', border: 'rgba(66,133,244,0.25)',logo: 'google' },
   github:          { color: '#ffffff', bg: 'rgba(255,255,255,0.06)',border: 'rgba(255,255,255,0.15)',logo: 'github' },
-  ibm:             { color: '#052FAD', bg: 'rgba(5,47,173,0.08)',   border: 'rgba(5,47,173,0.25)',  logo: 'ibm' },
+  ibm:             { color: '#0062FF', bg: 'rgba(0,98,255,0.08)',   border: 'rgba(0,98,255,0.25)',  logo: 'ibm' },
   hackerrank:      { color: '#00EA64', bg: 'rgba(0,234,100,0.08)',  border: 'rgba(0,234,100,0.25)', logo: 'hackerrank' },
   coursera:        { color: '#0056D2', bg: 'rgba(0,86,210,0.08)',   border: 'rgba(0,86,210,0.25)',  logo: 'coursera' },
   certiprof:       { color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)',border: 'rgba(139,92,246,0.25)',logo: '' },
