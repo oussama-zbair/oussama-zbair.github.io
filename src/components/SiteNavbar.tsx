@@ -56,9 +56,19 @@ const SiteNavbar: React.FC = () => {
   }, []);
 
   const scrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) window.scrollTo({ top: id === 'hero' ? 0 : el.offsetTop - 80, behavior: 'smooth' });
     setMobileOpen(false);
+    // Small delay so the mobile menu closes before scrolling
+    setTimeout(() => {
+      if (id === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        return;
+      }
+      const el = document.getElementById(id);
+      if (el) {
+        const top = el.getBoundingClientRect().top + window.scrollY - 80;
+        window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+      }
+    }, 50);
   };
 
   return (

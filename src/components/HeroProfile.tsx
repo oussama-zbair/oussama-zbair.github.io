@@ -40,20 +40,31 @@ function useVisitorGeo(): GeoData | null {
   return geo;
 }
 
-// ── Flag image via flagcdn.com — works on all platforms including Windows ─────
-// Unicode regional indicator emojis don't render on Windows, so we use images.
+// ── Flag image via flagcdn.com — larger, cleaner, works on all platforms ──────
 const FlagImage: React.FC<{ code: string }> = ({ code }) => {
   const lower = code.toLowerCase();
-  if (!lower || lower === 'un') return <span className="text-base">🌍</span>;
+  if (!lower || lower === 'un') {
+    return (
+      <span className="flex items-center justify-center w-8 h-6 text-lg leading-none">🌍</span>
+    );
+  }
   return (
     <img
-      src={`https://flagcdn.com/24x18/${lower}.png`}
-      srcSet={`https://flagcdn.com/48x36/${lower}.png 2x`}
-      width={24}
-      height={18}
-      alt={code}
-      className="inline-block rounded-sm object-cover flex-shrink-0 shadow-sm"
-      onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+      src={`https://flagcdn.com/40x30/${lower}.png`}
+      srcSet={`https://flagcdn.com/80x60/${lower}.png 2x`}
+      width={40}
+      height={30}
+      alt={`Flag of ${code}`}
+      className="rounded flex-shrink-0 shadow-md border border-white/10"
+      style={{ objectFit: 'cover', display: 'block' }}
+      onError={e => {
+        const img = e.target as HTMLImageElement;
+        img.style.display = 'none';
+        const span = document.createElement('span');
+        span.textContent = '🌍';
+        span.style.fontSize = '1.25rem';
+        img.parentNode?.insertBefore(span, img.nextSibling);
+      }}
     />
   );
 };
@@ -222,34 +233,51 @@ const HeroProfile: React.FC = () => {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="flex items-center justify-between mb-5 px-4 py-2.5 rounded-xl
-                     bg-card/60 backdrop-blur-sm border border-border"
+          className="mb-5 px-4 py-3 rounded-xl bg-card/60 backdrop-blur-sm border border-border"
         >
-          {/* Left — visitor location + greeting */}
-          <div className="flex items-center gap-2 min-w-0">
-            {geo ? (
-              <>
-                <FlagImage code={geo.countryCode} />
-                <div className="min-w-0">
-                  <p className="text-xs text-muted-foreground truncate flex items-center gap-1">
-                    <Sparkles className="w-3 h-3 text-primary flex-shrink-0" />
-                    {getGreeting(geo)}
-                  </p>
-                </div>
-              </>
-            ) : (
-              <span className="text-xs text-muted-foreground animate-pulse flex items-center gap-1.5">
-                <MapPin className="w-3 h-3" /> Detecting location…
-              </span>
-            )}
-          </div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
 
-          {/* Right — live clock in visitor's timezone */}
-          <div className="font-mono text-right flex-shrink-0 ml-4">
-            <div className="text-sm font-semibold text-foreground tabular-nums tracking-tight">
-              {clock.timeStr}
+            {/* Flag + greeting */}
+            <div className="flex items-center gap-3">
+              {geo ? (
+                <>
+                  <FlagImage code={geo.countryCode} />
+                  <div>
+                    <p className="text-xs font-medium text-foreground flex items-center gap-1 flex-wrap">
+                      <Sparkles className="w-3 h-3 text-primary flex-shrink-0" />
+                      <span>
+                        {(() => {
+                          const greetings: Record<string, string> = {
+                            FR: 'Bonjour', DE: 'Hallo', ES: 'Hola', IT: 'Ciao', PT: 'Olá',
+                            JP: 'こんにちは', CN: '你好', KR: '안녕하세요', SA: 'مرحباً',
+                            MA: 'مرحباً', EG: 'أهلاً', AE: 'أهلاً', RU: 'Привет',
+                          };
+                          return greetings[geo.countryCode] ?? 'Hello';
+                        })()}
+                      </span>
+                      <span className="text-muted-foreground">— thanks for visiting</span>
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                      <MapPin className="w-3 h-3 flex-shrink-0" />
+                      {geo.city ? `${geo.city}, ${geo.country}` : geo.country}
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <span className="text-xs text-muted-foreground animate-pulse flex items-center gap-1.5">
+                  <MapPin className="w-3 h-3" /> Detecting location…
+                </span>
+              )}
             </div>
-            <div className="text-[11px] text-muted-foreground">{clock.dateStr}</div>
+
+            {/* Live clock */}
+            <div className="font-mono text-right sm:flex-shrink-0 pl-[52px] sm:pl-0">
+              <div className="text-sm font-semibold text-foreground tabular-nums tracking-tight">
+                {clock.timeStr}
+              </div>
+              <div className="text-[11px] text-muted-foreground">{clock.dateStr}</div>
+            </div>
+
           </div>
         </motion.div>
 

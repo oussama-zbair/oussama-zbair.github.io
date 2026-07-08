@@ -1,46 +1,72 @@
 import { useEffect } from 'react';
 
-/**
- * Security protection hook.
- *
- * What this does (and why):
- * - Disables console output in production so stack traces / data shapes
- *   are not visible to casual observers in the browser console.
- * - Prevents drag-and-drop of images/links (minor UX hardening).
- *
- * What this intentionally does NOT do:
- * - Block F12 / right-click — this is security theater; any developer
- *   can bypass it in seconds and it harms legitimate users (accessibility,
- *   screen readers, power users).
- * - Detect DevTools — unreliable and creates false positives.
- * - Block copy — breaks accessibility and usability.
- *
- * Real security for this site lives in:
- * - No API keys or secrets in the client bundle (checked via .env)
- * - CSP headers in public/_headers (Netlify)
- * - HTTPS enforced via Netlify
- */
 export const useSecurityProtection = () => {
   useEffect(() => {
-    // Silence console in production to avoid leaking internals
+    // ── Silence console in production ──────────────────────────────────────
     if (import.meta.env.PROD) {
       const noop = () => {};
       console.log   = noop;
       console.warn  = noop;
       console.info  = noop;
       console.debug = noop;
-      // Keep console.error for legitimate runtime error tracking
     }
 
-    // Prevent drag-start on images and links (minor UX hardening)
-    const handleDragStart = (e: DragEvent) => {
+    // ── Block copy / cut ───────────────────────────────────────────────────
+    const handleCopy = (e: ClipboardEvent) => {
       const target = e.target as HTMLElement;
-      if (target.tagName === 'IMG' || target.tagName === 'A') {
-        e.preventDefault();
+      // Allow copy inside form inputs
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+      e.clipboardData?.setData('text/plain', '');
+    };
+    const handleCut = (e: ClipboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') return;
+      e.preventDefault();
+    };
+
+    // ── Block right-click context menu ─────────────────────────────────────
+    const handleContextMenu = (e: MouseEvent) => e.preventDefault();
+
+    // ── Block inspect / devtools keyboard shortcuts ────────────────────────
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // F12
+      if (e.key === 'F12') { e.preventDefault(); return; }
+      // Ctrl+Shift+I / Ctrl+Shift+J / Ctrl+Shift+C
+      if (e.ctrlKey && e.shiftKey && ['I','i','J','j','C','c'].includes(e.key)) {
+        e.preventDefault(); return;
+      }
+      // Ctrl+U (view source)
+      if (e.ctrlKey && (e.key === 'u' || e.key === 'U')) {
+        e.preventDefault(); return;
+      }
+      // Ctrl+C / Ctrl+X (copy/cut) — block outside inputs
+      if (e.ctrlKey && (e.key === 'c' || e.key === 'x')) {
+        const target = e.target as HTMLElement;
+        if (target.tagName !== 'INPUT' && target.tagName !== 'TEXTAREA') {
+          e.preventDefault();
+        }
       }
     };
 
-    document.addEventListener('dragstart', handleDragStart);
-    return () => document.removeEventListener('dragstart', handleDragStart);
+    // ── Block drag of images/links ─────────────────────────────────────────
+    const handleDragStart = (e: DragEvent) => {
+      const target = e.target as HTMLElement;
+      if (target.tagName === 'IMG' || target.tagName === 'A') e.preventDefault();
+    };
+
+    document.addEventListener('copy',        handleCopy);
+    document.addEventListener('cut',         handleCut);
+    document.addEventListener('contextmenu', handleContextMenu);
+    document.addEventListener('keydown',     handleKeyDown);
+    document.addEventListener('dragstart',   handleDragStart);
+
+    return () => {
+      document.removeEventListener('copy',        handleCopy);
+      document.removeEventListener('cut',         handleCut);
+      document.removeEventListener('contextmenu', handleContextMenu);
+      document.removeEventListener('keydown',     handleKeyDown);
+      document.removeEventListener('dragstart',   handleDragStart);
+    };
   }, []);
 };
