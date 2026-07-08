@@ -2,6 +2,7 @@ import React from 'react';
 import SecurityWrapper from '@/components/SecurityWrapper';
 import SiteNavbar from '@/components/SiteNavbar';
 import HeroProfile from '@/components/HeroProfile';
+import ScrollProgressBar from '@/components/ScrollProgressBar';
 import TechStackConstellation from '@/components/artistic/TechStackConstellation';
 import ProjectGalaxy from '@/components/artistic/ProjectGalaxy';
 import CertificationsGalaxy from '@/components/artistic/CertificationsGalaxy';
@@ -12,6 +13,9 @@ const Index: React.FC = () => {
   return (
     <SecurityWrapper>
       <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
+
+        {/* Scroll progress */}
+        <ScrollProgressBar />
 
         {/* Always-visible navbar */}
         <SiteNavbar />

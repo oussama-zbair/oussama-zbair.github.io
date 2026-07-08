@@ -1,13 +1,158 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ExternalLink, Github, Shield } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ExternalLink, Github, Shield, X, ChevronRight } from 'lucide-react';
 import { projects } from '@/data/portfolio';
 import FloatingSection from './FloatingSection';
-import GlassCard from './GlassCard';
 
+// ── Tech icon map (Simple Icons CDN) ─────────────────────────────────────────
+const TECH_ICONS: Record<string, { icon: string; color: string }> = {
+  'Java':           { icon: 'java',             color: '#ED8B00' },
+  'Spring Boot':    { icon: 'springboot',        color: '#6DB33F' },
+  'React':          { icon: 'react',             color: '#61DAFB' },
+  'React 19':       { icon: 'react',             color: '#61DAFB' },
+  'TypeScript':     { icon: 'typescript',        color: '#3178C6' },
+  'JavaScript':     { icon: 'javascript',        color: '#F7DF1E' },
+  'Docker':         { icon: 'docker',            color: '#2496ED' },
+  'PostgreSQL':     { icon: 'postgresql',        color: '#4169E1' },
+  'MySQL':          { icon: 'mysql',             color: '#4479A1' },
+  'MongoDB':        { icon: 'mongodb',           color: '#47A248' },
+  'Python':         { icon: 'python',            color: '#3776AB' },
+  'Flask':          { icon: 'flask',             color: '#ffffff' },
+  'Node.js':        { icon: 'nodedotjs',         color: '#339933' },
+  'Next.js':        { icon: 'nextdotjs',         color: '#ffffff' },
+  'Vue.js':         { icon: 'vuedotjs',          color: '#4FC08D' },
+  'Angular':        { icon: 'angular',           color: '#DD0031' },
+  'Tailwind CSS':   { icon: 'tailwindcss',       color: '#06B6D4' },
+  'Tailwind':       { icon: 'tailwindcss',       color: '#06B6D4' },
+  'AWS':            { icon: 'amazonaws',         color: '#FF9900' },
+  'Azure':          { icon: 'microsoftazure',    color: '#0078D4' },
+  'Firebase':       { icon: 'firebase',          color: '#FFCA28' },
+  'Redis':          { icon: 'redis',             color: '#DC382D' },
+  'JWT':            { icon: 'jsonwebtokens',     color: '#D63AFF' },
+  'Git':            { icon: 'git',               color: '#F05032' },
+  'GitHub Actions': { icon: 'githubactions',     color: '#2088FF' },
+  'Electron.js':    { icon: 'electron',          color: '#47848F' },
+  'Django':         { icon: 'django',            color: '#092E20' },
+  'scikit-learn':   { icon: 'scikitlearn',       color: '#F7931E' },
+  'PyTorch':        { icon: 'pytorch',           color: '#EE4C2C' },
+  'TensorFlow':     { icon: 'tensorflow',        color: '#FF6F00' },
+  'Framer Motion':  { icon: 'framer',            color: '#0055FF' },
+  'Vite':           { icon: 'vite',              color: '#646CFF' },
+  'Mapbox':         { icon: 'mapbox',            color: '#000000' },
+};
+
+const TechBadge: React.FC<{ tag: string }> = ({ tag }) => {
+  const tech = TECH_ICONS[tag];
+  if (tech) {
+    return (
+      <span className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/60 border border-border text-[11px] text-muted-foreground">
+        <img
+          src={`https://cdn.simpleicons.org/${tech.icon}/${tech.color.replace('#','')}`}
+          alt={tag}
+          width={12}
+          height={12}
+          className="flex-shrink-0"
+          onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+        />
+        {tag}
+      </span>
+    );
+  }
+  return (
+    <span className="px-2 py-1 rounded-md bg-primary/10 text-primary text-[11px]">{tag}</span>
+  );
+};
+
+// ── Project detail modal ──────────────────────────────────────────────────────
+const ProjectModal: React.FC<{ project: typeof projects[0]; onClose: () => void }> = ({ project, onClose }) => (
+  <AnimatePresence>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm"
+      onClick={onClose}
+    >
+      <motion.div
+        initial={{ scale: 0.92, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.92, opacity: 0, y: 20 }}
+        transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        className="bg-card border border-border rounded-2xl p-6 max-w-lg w-full shadow-2xl max-h-[85vh] overflow-y-auto"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex-1 pr-4">
+            <h3 className="text-xl font-bold text-foreground">{project.title}</h3>
+            {project.confidential && (
+              <span className="inline-flex items-center gap-1 mt-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20">
+                <Shield className="w-3 h-3" /> Confidential
+              </span>
+            )}
+          </div>
+          <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors">
+            <X className="w-4 h-4" />
+          </button>
+        </div>
+
+        {/* Full description */}
+        <p className="text-sm text-muted-foreground leading-relaxed mb-5">{project.description}</p>
+
+        {/* All tags */}
+        <div className="flex flex-wrap gap-1.5 mb-5">
+          {project.tags.map(tag => <TechBadge key={tag} tag={tag} />)}
+        </div>
+
+        {/* Links */}
+        {!project.confidential && (
+          <div className="flex flex-wrap gap-3">
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-primary text-primary-foreground text-sm font-medium hover:opacity-90 transition-opacity">
+                <ExternalLink className="w-3.5 h-3.5" /> Live Demo
+              </a>
+            )}
+            {(project.codeUrl || project.frontendUrl || project.backendUrl) && (
+              <>
+                {project.frontendUrl && (
+                  <a href={project.frontendUrl} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all">
+                    <Github className="w-3.5 h-3.5" /> Frontend
+                  </a>
+                )}
+                {project.backendUrl && (
+                  <a href={project.backendUrl} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all">
+                    <Github className="w-3.5 h-3.5" /> Backend
+                  </a>
+                )}
+                {project.codeUrl && !project.frontendUrl && (
+                  <a href={project.codeUrl} target="_blank" rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-4 py-2 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground hover:border-primary/40 transition-all">
+                    <Github className="w-3.5 h-3.5" /> Source
+                  </a>
+                )}
+              </>
+            )}
+          </div>
+        )}
+        {project.confidential && (
+          <div className="flex items-center gap-2 text-amber-400 text-xs p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg">
+            <Shield className="w-4 h-4 flex-shrink-0" />
+            Source code not available due to confidentiality agreement.
+          </div>
+        )}
+      </motion.div>
+    </motion.div>
+  </AnimatePresence>
+);
+
+// ── ProjectGalaxy ─────────────────────────────────────────────────────────────
 const ProjectGalaxy: React.FC = () => {
-  const [showAll, setShowAll] = React.useState(false);
-  const displayedProjects = showAll ? projects : projects.slice(0, 6);
+  const [showAll, setShowAll] = useState(false);
+  const [selected, setSelected] = useState<typeof projects[0] | null>(null);
+  const displayed = showAll ? projects : projects.slice(0, 6);
 
   return (
     <FloatingSection className="min-h-screen py-20 bg-background relative">
@@ -18,109 +163,83 @@ const ProjectGalaxy: React.FC = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-mono text-primary tracking-[0.3em] uppercase">
-            Projects
-          </span>
+          <span className="text-xs font-mono text-primary tracking-[0.3em] uppercase">Projects</span>
           <h2 className="text-4xl md:text-6xl font-bold mt-4 text-foreground">
             Featured <span className="gradient-text">Work</span>
           </h2>
-          <p className="text-muted-foreground mt-4">
-            {projects.length} projects showcasing full-stack development
-          </p>
+          <p className="text-muted-foreground mt-4">{projects.length} projects — click any card for full details</p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {displayedProjects.map((project, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 max-w-7xl mx-auto">
+          {displayed.map((project, index) => (
             <motion.div
               key={project.title}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ delay: index * 0.08 }}
+              whileHover={{ y: -4 }}
+              onClick={() => setSelected(project)}
+              className="group cursor-pointer rounded-2xl border border-border bg-card/50 backdrop-blur-sm
+                         hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5
+                         transition-all duration-300 overflow-hidden flex flex-col"
             >
-              <GlassCard className="h-full">
-                {/* Project image placeholder */}
-                <div className="aspect-video rounded-lg bg-gradient-to-br from-primary/10 to-accent/10 mb-6 overflow-hidden relative">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <span className="text-4xl opacity-50">🚀</span>
-                  </div>
-                  {/* Confidential badge overlay */}
-                  {project.confidential && (
-                    <div className="absolute top-2 right-2 flex items-center gap-1 px-2 py-1 bg-amber-500/90 backdrop-blur-sm border border-amber-400/50 rounded-full">
-                      <Shield size={10} className="text-amber-900" />
-                      <span className="text-xs font-medium text-amber-900">Confidential</span>
-                    </div>
-                  )}
-                </div>
+              {/* Top gradient bar */}
+              <div className="h-1 w-full bg-gradient-to-r from-primary via-accent to-primary/50" />
 
+              <div className="p-5 flex flex-col flex-1">
+                {/* Title + confidential */}
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="text-xl font-semibold text-foreground flex-1">
+                  <h3 className="text-base font-bold text-foreground group-hover:text-primary transition-colors leading-snug flex-1 pr-2">
                     {project.title}
                   </h3>
                   {project.confidential && (
-                    <div className="flex items-center gap-1 px-2 py-1 bg-amber-500/20 border border-amber-500/30 rounded-full ml-2 flex-shrink-0">
-                      <Shield size={10} className="text-amber-400" />
-                      <span className="text-xs font-medium text-amber-400">Confidential</span>
-                    </div>
+                    <span className="flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 flex-shrink-0">
+                      <Shield className="w-2.5 h-2.5" /> NDA
+                    </span>
                   )}
                 </div>
-                
-                <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
+
+                {/* Description — 2 lines, click for more */}
+                <p className="text-xs text-muted-foreground leading-relaxed mb-4 line-clamp-2 flex-1">
                   {project.description}
                 </p>
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {project.tags.slice(0, 4).map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 text-xs rounded bg-primary/10 text-primary"
-                    >
-                      {tag}
+                {/* Tech badges — first 4 */}
+                <div className="flex flex-wrap gap-1.5 mb-4">
+                  {project.tags.slice(0, 4).map(tag => <TechBadge key={tag} tag={tag} />)}
+                  {project.tags.length > 4 && (
+                    <span className="px-2 py-1 rounded-md bg-muted/40 text-[11px] text-muted-foreground">
+                      +{project.tags.length - 4}
                     </span>
-                  ))}
-                </div>
-
-                {/* Links */}
-                <div className="flex flex-col gap-2">
-                  {project.confidential ? (
-                    <div className="flex items-center gap-2 text-amber-400 text-sm p-2 bg-amber-500/10 border border-amber-500/20 rounded-lg">
-                      <Shield size={14} className="flex-shrink-0" />
-                      <span className="text-xs">Source code not available due to confidentiality</span>
-                    </div>
-                  ) : (
-                    <div className="flex gap-4">
-                      {project.liveUrl && (
-                        <a
-                          href={project.liveUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-                        >
-                          <ExternalLink className="w-4 h-4" />
-                          Live Demo
-                        </a>
-                      )}
-                      {(project.codeUrl || project.frontendUrl) && (
-                        <a
-                          href={project.codeUrl || project.frontendUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
-                        >
-                          <Github className="w-4 h-4" />
-                          Source
-                        </a>
-                      )}
-                    </div>
                   )}
                 </div>
-              </GlassCard>
+
+                {/* Footer */}
+                <div className="flex items-center justify-between pt-3 border-t border-border/50">
+                  <div className="flex gap-2" onClick={e => e.stopPropagation()}>
+                    {project.liveUrl && (
+                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[11px] text-primary hover:underline">
+                        <ExternalLink className="w-3 h-3" /> Demo
+                      </a>
+                    )}
+                    {(project.codeUrl || project.frontendUrl) && !project.confidential && (
+                      <a href={project.codeUrl || project.frontendUrl} target="_blank" rel="noopener noreferrer"
+                        className="flex items-center gap-1 text-[11px] text-muted-foreground hover:text-foreground">
+                        <Github className="w-3 h-3" /> Code
+                      </a>
+                    )}
+                  </div>
+                  <span className="flex items-center gap-0.5 text-[11px] text-muted-foreground/60 group-hover:text-primary/60 transition-colors">
+                    Details <ChevronRight className="w-3 h-3" />
+                  </span>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
 
-        {/* Show More/Less Button */}
         {projects.length > 6 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -139,6 +258,9 @@ const ProjectGalaxy: React.FC = () => {
           </motion.div>
         )}
       </div>
+
+      {/* Detail modal */}
+      {selected && <ProjectModal project={selected} onClose={() => setSelected(null)} />}
     </FloatingSection>
   );
 };

@@ -99,6 +99,45 @@ function getGreeting(geo: GeoData): string {
   return `${word} — thanks for visiting from ${loc}!`;
 }
 
+// ── Typing animation hook ─────────────────────────────────────────────────────
+const ROLES = [
+  'Software Engineer',
+  'Full Stack Developer',
+  'AI Solutions Builder',
+  'Backend Engineer',
+];
+
+function useTyping(words: string[], speed = 80, pause = 1800) {
+  const [displayed, setDisplayed] = useState('');
+  const [wordIdx, setWordIdx] = useState(0);
+  const [charIdx, setCharIdx] = useState(0);
+  const [deleting, setDeleting] = useState(false);
+
+  useEffect(() => {
+    const current = words[wordIdx];
+    let delay = deleting ? speed / 2 : speed;
+
+    if (!deleting && charIdx === current.length) {
+      delay = pause;
+      const t = setTimeout(() => setDeleting(true), delay);
+      return () => clearTimeout(t);
+    }
+    if (deleting && charIdx === 0) {
+      setDeleting(false);
+      setWordIdx(i => (i + 1) % words.length);
+      return;
+    }
+
+    const t = setTimeout(() => {
+      setCharIdx(i => i + (deleting ? -1 : 1));
+      setDisplayed(current.slice(0, charIdx + (deleting ? -1 : 1)));
+    }, delay);
+    return () => clearTimeout(t);
+  }, [charIdx, deleting, wordIdx, words, speed, pause]);
+
+  return displayed;
+}
+
 // ── Animated canvas background ────────────────────────────────────────────────
 const TechParticles: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -206,8 +245,9 @@ const TechParticles: React.FC = () => {
 
 // ── HeroProfile ───────────────────────────────────────────────────────────────
 const HeroProfile: React.FC = () => {
-  const geo   = useVisitorGeo();
-  const clock = useClock(geo?.timezone);
+  const geo    = useVisitorGeo();
+  const clock  = useClock(geo?.timezone);
+  const role   = useTyping(ROLES);
 
   const pills = [
     { icon: Code2,  label: 'Java · Spring Boot · React' },
@@ -313,8 +353,9 @@ const HeroProfile: React.FC = () => {
                   Available
                 </span>
               </div>
-              <p className="text-muted-foreground text-sm">
-                Software Engineer · Full Stack Developer · AI Solutions Builder
+              <p className="text-muted-foreground text-sm min-h-[1.25rem]">
+                <span className="text-foreground font-medium">{role}</span>
+                <span className="animate-pulse text-primary ml-0.5">|</span>
               </p>
               <div className="flex items-center gap-1.5 mt-1.5 text-xs text-muted-foreground">
                 <MapPin className="w-3 h-3" /> Morocco

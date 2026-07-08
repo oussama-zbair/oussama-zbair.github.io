@@ -1,198 +1,179 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Award, ExternalLink, Shield, Star } from 'lucide-react';
+import { Award, ExternalLink, CheckCircle2, Star } from 'lucide-react';
 import { certifications } from '@/data/portfolio';
 import FloatingSection from './FloatingSection';
-import GlassCard from './GlassCard';
 
-// Organization logo URLs using shields.io or simple-icons
-const issuerLogos: Record<string, string> = {
-  oracle: 'https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white',
-  github: 'https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white',
-  google: 'https://img.shields.io/badge/Google-4285F4?style=for-the-badge&logo=google&logoColor=white',
-  ibm: 'https://img.shields.io/badge/IBM-052FAD?style=for-the-badge&logo=ibm&logoColor=white',
-  hackerrank: 'https://img.shields.io/badge/HackerRank-00EA64?style=for-the-badge&logo=hackerrank&logoColor=black',
-  coursera: 'https://img.shields.io/badge/Coursera-0056D2?style=for-the-badge&logo=coursera&logoColor=white',
-  certiprof: 'https://img.shields.io/badge/CertiProf-2F3E46?style=for-the-badge&logoColor=white',
-  aws: 'https://img.shields.io/badge/AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white',
+// ── Issuer config ─────────────────────────────────────────────────────────────
+const ISSUERS: Record<string, { color: string; bg: string; border: string; logo: string }> = {
+  oracle:          { color: '#F80000', bg: 'rgba(248,0,0,0.08)',    border: 'rgba(248,0,0,0.25)',   logo: 'oracle' },
+  aws:             { color: '#FF9900', bg: 'rgba(255,153,0,0.08)',  border: 'rgba(255,153,0,0.25)', logo: 'amazonaws' },
+  google:          { color: '#4285F4', bg: 'rgba(66,133,244,0.08)', border: 'rgba(66,133,244,0.25)',logo: 'google' },
+  github:          { color: '#ffffff', bg: 'rgba(255,255,255,0.06)',border: 'rgba(255,255,255,0.15)',logo: 'github' },
+  ibm:             { color: '#052FAD', bg: 'rgba(5,47,173,0.08)',   border: 'rgba(5,47,173,0.25)',  logo: 'ibm' },
+  hackerrank:      { color: '#00EA64', bg: 'rgba(0,234,100,0.08)',  border: 'rgba(0,234,100,0.25)', logo: 'hackerrank' },
+  coursera:        { color: '#0056D2', bg: 'rgba(0,86,210,0.08)',   border: 'rgba(0,86,210,0.25)',  logo: 'coursera' },
+  certiprof:       { color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)',border: 'rgba(139,92,246,0.25)',logo: '' },
+  'linux-foundation': { color: '#FCC624', bg: 'rgba(252,198,36,0.08)', border: 'rgba(252,198,36,0.25)', logo: 'linux' },
 };
 
+interface CertCardProps {
+  cert: typeof certifications[0];
+  index: number;
+  featured?: boolean;
+}
+
+const CertCard: React.FC<CertCardProps> = ({ cert, index, featured }) => {
+  const cfg = ISSUERS[cert.badge || ''] ?? {
+    color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)', border: 'rgba(139,92,246,0.25)', logo: '',
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.06 }}
+      whileHover={{ y: -4, scale: 1.01 }}
+      className="relative rounded-2xl border overflow-hidden transition-all duration-300 group"
+      style={{ borderColor: cfg.border, background: cfg.bg }}
+    >
+      {/* Top accent line */}
+      <div className="h-0.5 w-full" style={{ background: cfg.color }} />
+
+      {/* Latest indicator — subtle colored dot, no text badge */}
+      {cert.isLatest && (
+        <div
+          className="absolute top-3 right-3 w-2 h-2 rounded-full animate-pulse"
+          style={{ background: cfg.color, boxShadow: `0 0 6px ${cfg.color}` }}
+        />
+      )}
+
+      <div className={`p-5 ${featured ? 'pb-5' : 'pb-4'}`}>
+        {/* Issuer logo + verify */}
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            {cfg.logo ? (
+              <img
+                src={`https://cdn.simpleicons.org/${cfg.logo}/${cfg.color.replace('#','')}`}
+                alt={cert.issuer}
+                width={featured ? 20 : 16}
+                height={featured ? 20 : 16}
+                className="flex-shrink-0"
+                onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
+              />
+            ) : (
+              <Award className="w-4 h-4" style={{ color: cfg.color }} />
+            )}
+            <span className="text-xs font-semibold" style={{ color: cfg.color }}>
+              {cert.issuer}
+            </span>
+          </div>
+          {cert.verifyUrl && (
+            <a
+              href={cert.verifyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-[10px] font-medium opacity-70 hover:opacity-100 transition-opacity"
+              style={{ color: cfg.color }}
+            >
+              <CheckCircle2 className="w-3 h-3" />
+              Verify
+              <ExternalLink className="w-2.5 h-2.5" />
+            </a>
+          )}
+        </div>
+
+        {/* Title */}
+        <h3 className={`font-bold text-foreground leading-snug mb-2 group-hover:opacity-90 transition-opacity ${featured ? 'text-base' : 'text-sm'}`}>
+          {cert.title}
+        </h3>
+
+        {/* Date */}
+        <p className="text-[11px] text-muted-foreground font-mono">{cert.date}</p>
+      </div>
+    </motion.div>
+  );
+};
+
+// ── CertificationsGalaxy ──────────────────────────────────────────────────────
 const CertificationsGalaxy: React.FC = () => {
-  const latestCerts = certifications.filter(c => c.isLatest);
-  const otherCerts = certifications.filter(c => !c.isLatest);
-
-  const getIssuerColor = (issuer: string) => {
-    if (issuer.includes('Oracle')) return 'from-red-500 to-orange-500';
-    if (issuer.includes('GitHub')) return 'from-gray-600 to-gray-800';
-    if (issuer.includes('Google')) return 'from-blue-400 to-green-500';
-    if (issuer.includes('IBM')) return 'from-blue-500 to-blue-700';
-    if (issuer.includes('HackerRank')) return 'from-green-400 to-emerald-600';
-    if (issuer.includes('Coursera')) return 'from-blue-500 to-blue-600';
-    return 'from-primary to-accent';
-  };
-
-  const getLogoBadge = (badge?: string) => {
-    if (!badge) return null;
-    return issuerLogos[badge] || null;
-  };
+  const latest = certifications.filter(c => c.isLatest);
+  const others  = certifications.filter(c => !c.isLatest);
 
   return (
     <FloatingSection className="min-h-screen py-20 bg-background relative">
       <div className="container mx-auto px-4 relative z-10">
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-xs font-mono text-primary tracking-[0.3em] uppercase">
-            Certifications
-          </span>
+          <span className="text-xs font-mono text-primary tracking-[0.3em] uppercase">Certifications</span>
           <h2 className="text-4xl md:text-6xl font-bold mt-4 text-foreground">
             Professional <span className="gradient-text">Credentials</span>
           </h2>
           <p className="text-muted-foreground mt-4 max-w-2xl mx-auto">
-            Industry-recognized certifications validating expertise in Java, Cloud, AI, and Software Engineering
+            {certifications.length} industry-recognized certifications across Java, Cloud, AI, DevOps & Security
           </p>
         </motion.div>
 
-        {/* Latest/Featured Certifications */}
-        <div className="mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center justify-center gap-2 mb-8"
-          >
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-              Latest Achievements
-            </span>
-            <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-          </motion.div>
+        {/* Stats row */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap justify-center gap-4 mb-16"
+        >
+          {[
+            { value: certifications.length, label: 'Total Certs' },
+            { value: latest.length, label: 'This Year' },
+            { value: '6+', label: 'Issuers' },
+            { value: '5+', label: 'Domains' },
+          ].map(stat => (
+            <div key={stat.label}
+              className="flex flex-col items-center px-6 py-3 rounded-xl border border-border bg-card/40 min-w-[100px]">
+              <span className="text-2xl font-black text-primary">{stat.value}</span>
+              <span className="text-[11px] text-muted-foreground mt-0.5">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
-            {latestCerts.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-              >
-                <GlassCard className="h-full relative overflow-hidden group">
-                  {/* Gradient accent */}
-                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${getIssuerColor(cert.issuer)}`} />
-                  
-                  <div className="flex items-start gap-4">
-                    {/* Organization Logo Badge */}
-                    <div className="flex-shrink-0">
-                      {getLogoBadge(cert.badge) ? (
-                        <img
-                          src={getLogoBadge(cert.badge)!}
-                          alt={cert.issuer}
-                          className="h-7 rounded"
-                          loading="lazy"
-                        />
-                      ) : (
-                        <div className="w-12 h-7 bg-muted rounded flex items-center justify-center">
-                          <Award className="w-4 h-4 text-muted-foreground" />
-                        </div>
-                      )}
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg font-semibold text-foreground mb-1 group-hover:text-primary transition-colors">
-                        {cert.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground mb-2">{cert.issuer}</p>
-                      <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                        <span className="flex items-center gap-1">
-                          <Shield className="w-3 h-3" />
-                          {cert.date}
-                        </span>
-                        {cert.verifyUrl && (
-                          <a
-                            href={cert.verifyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-1 text-primary hover:underline"
-                          >
-                            <ExternalLink className="w-3 h-3" />
-                            Verify
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </GlassCard>
-              </motion.div>
+        {/* Latest — featured large cards */}
+        <div className="mb-12">
+          <div className="flex items-center gap-2 mb-6 justify-center">
+            <div className="h-px flex-1 max-w-[80px] bg-border" />
+            <span className="text-xs font-mono text-primary uppercase tracking-widest flex items-center gap-1.5">
+              <Star className="w-3 h-3 fill-primary" /> Latest Achievements
+            </span>
+            <div className="h-px flex-1 max-w-[80px] bg-border" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            {latest.map((cert, i) => (
+              <CertCard key={cert.id} cert={cert} index={i} featured />
             ))}
           </div>
         </div>
 
-        {/* Other Certifications */}
+        {/* Others */}
         <div>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex items-center justify-center gap-2 mb-8"
-          >
-            <Award className="w-5 h-5 text-primary" />
-            <span className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
-              More Certifications
+          <div className="flex items-center gap-2 mb-6 justify-center">
+            <div className="h-px flex-1 max-w-[80px] bg-border" />
+            <span className="text-xs font-mono text-muted-foreground uppercase tracking-widest flex items-center gap-1.5">
+              <Award className="w-3 h-3" /> More Certifications
             </span>
-          </motion.div>
-
-          <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-            {otherCerts.map((cert, index) => (
-              <motion.div
-                key={cert.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ scale: 1.02, y: -2 }}
-                className="glass-card rounded-xl p-4 max-w-xs"
-              >
-                <div className="flex items-center gap-3">
-                  {/* Organization Logo Badge */}
-                  {getLogoBadge(cert.badge) ? (
-                    <img
-                      src={getLogoBadge(cert.badge)!}
-                      alt={cert.issuer}
-                      className="h-6 rounded flex-shrink-0"
-                      loading="lazy"
-                    />
-                  ) : (
-                    <div className="w-10 h-6 bg-muted rounded flex items-center justify-center flex-shrink-0">
-                      <Award className="w-3 h-3 text-muted-foreground" />
-                    </div>
-                  )}
-                  <div>
-                    <h4 className="text-sm font-medium text-foreground line-clamp-2">
-                      {cert.title}
-                    </h4>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      {cert.issuer} • {cert.date}
-                    </p>
-                    {cert.verifyUrl && (
-                      <a
-                        href={cert.verifyUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-primary hover:underline inline-flex items-center gap-1 mt-1"
-                      >
-                        <ExternalLink className="w-3 h-3" />
-                        Verify
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
+            <div className="h-px flex-1 max-w-[80px] bg-border" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-5xl mx-auto">
+            {others.map((cert, i) => (
+              <CertCard key={cert.id} cert={cert} index={i} />
             ))}
           </div>
         </div>
+
       </div>
     </FloatingSection>
   );
