@@ -1,4 +1,5 @@
 import { debugLogger } from './debugLogger';
+import { calculateReadingTime } from './readingTime';
 
 /**
  * Dynamic article content loader
@@ -72,7 +73,6 @@ export async function loadArticleContent(slug: string): Promise<ArticleContent> 
     }
 
     // Calculate reading time
-    const { calculateReadingTime } = await import('./readingTime');
     const readingTime = calculateReadingTime(content);
 
     const articleContent: ArticleContent = {
@@ -103,7 +103,6 @@ Please try again later or contact support if the issue persists.
 **Article ID:** ${slug}
     `;
 
-    const { calculateReadingTime } = await import('./readingTime');
     const readingTime = calculateReadingTime(fallbackContent);
 
     return {

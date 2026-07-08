@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Home, Code2, FolderGit2, Award, Briefcase, BookOpen, Mail, Moon, Sun } from 'lucide-react';
+import { Home, Code2, FolderGit2, Award, Briefcase, BookOpen, Mail, Moon, Sun, Library } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import ResumeDownloadButton from './ResumeDownloadButton';
 
@@ -9,6 +10,8 @@ interface NavItem {
   id: string;
   label: string;
   icon: React.ElementType;
+  isRoute?: boolean;
+  routePath?: string;
 }
 
 const navItems: NavItem[] = [
@@ -18,6 +21,7 @@ const navItems: NavItem[] = [
   { id: 'certifications', label: 'Certs', icon: Award },
   { id: 'experience', label: 'Experience', icon: Briefcase },
   { id: 'blog', label: 'Blog', icon: BookOpen },
+  { id: 'knowledge', label: 'KB', icon: Library, isRoute: true, routePath: 'https://docs.oussamazbair.engineer' },
   { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
@@ -26,6 +30,7 @@ const FloatingNav: React.FC = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const { resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setMounted(true);
@@ -69,18 +74,22 @@ const FloatingNav: React.FC = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      // Calculate proper offset based on section
-      let offset = 80; // Default offset for fixed nav
-      
-      if (id === 'hero') {
-        offset = 0; // No offset for hero section
-      }
-      
+      let offset = 80;
+      if (id === 'hero') offset = 0;
       const top = element.offsetTop - offset;
-      window.scrollTo({ 
-        top: Math.max(0, top), // Ensure we don't scroll to negative position
-        behavior: 'smooth' 
-      });
+      window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+    }
+  };
+
+  const handleNavClick = (item: NavItem) => {
+    if (item.isRoute && item.routePath) {
+      if (item.routePath.startsWith('http')) {
+        window.open(item.routePath, '_blank', 'noopener,noreferrer');
+      } else {
+        navigate(item.routePath);
+      }
+    } else {
+      scrollToSection(item.id);
     }
   };
 
@@ -100,12 +109,12 @@ const FloatingNav: React.FC = () => {
           <div className="glass-card px-1 sm:px-2 py-2 rounded-full flex items-center gap-0.5 sm:gap-1 border border-primary/20 shadow-lg shadow-black/20 overflow-x-auto scrollbar-hide">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activeSection === item.id;
+              const isActive = item.isRoute ? false : activeSection === item.id;
 
               return (
                 <motion.button
                   key={item.id}
-                  onClick={() => scrollToSection(item.id)}
+                  onClick={() => handleNavClick(item)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   className={cn(

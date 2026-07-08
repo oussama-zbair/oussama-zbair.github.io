@@ -6,65 +6,34 @@ interface SecurityWrapperProps {
 }
 
 /**
- * Security wrapper component that applies protection measures
- * to the entire application
+ * Applies lightweight, non-intrusive security protections.
+ * See useSecurityProtection for rationale on what is and isn't blocked.
  */
 const SecurityWrapper: React.FC<SecurityWrapperProps> = ({ children }) => {
-  // Apply security protections
   useSecurityProtection();
 
   useEffect(() => {
-    // Add CSS to prevent selection on body
-    document.body.style.userSelect = 'none';
-    document.body.style.webkitUserSelect = 'none';
-    
-    // Prevent image dragging globally
+    // Block printing — prevent easy PDF export of the full page
     const style = document.createElement('style');
     style.textContent = `
-      img, a, button, [data-protected] {
-        -webkit-user-drag: none;
-        user-drag: none;
-        -webkit-touch-callout: none;
-      }
-      
-      /* Allow selection in form inputs */
-      input, textarea {
-        user-select: text !important;
-        -webkit-user-select: text !important;
-      }
-      
-      /* Hide content when printing */
       @media print {
-        body * {
-          visibility: hidden !important;
-        }
+        body * { visibility: hidden !important; }
         body::after {
-          content: 'Printing is disabled for security reasons.';
+          content: 'Printing is not available.';
           visibility: visible;
           position: fixed;
-          top: 50%;
-          left: 50%;
+          top: 50%; left: 50%;
           transform: translate(-50%, -50%);
-          font-size: 24px;
+          font-size: 20px;
+          font-family: sans-serif;
         }
       }
     `;
     document.head.appendChild(style);
-
-    return () => {
-      document.head.removeChild(style);
-    };
+    return () => { document.head.removeChild(style); };
   }, []);
 
-  return (
-    <div 
-      className="no-select no-drag"
-      onContextMenu={(e) => e.preventDefault()}
-      data-protected="true"
-    >
-      {children}
-    </div>
-  );
+  return <>{children}</>;
 };
 
 export default SecurityWrapper;

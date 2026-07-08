@@ -3,7 +3,7 @@ import { ArrowLeft, Calendar, Clock, Heart, Share2, Bookmark, User } from 'lucid
 import { motion } from 'framer-motion';
 import articlesData from '../data/articles.json';
 import { loadArticleContent } from '../utils/articleLoader';
-import { parseMarkdown, renderMarkdownToHTML } from '../utils/markdown';
+import { renderMarkdown } from '../utils/markdownRenderer';
 
 interface Article {
   id: string;
@@ -67,10 +67,9 @@ export const ArticleReader: React.FC<ArticleReaderProps> = ({ slug, onBack }) =>
         console.log(`ArticleReader: Content loaded, length: ${articleContent.content.length} characters`);
         
         // Parse markdown and render to HTML
-        const nodes = parseMarkdown(articleContent.content);
-        const htmlContent = renderMarkdownToHTML(nodes);
+        const htmlContent = renderMarkdown(articleContent.content);
         
-        console.log(`ArticleReader: Markdown parsed and rendered to HTML`);
+        console.log(`ArticleReader: Markdown rendered to HTML`);
         
         setContent(htmlContent);
         setReadingTime(articleContent.readingTime.text);

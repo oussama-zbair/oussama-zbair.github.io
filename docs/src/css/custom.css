@@ -1,0 +1,268 @@
+/* ── Oussama Zbair — Engineering Knowledge Base ───────────────────────────────
+   Matches the portfolio palette: purple primary, pink accent, dark background
+   ─────────────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.bunny.net/css?family=inter:300,400,500,600,700|space-mono:400,700');
+
+/* ── Design tokens ─────────────────────────────────────────────────────────── */
+:root {
+  --ifm-font-family-base: 'Inter', system-ui, sans-serif;
+  --ifm-font-family-monospace: 'Space Mono', 'Fira Code', monospace;
+
+  /* Primary — purple (matches portfolio --primary: 262 83% 50%) */
+  --ifm-color-primary:         #7c3aed;
+  --ifm-color-primary-dark:    #6d28d9;
+  --ifm-color-primary-darker:  #5b21b6;
+  --ifm-color-primary-darkest: #4c1d95;
+  --ifm-color-primary-light:   #8b5cf6;
+  --ifm-color-primary-lighter: #a78bfa;
+  --ifm-color-primary-lightest:#c4b5fd;
+
+  --ifm-code-font-size: 0.85rem;
+  --ifm-border-radius: 0.75rem;
+  --ifm-global-border-width: 1px;
+
+  --ifm-navbar-background-color: #ffffff;
+  --ifm-navbar-shadow: 0 1px 0 0 #e5e7eb;
+
+  --docusaurus-highlighted-code-line-bg: rgba(124, 58, 237, 0.08);
+}
+
+[data-theme='dark'] {
+  /* Match portfolio dark: background 240 10% 3.9% ≈ #09090f */
+  --ifm-background-color:          #09090f;
+  --ifm-background-surface-color:  #0f0f18;
+
+  --ifm-color-primary:         #8b5cf6;
+  --ifm-color-primary-dark:    #7c3aed;
+  --ifm-color-primary-darker:  #6d28d9;
+  --ifm-color-primary-darkest: #5b21b6;
+  --ifm-color-primary-light:   #a78bfa;
+  --ifm-color-primary-lighter: #c4b5fd;
+  --ifm-color-primary-lightest:#ddd6fe;
+
+  --ifm-navbar-background-color: #0f0f18;
+  --ifm-navbar-shadow: 0 1px 0 0 rgba(255,255,255,0.05);
+
+  --ifm-toc-border-color: rgba(255,255,255,0.07);
+  --ifm-hr-border-color:  rgba(255,255,255,0.07);
+
+  --ifm-heading-color: #f8fafc;
+  --ifm-font-color-base: #cbd5e1;
+
+  --ifm-menu-color-background-active:  rgba(139, 92, 246, 0.12);
+  --ifm-menu-color-active:             #a78bfa;
+
+  --docusaurus-highlighted-code-line-bg: rgba(139, 92, 246, 0.12);
+}
+
+/* ── Global typography ─────────────────────────────────────────────────────── */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 { font-weight: 700; }
+
+/* ── Navbar ────────────────────────────────────────────────────────────────── */
+.navbar {
+  backdrop-filter: blur(12px);
+}
+
+.navbar__brand {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.navbar__logo {
+  height: 28px;
+  margin-right: 6px;
+}
+
+[data-theme='dark'] .navbar {
+  background: rgba(15, 15, 24, 0.85);
+}
+
+/* ── Sidebar ────────────────────────────────────────────────────────────────── */
+.menu__link {
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  transition: background 0.15s, color 0.15s;
+}
+
+.menu__link--active {
+  font-weight: 600;
+}
+
+[data-theme='dark'] .menu__link:hover:not(.menu__link--active) {
+  background: rgba(139, 92, 246, 0.07);
+  color: #e2e8f0;
+}
+
+/* Category label */
+.menu__list-item-collapsible .menu__link {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+/* ── TOC (right sidebar) ───────────────────────────────────────────────────── */
+.table-of-contents__link {
+  font-size: 0.8125rem;
+  transition: color 0.15s;
+}
+.table-of-contents__link--active {
+  font-weight: 600;
+  color: var(--ifm-color-primary);
+}
+
+/* ── Article / Doc page ────────────────────────────────────────────────────── */
+article header h1 {
+  font-size: 2rem;
+  line-height: 1.25;
+  margin-bottom: 0.5rem;
+}
+
+.markdown h2 {
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+  padding-bottom: 0.4rem;
+  margin-top: 2.5rem;
+}
+
+.markdown > p { line-height: 1.75; }
+
+/* ── Code blocks ───────────────────────────────────────────────────────────── */
+.prism-code {
+  font-size: 0.8125rem !important;
+  line-height: 1.7 !important;
+  border-radius: 0.75rem !important;
+}
+
+div[class*='codeBlockContainer'] {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+div[class*='codeBlockTitle'] {
+  font-family: var(--ifm-font-family-monospace);
+  font-size: 0.75rem;
+  padding: 0.5rem 1rem;
+  background: rgba(139, 92, 246, 0.08);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Inline code */
+code {
+  font-size: 0.84em;
+  padding: 0.15em 0.4em;
+  border-radius: 0.3rem;
+  background: rgba(139, 92, 246, 0.1);
+  color: var(--ifm-color-primary-lighter);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  font-family: var(--ifm-font-family-monospace);
+}
+
+[data-theme='light'] code {
+  background: #f3f4f6;
+  color: #6d28d9;
+  border-color: #e5e7eb;
+}
+
+/* ── Tables ────────────────────────────────────────────────────────────────── */
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.07);
+}
+
+[data-theme='light'] table {
+  border-color: #e5e7eb;
+}
+
+thead tr {
+  background: rgba(139, 92, 246, 0.08);
+}
+
+[data-theme='light'] thead tr {
+  background: #f9fafb;
+}
+
+th, td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  vertical-align: top;
+}
+
+[data-theme='light'] th,
+[data-theme='light'] td {
+  border-bottom-color: #f3f4f6;
+}
+
+tbody tr:hover {
+  background: rgba(139, 92, 246, 0.04);
+}
+
+/* ── Admonitions ───────────────────────────────────────────────────────────── */
+.alert--info    { --ifm-alert-background-color: rgba(139, 92, 246, 0.07); border-left: 3px solid var(--ifm-color-primary); }
+.alert--success { border-left: 3px solid #10b981; }
+.alert--warning { border-left: 3px solid #f59e0b; }
+.alert--danger  { border-left: 3px solid #ef4444; }
+
+/* ── Breadcrumbs ───────────────────────────────────────────────────────────── */
+.breadcrumbs__item--active .breadcrumbs__link {
+  color: var(--ifm-color-primary);
+  font-weight: 600;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.footer__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ifm-color-primary);
+}
+
+/* ── Pagination ────────────────────────────────────────────────────────────── */
+.pagination-nav__link {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255,255,255,0.07);
+  transition: border-color 0.15s, transform 0.15s;
+}
+.pagination-nav__link:hover {
+  border-color: var(--ifm-color-primary);
+  transform: translateY(-1px);
+}
+
+/* ── Custom badge helper ─────────────────────────────────────────────────────
+   Use in MDX: <span className="badge badge--primary">New</span>
+   ─────────────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.badge--primary  { background: rgba(139,92,246,0.15); color: var(--ifm-color-primary-lighter); border: 1px solid rgba(139,92,246,0.25); }
+.badge--success  { background: rgba(16,185,129,0.12); color: #34d399; border: 1px solid rgba(16,185,129,0.25); }
+.badge--warning  { background: rgba(245,158,11,0.12); color: #fbbf24; border: 1px solid rgba(245,158,11,0.25); }
+.badge--danger   { background: rgba(239,68,68,0.12);  color: #f87171; border: 1px solid rgba(239,68,68,0.25); }
+
+/* ── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(139,92,246,0.25); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(139,92,246,0.45); }

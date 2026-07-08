@@ -73,6 +73,7 @@ const techStack: TechCategory[] = [
       { name: 'Google Cloud', logo: 'google-cloud', color: '#4285F4', textColor: 'white' },
       { name: 'Heroku', logo: 'heroku', color: '#430098', textColor: 'white' },
       { name: 'Vercel', logo: 'vercel', color: '#000000', textColor: 'white' },
+      { name: 'Netlify', logo: 'netlify', color: '#00C7B7', textColor: 'white' },
     ],
   },
   {

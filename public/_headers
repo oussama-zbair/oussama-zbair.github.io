@@ -1,22 +1,28 @@
-# Security Headers for Netlify
+# Security Headers for Netlify — oussamazbair.engineer
 /*
-  # Content Security Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https:; frame-ancestors 'none'; base-uri 'self'; form-action 'self';
-  
+  # CSP — allowlist only what the site actually uses:
+  # - scripts: self + inline (React needs this)
+  # - styles: self + inline + Bunny CDN fonts
+  # - fonts: self + Bunny CDN (GDPR-friendly Google Fonts alternative)
+  # - images: self + data URIs + HTTPS (Unsplash, flagcdn, shields.io, etc.)
+  # - connect: self + HTTPS APIs (geojs geolocation, emailjs, get.geojs.io)
+  # - frame-ancestors none: blocks embedding in iframes (clickjacking)
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' https://fonts.bunny.net; font-src 'self' https://fonts.bunny.net; img-src 'self' data: https:; connect-src 'self' https://api.emailjs.com https://get.geojs.io https://flagcdn.com https:; frame-src https://calendly.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://api.emailjs.com;
+
   # Prevent MIME type sniffing
   X-Content-Type-Options: nosniff
-  
-  # Enable XSS protection
-  X-XSS-Protection: 1; mode=block
-  
-  # Prevent clickjacking
+
+  # Block clickjacking
   X-Frame-Options: DENY
-  
-  # Force HTTPS
+
+  # Force HTTPS for 1 year, include subdomains
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
-  
-  # Referrer policy
+
+  # Minimal referrer info sent to third parties
   Referrer-Policy: strict-origin-when-cross-origin
-  
-  # Permissions policy
-  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()
+
+  # Disable unused browser features
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()
+
+  # Prevent XSS (legacy browsers)
+  X-XSS-Protection: 1; mode=block
