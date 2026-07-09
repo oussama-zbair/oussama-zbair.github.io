@@ -5,7 +5,15 @@ const sidebars: SidebarsConfig = {
     {
       type: 'doc',
       id: 'index',
-      label: '🗺️ Overview',
+      label: '🏠 Home',
+    },
+    {
+      type: 'category',
+      label: '⚙️ Meta',
+      collapsed: false,
+      items: [
+        'meta/building-this-portfolio',
+      ],
     },
     {
       type: 'category',

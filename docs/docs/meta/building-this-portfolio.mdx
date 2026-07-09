@@ -1,0 +1,416 @@
+---
+sidebar_position: 1
+title: Building This Portfolio
+description: A deep dive into how this portfolio was designed, engineered, and secured — the tech stack, architecture decisions, UX philosophy, and lessons learned.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Building This Portfolio Website
+
+<div style={{
+  display: 'inline-flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem'
+}}>
+  {['React','TypeScript','Vite','Tailwind CSS','Framer Motion','Vercel','Docusaurus'].map(tag => (
+    <span key={tag} style={{
+      padding: '0.2rem 0.75rem', borderRadius: '9999px',
+      background: 'var(--ifm-background-surface-color)',
+      border: '1px solid var(--ifm-toc-border-color)',
+      fontSize: '0.78rem', color: 'var(--ifm-color-content-secondary)'
+    }}>{tag}</span>
+  ))}
+</div>
+
+---
+
+## A Question You've Probably Asked
+
+You're a software engineer.
+
+You've shipped production backends, deployed cloud infrastructure, written hundreds of tests, passed a stack of professional certifications. You can design a distributed system, explain garbage collection in depth, and architect a microservices platform from scratch.
+
+And yet — when a recruiter asks *"Can I see your work?"* — what do you send?
+
+A PDF. A LinkedIn profile. Maybe a GitHub link with some green squares.
+
+There's a better answer. And building it taught me more than I expected.
+
+---
+
+## Why a Portfolio Website?
+
+Before writing a single line of code, the honest question is: **why bother?**
+
+A CV lists what you claim to know. A portfolio demonstrates what you actually built. The difference matters — especially in a field where everyone has the same certifications and similar job titles.
+
+Here's what I wanted to accomplish:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(139,92,246,0.3)', background: 'rgba(139,92,246,0.05)'}}>
+  <strong style={{color: '#8b5cf6'}}>🎯 Show, don't list</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Replace "proficient in React" with a live application built in React that recruiters can actually interact with.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(16,185,129,0.3)', background: 'rgba(16,185,129,0.05)'}}>
+  <strong style={{color: '#10b981'}}>🧠 Own the infrastructure</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Control the domain, hosting, CDN, security headers, and deployment pipeline end-to-end.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(236,72,153,0.3)', background: 'rgba(236,72,153,0.05)'}}>
+  <strong style={{color: '#ec4899'}}>📚 Build a knowledge hub</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Attach a living technical knowledge base that grows with my career — what you're reading right now.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.05)'}}>
+  <strong style={{color: '#f59e0b'}}>⚡ Apply what I know</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Use the same engineering practices I apply professionally: CI/CD, security headers, performance budgets, accessibility.
+  </p>
+</div>
+
+</div>
+
+The result is what you're looking at: **oussamazbair.engineer** — a portfolio and engineering knowledge base, built the way I'd build any professional product.
+
+---
+
+## Architecture Overview
+
+The system is split into two independent deployments that share a domain:
+
+```
+oussamazbair.engineer          →  Portfolio (React SPA)
+docs.oussamazbair.engineer     →  Knowledge Base (Docusaurus)
+```
+
+<div style={{background: 'var(--ifm-background-surface-color)', border: '1px solid var(--ifm-toc-border-color)', borderRadius: '0.75rem', padding: '1.5rem', margin: '1.5rem 0', fontFamily: 'monospace', fontSize: '0.85rem', lineHeight: 2}}>
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   Vercel Edge Network                │
+├───────────────────────┬─────────────────────────────┤
+│  oussamazbair.engineer │  docs.oussamazbair.engineer │
+│                        │                             │
+│  React + Vite (SPA)   │  Docusaurus (Static Site)   │
+│  Tailwind + Framer    │  MDX + Custom CSS            │
+│  Motion               │                             │
+└───────────────────────┴─────────────────────────────┘
+         ↑                           ↑
+    GitHub repo              Same GitHub repo
+    /  (root)                /docs subfolder
+```
+
+</div>
+
+Both sites live in the **same GitHub repository**, deployed as two separate Vercel projects pointed at different root directories. This keeps everything in one place while serving two distinct purposes.
+
+---
+
+## The Tech Stack
+
+### Portfolio — `oussamazbair.engineer`
+
+<Tabs>
+  <TabItem value="frontend" label="Frontend" default>
+
+| Technology | Version | Purpose |
+|---|---|---|
+| **React** | 18 | UI component model, state management |
+| **TypeScript** | 5.x | Type safety across the entire codebase |
+| **Vite** | 8.x | Build tool — sub-second HMR, Rolldown bundler |
+| **Tailwind CSS** | 3.x | Utility-first styling, design tokens, dark mode |
+| **Framer Motion** | 12.x | Declarative animations and page transitions |
+| **next-themes** | 0.3 | Theme persistence (dark mode locked) |
+| **React Router v6** | 6.x | Client-side routing with future v7 flags |
+
+  </TabItem>
+  <TabItem value="ui" label="UI Libraries">
+
+| Library | Purpose |
+|---|---|
+| **shadcn/ui** | Accessible component primitives (Radix UI base) |
+| **Radix UI** | Headless accessible components |
+| **Lucide React** | Consistent icon system |
+| **class-variance-authority** | Variant-based component styling |
+| **tailwind-merge + clsx** | Conditional class merging |
+
+  </TabItem>
+  <TabItem value="infra" label="Infrastructure">
+
+| Service | Purpose |
+|---|---|
+| **Vercel** | Hosting, CDN, automatic HTTPS, preview deployments |
+| **GitHub** | Source control, CI/CD trigger |
+| **Custom domain** | `oussamazbair.engineer` via DNS CNAME |
+| **EmailJS** | Contact form — no backend required |
+| **flagcdn.com** | Country flag images for visitor geolocation |
+| **geojs.io** | IP-based geolocation (privacy-respecting, no key needed) |
+
+  </TabItem>
+</Tabs>
+
+### Knowledge Base — `docs.oussamazbair.engineer`
+
+| Technology | Purpose |
+|---|---|
+| **Docusaurus 3.10** | Static site generator optimized for documentation |
+| **MDX** | Markdown + React components in the same file |
+| **Prism.js** | Syntax highlighting (Java, TypeScript, Bash, YAML, Docker…) |
+| **Custom CSS** | Purple/dark theme matching the main portfolio palette |
+
+---
+
+## Design System
+
+### Design Principles
+
+The portfolio follows four principles that I apply to production software as well:
+
+1. **Dark-first** — one mode, done right. Dark mode forced via `forcedTheme="dark"` at the ThemeProvider level and `class="dark"` on the `<html>` element from the start — no flash.
+
+2. **Motion with purpose** — every animation serves a function: it either guides attention, communicates state, or provides feedback. No animations for decoration alone.
+
+3. **Content hierarchy** — typography and spacing carry more weight than color. The design works in grayscale.
+
+4. **Performance budget** — the main bundle is code-split into vendor chunks (Three.js isolated, Framer Motion isolated, markdown renderer isolated). The first meaningful paint is under 1.5s on a mid-tier connection.
+
+### Color Palette
+
+```css
+/* Design tokens — HSL variables */
+--primary:  262 83% 58%;   /* Purple  — primary actions, links, accents */
+--accent:   340 82% 52%;   /* Pink    — secondary highlights             */
+--info:     185 95% 50%;   /* Cyan    — tech indicators                  */
+--success:  142 76% 45%;   /* Green   — available status, success states */
+
+/* Background layers */
+--background:       240 10% 3.9%;   /* Near-black page background */
+--card:             240 10% 6%;     /* Slightly lighter card surfaces */
+--muted:            240 5% 15%;     /* Subtle backgrounds */
+--border:           240 5% 15%;     /* Borders and dividers */
+```
+
+### Typography
+
+```css
+/* Font stack */
+font-family: 'Inter', system-ui, sans-serif;      /* UI text */
+font-family: 'Space Mono', 'Fira Code', monospace; /* Code, clocks, mono data */
+
+/* Loaded via Bunny CDN — GDPR-compliant Google Fonts alternative */
+@import url('https://fonts.bunny.net/css?family=inter:300,400,500,600,700|space-mono:400,700');
+```
+
+---
+
+## Notable Engineering Decisions
+
+### Why Vite Over Next.js?
+
+The portfolio is a static SPA — there is no server-side rendering requirement, no dynamic data fetching at the server level, and no need for server components. Vite builds faster, the bundle is smaller, and the configuration is minimal.
+
+Next.js would have added complexity without any measurable user benefit here.
+
+### Why Docusaurus for the Knowledge Base?
+
+A custom markdown renderer was the first approach. It worked — but maintaining a bespoke parser for tables, code blocks, nested lists, and syntax highlighting is not the best use of engineering time. Docusaurus is purpose-built for exactly this: MDX rendering, syntax highlighting, search, sidebar navigation, and responsive layout all work out of the box.
+
+The right tool for the job beats the clever custom solution.
+
+### Why One Repository for Two Sites?
+
+- Single source of truth for all content
+- One `git push` triggers both deployments
+- Shared commit history across portfolio and docs
+- No context switching between repositories
+
+The tradeoff is a larger repository — acceptable for a personal project.
+
+### Live Clock and Geolocation
+
+The visitor greeting banner fetches the visitor's approximate location via `geojs.io` — a public, CORS-friendly, key-free IP geolocation API. The clock uses `setInterval` updating every second with the visitor's local timezone applied via `Intl.DateTimeFormat`.
+
+No tracking, no analytics, no cookies. Just a friendly welcome.
+
+---
+
+## Security Implementation
+
+Security on a static portfolio is mostly about hardening HTTP headers and avoiding exposure of credentials. Here is exactly what was implemented and why.
+
+### Content Security Policy
+
+```http
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self' 'unsafe-inline' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline' https://fonts.bunny.net;
+  font-src 'self' https://fonts.bunny.net;
+  img-src 'self' data: https:;
+  connect-src 'self' https://api.emailjs.com https://get.geojs.io https://flagcdn.com https:;
+  frame-src https://calendly.com;
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self' https://api.emailjs.com;
+```
+
+`unsafe-inline` and `unsafe-eval` are required by React (inline event handlers) and Vite's module system respectively. In a CSP-strict environment you would use nonces — acceptable for a personal portfolio, not for a financial application.
+
+### Security Headers
+
+```http
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=()
+```
+
+All headers are served via Vercel's `vercel.json` or the `public/_headers` file for Netlify-compatible deployments.
+
+### What Is Deliberately NOT Protected
+
+- **Right-click and DevTools blocking** — this is security theater. Any developer can bypass it in under three seconds. More importantly, it actively degrades the experience for screen readers, power users, and accessibility tools. Removed.
+- **Obfuscating JavaScript** — the source code is open on GitHub. Obfuscation of a public repo adds no security.
+
+### What Actually Matters
+
+- **No secrets in the client bundle** — EmailJS public keys are safe to expose (they are scoped to a specific domain). No private keys, database credentials, or internal API keys exist in the frontend.
+- **HTTPS everywhere** — enforced by Vercel. HSTS preload ensures browsers never make insecure requests.
+- **No third-party tracking** — no Google Analytics, no Facebook Pixel, no session recording. Zero telemetry sent to external services.
+
+---
+
+## Performance
+
+### Build Optimization
+
+The Vite build uses `manualChunks` to split the bundle into isolated vendor chunks:
+
+```typescript
+manualChunks(id: string) {
+  if (id.includes('three') || id.includes('@react-three')) return 'vendor-three';
+  if (id.includes('framer-motion'))                         return 'vendor-motion';
+  if (id.includes('highlight.js') || id.includes('marked')) return 'vendor-markdown';
+  if (id.includes('react-dom') || id.includes('react-router')) return 'vendor-react';
+  if (id.includes('@radix-ui'))                              return 'vendor-radix';
+}
+```
+
+This allows the browser to cache vendor chunks independently. When only the application code changes, users only re-download the `index-*.js` chunk, not the entire Three.js library.
+
+### highlight.js Tree Shaking
+
+The full `highlight.js` library is ~950 KB. By importing only the core and registering the 12 languages actually used (Java, TypeScript, Bash, YAML, JSON, SQL, Docker, Python, Kotlin, XML, Plaintext), the chunk drops to **~98 KB** — a 90% reduction.
+
+```typescript
+import hljs from 'highlight.js/lib/core'; // core only
+import java from 'highlight.js/lib/languages/java';
+hljs.registerLanguage('java', java);
+// ... 11 more
+```
+
+### Image Strategy
+
+Project screenshots are served from `/public/projects/` as static files — no image CDN required for a portfolio. Images are lazy-loaded with `loading="lazy"`. Projects with multiple screenshots use a CSS opacity cross-fade controlled by `setInterval` — no additional library needed.
+
+---
+
+## The Knowledge Base Integration
+
+The docs site is linked from the portfolio in three places:
+
+1. **Navbar** — "Docs" link opens `docs.oussamazbair.engineer` in a new tab
+2. **Hero section** — "Engineering Docs" button in the profile card
+3. **Writing section** — dedicated card alongside the Medium blog link
+
+The two sites share the same visual identity: purple primary color, Space Mono for code, Inter for prose, dark default mode.
+
+---
+
+## Deployment Pipeline
+
+```
+Developer pushes to main branch
+         │
+         ▼
+GitHub triggers Vercel webhooks (2 projects)
+         │
+         ├── Portfolio build: vite build (root)
+         │         └── Deployed to oussamazbair.engineer
+         │
+         └── Docs build: docusaurus build (docs/)
+                   └── Deployed to docs.oussamazbair.engineer
+```
+
+Both deployments complete in under 2 minutes. Preview deployments are automatically created for every pull request.
+
+---
+
+## Lessons Learned
+
+**1. Start with the domain name.**
+`oussamazbair.engineer` communicates profession instantly. The `.engineer` TLD is cheap and more memorable than `.dev` or `.io` for this use case.
+
+**2. One repository is simpler than two.**
+The temptation is to create separate repositories. Resist it. A monorepo for a personal project reduces cognitive overhead significantly.
+
+**3. Docusaurus for documentation, custom code for everything else.**
+The custom markdown renderer I built first worked — but Docusaurus renders MDX with tables, code blocks, admonitions, search, and sidebar navigation better than anything I would build myself in a reasonable time. Choose boring technology for problems that are already solved.
+
+**4. Security headers are free.**
+Adding `X-Frame-Options`, `HSTS`, and a CSP takes thirty minutes. There is no reason not to do it on every project, regardless of size.
+
+**5. Animation frameworks need discipline.**
+Framer Motion is powerful. It is also easy to overuse. Every animation was reviewed against one question: *does this help the user understand something, or is it just moving pixels?* Many animations were removed.
+
+**6. Visitor experience details compound.**
+The live clock, flag image, localized greeting, typing animation, and scroll progress bar each take an hour to build. Together they make the portfolio feel alive rather than static. Small investments in UX compound.
+
+---
+
+## What's Next
+
+- Add a profile photo to the hero section
+- Complete all KB articles with full content
+- Add Algolia search to the docs site
+- Write blog articles on Medium linking back to the KB
+
+---
+
+## Summary
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', margin: '1.5rem 0'}}>
+  {[
+    ['⚛️', 'React 18 + TypeScript', 'UI framework'],
+    ['⚡', 'Vite 8 + Rolldown', 'Build tooling'],
+    ['🎨', 'Tailwind CSS', 'Styling'],
+    ['🎬', 'Framer Motion', 'Animations'],
+    ['📚', 'Docusaurus 3.10', 'Knowledge base'],
+    ['🚀', 'Vercel', 'Hosting + CDN'],
+    ['🔒', 'CSP + HSTS', 'Security headers'],
+    ['🌍', 'geojs.io', 'Geolocation'],
+  ].map(([icon, name, role]) => (
+    <div key={name} style={{
+      padding: '1rem', borderRadius: '0.75rem', textAlign: 'center',
+      border: '1px solid var(--ifm-toc-border-color)',
+      background: 'var(--ifm-background-surface-color)'
+    }}>
+      <div style={{fontSize: '1.5rem', marginBottom: '0.4rem'}}>{icon}</div>
+      <div style={{fontWeight: 700, fontSize: '0.82rem'}}>{name}</div>
+      <div style={{fontSize: '0.75rem', color: 'var(--ifm-color-content-secondary)', marginTop: '0.2rem'}}>{role}</div>
+    </div>
+  ))}
+</div>
+
+:::info Source Code
+The full source code is available on GitHub: [oussama-zbair/oussama-zbair.github.io](https://github.com/oussama-zbair/oussama-zbair.github.io)
+:::
