@@ -95,12 +95,12 @@ docs.oussamazbair.engineer     →  Knowledge Base (Docusaurus)
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│                   Vercel Edge Network                │
+│                   Vercel Edge Network               │
 ├───────────────────────┬─────────────────────────────┤
-│  oussamazbair.engineer │  docs.oussamazbair.engineer │
-│                        │                             │
+│  oussamazbair.engineer│  docs.oussamazbair.engineer │
+│                       │                             │
 │  React + Vite (SPA)   │  Docusaurus (Static Site)   │
-│  Tailwind + Framer    │  MDX + Custom CSS            │
+│  Tailwind + Framer    │  MDX + Custom CSS           │
 │  Motion               │                             │
 └───────────────────────┴─────────────────────────────┘
          ↑                           ↑
@@ -336,24 +336,6 @@ The two sites share the same visual identity: purple primary color, Space Mono f
 
 ---
 
-## Deployment Pipeline
-
-```
-Developer pushes to main branch
-         │
-         ▼
-GitHub triggers Vercel webhooks (2 projects)
-         │
-         ├── Portfolio build: vite build (root)
-         │         └── Deployed to oussamazbair.engineer
-         │
-         └── Docs build: docusaurus build (docs/)
-                   └── Deployed to docs.oussamazbair.engineer
-```
-
-Both deployments complete in under 2 minutes. Preview deployments are automatically created for every pull request.
-
----
 
 ## Lessons Learned
 
@@ -377,14 +359,6 @@ The live clock, flag image, localized greeting, typing animation, and scroll pro
 
 ---
 
-## What's Next
-
-- Add a profile photo to the hero section
-- Complete all KB articles with full content
-- Add Algolia search to the docs site
-- Write blog articles on Medium linking back to the KB
-
----
 
 ## Summary
 
@@ -411,6 +385,4 @@ The live clock, flag image, localized greeting, typing animation, and scroll pro
   ))}
 </div>
 
-:::info Source Code
-The full source code is available on GitHub: [oussama-zbair/oussama-zbair.github.io](https://github.com/oussama-zbair/oussama-zbair.github.io)
-:::
+
