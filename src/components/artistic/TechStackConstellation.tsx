@@ -80,6 +80,7 @@ const techStack: TechCategory[] = [
     title: 'Testing & Tools',
     icon: '🧪',
     techs: [
+      { name: 'JUnit', logo: 'junit5', color: '#25A162', textColor: 'white' },
       { name: 'Jest', logo: 'jest', color: '#C21325', textColor: 'white' },
       { name: 'Pytest', logo: 'pytest', color: '#0A9EDC', textColor: 'white' },
       { name: 'Selenium', logo: 'selenium', color: '#43B02A', textColor: 'white' },

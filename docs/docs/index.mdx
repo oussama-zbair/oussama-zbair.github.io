@@ -1,0 +1,409 @@
+---
+id: index
+title: Personal Engineering Knowledge Base
+sidebar_label: 🏠 Home
+slug: /
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+<div style={{textAlign: 'center', padding: '3rem 1rem 2rem'}}>
+  <div style={{
+    display: 'inline-flex', alignItems: 'center', gap: '0.5rem',
+    background: 'var(--ifm-color-primary-lightest)', color: 'var(--ifm-color-primary-darkest)',
+    borderRadius: '9999px', padding: '0.35rem 1rem',
+    fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.08em',
+    textTransform: 'uppercase', marginBottom: '1.5rem'
+  }}>
+    📚 Living Documentation
+  </div>
+
+  <h1 style={{fontSize: '2.75rem', fontWeight: 800, lineHeight: 1.15, marginBottom: '1rem'}}>
+    Personal Engineering<br/>
+    <span style={{color: 'var(--ifm-color-primary)'}}>Knowledge Base</span>
+  </h1>
+
+  <p style={{fontSize: '1.125rem', color: 'var(--ifm-color-content-secondary)', maxWidth: '640px', margin: '0 auto 2rem', lineHeight: 1.7}}>
+    A living collection of software engineering knowledge — built through continuous learning,
+    professional certifications, academic studies, personal projects, and real-world experience.
+  </p>
+
+  <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+    <a href="/java/java-core" style={{
+      background: 'var(--ifm-color-primary)', color: 'white',
+      padding: '0.625rem 1.5rem', borderRadius: '9999px',
+      fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none'
+    }}>Start Reading →</a>
+    <a href="https://oussamazbair.engineer" style={{
+      border: '1px solid var(--ifm-color-primary)',
+      color: 'var(--ifm-color-primary)',
+      padding: '0.625rem 1.5rem', borderRadius: '9999px',
+      fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none'
+    }}>← Portfolio</a>
+  </div>
+</div>
+
+---
+
+## What Is This Knowledge Base?
+
+This is my **personal engineering handbook**.
+
+It was created to organize and preserve the technical knowledge I acquire throughout my career — instead of letting it disappear after completing a certification, finishing a course, or ending a project.
+
+Unlike traditional study notes, this documentation is designed to **evolve continuously** as I gain new experience and discover better practices. Every page represents knowledge that I consider valuable enough to remember, revisit, and apply in real software engineering work.
+
+:::tip Philosophy
+The goal is not to collect certificates — it is to build a **reusable knowledge system** that compounds over time.
+:::
+
+---
+
+## Why I Built It
+
+Software engineering changes rapidly. Every year brings new technologies, certifications, frameworks, and concepts. Without documenting them properly, much of that knowledge fades over time.
+
+This project provides **one centralized place** where I can:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--ifm-toc-border-color)', background: 'var(--ifm-background-surface-color)'}}>
+  <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>🎯</div>
+  <strong>Interview Preparation</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Review concepts quickly before technical interviews without re-reading entire courses.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--ifm-toc-border-color)', background: 'var(--ifm-background-surface-color)'}}>
+  <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>🔄</div>
+  <strong>Knowledge Refresh</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Refresh a technology before starting a new project or joining a new team.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--ifm-toc-border-color)', background: 'var(--ifm-background-surface-color)'}}>
+  <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>📖</div>
+  <strong>Certification Preservation</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Preserve the knowledge from certifications long after the exam is over.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid var(--ifm-toc-border-color)', background: 'var(--ifm-background-surface-color)'}}>
+  <div style={{fontSize: '1.5rem', marginBottom: '0.5rem'}}>🌍</div>
+  <strong>Public Knowledge Sharing</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Share technical knowledge publicly with students and fellow engineers.
+  </p>
+</div>
+
+</div>
+
+---
+
+## The Learning Cycle
+
+Every topic in this knowledge base follows the same journey:
+
+<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0, margin: '2rem auto', maxWidth: '320px'}}>
+  {[
+    ['🎓', 'Learn', 'Study the topic through courses, docs, books'],
+    ['🔨', 'Practice & Build', 'Apply the knowledge in real projects'],
+    ['🏅', 'Earn Certification', 'Validate understanding through exams'],
+    ['✍️', 'Write Documentation', 'Capture knowledge in your own words'],
+    ['🔁', 'Review & Improve', 'Update docs as understanding deepens'],
+    ['🚀', 'Apply in Real Work', 'Use the knowledge professionally'],
+  ].map(([icon, title, desc], i, arr) => (
+    <div key={i} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+      <div style={{
+        display: 'flex', alignItems: 'center', gap: '1rem',
+        background: 'var(--ifm-background-surface-color)',
+        border: '1px solid var(--ifm-color-primary)',
+        borderRadius: '0.75rem', padding: '0.75rem 1.25rem',
+        width: '100%', boxSizing: 'border-box'
+      }}>
+        <span style={{fontSize: '1.5rem', flexShrink: 0}}>{icon}</span>
+        <div>
+          <div style={{fontWeight: 700, fontSize: '0.9rem'}}>{title}</div>
+          <div style={{fontSize: '0.775rem', color: 'var(--ifm-color-content-secondary)', marginTop: '0.1rem'}}>{desc}</div>
+        </div>
+      </div>
+      {i < arr.length - 1 && (
+        <div style={{
+          width: '2px', height: '1.5rem',
+          background: 'linear-gradient(to bottom, var(--ifm-color-primary), var(--ifm-color-primary-light))',
+          margin: '0'
+        }} />
+      )}
+    </div>
+  ))}
+  <div style={{
+    marginTop: '1rem', padding: '0.5rem 1.5rem',
+    background: 'var(--ifm-color-primary)', color: 'white',
+    borderRadius: '9999px', fontWeight: 700, fontSize: '0.85rem',
+    letterSpacing: '0.05em'
+  }}>
+    ♾️ Continuous Learning
+  </div>
+</div>
+
+---
+
+## What You'll Find Here
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(237,139,0,0.3)', background: 'rgba(237,139,0,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>☕</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#ED8B00'}}>Programming</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Java, Python, JavaScript, TypeScript — OOP, data structures, algorithms, and language-specific concepts.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(109,179,63,0.3)', background: 'rgba(109,179,63,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🌐</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#6DB33F'}}>Web Development</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Frontend, backend, REST APIs, authentication, databases, microservices, and distributed systems.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(36,150,237,0.3)', background: 'rgba(36,150,237,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>☁️</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#2496ED'}}>Cloud Computing</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    AWS, Oracle Cloud Infrastructure — cloud fundamentals, deployment models, networking, and identity management.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(139,92,246,0.3)', background: 'rgba(139,92,246,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🐳</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#8b5cf6'}}>DevOps & Cloud Native</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Docker, Kubernetes, GitHub, CI/CD — containers, orchestration, and deployment pipelines.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(236,72,153,0.3)', background: 'rgba(236,72,153,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🤖</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#ec4899'}}>Artificial Intelligence</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Machine learning fundamentals, generative AI, LLMs, prompt engineering, and AI applications.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🔐</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#ef4444'}}>Cybersecurity</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Authentication, encryption, security principles, secure software development, and cloud security.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(16,185,129,0.3)', background: 'rgba(16,185,129,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🏗️</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#10b981'}}>Software Engineering</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Architecture, design patterns, SDLC methodologies, testing, and engineering best practices.
+  </p>
+</div>
+
+<div style={{padding: '1.5rem', borderRadius: '1rem', border: '1px solid rgba(20,184,166,0.3)', background: 'rgba(20,184,166,0.05)'}}>
+  <div style={{fontSize: '2rem', marginBottom: '0.75rem'}}>🔄</div>
+  <h3 style={{margin: '0 0 0.5rem', color: '#14b8a6'}}>Agile</h3>
+  <p style={{margin: 0, fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.6}}>
+    Scrum framework, ceremonies, roles, and agile methodologies applied in real teams.
+  </p>
+</div>
+
+</div>
+
+---
+
+## Every Article Follows the Same Structure
+
+Consistency makes the documentation easier to navigate and maintain.
+
+<div style={{display: 'flex', flexWrap: 'wrap', gap: '0.5rem', margin: '1.5rem 0'}}>
+  {['Overview','Why It Exists','Core Concepts','Architecture','Detailed Explanation','Practical Examples','Best Practices','Common Mistakes','Interview Questions','Cheat Sheet','Official References','Personal Notes'].map((item, i) => (
+    <span key={i} style={{
+      padding: '0.3rem 0.8rem', borderRadius: '9999px',
+      background: 'var(--ifm-background-surface-color)',
+      border: '1px solid var(--ifm-toc-border-color)',
+      fontSize: '0.8rem', color: 'var(--ifm-color-content-secondary)'
+    }}>
+      <span style={{color: 'var(--ifm-color-primary)', fontWeight: 700, marginRight: '0.35rem'}}>{i + 1}.</span>
+      {item}
+    </span>
+  ))}
+</div>
+
+---
+
+## How to Use This Documentation
+
+<Tabs>
+  <TabItem value="interview" label="🎯 Interview Prep" default>
+
+**Goal:** Quickly review a topic before a technical interview.
+
+1. Open the relevant topic from the sidebar
+2. Skip directly to the **Interview Questions** section at the bottom
+3. Read the **Cheat Sheet** for key facts and commands
+4. Done — you're ready in under 5 minutes
+
+  </TabItem>
+  <TabItem value="learning" label="📚 Learning a Topic">
+
+**Goal:** Understand something new from scratch.
+
+1. Start with the **Overview** — understand why this technology exists
+2. Read **Core Concepts** to build a mental model
+3. Study the **Practical Examples** with real code
+4. Apply it in a small personal project
+
+  </TabItem>
+  <TabItem value="reference" label="🔍 Quick Reference">
+
+**Goal:** Find a specific command, definition, or pattern fast.
+
+1. Use the **search bar** (top right) with any keyword
+2. Jump directly to the **Cheat Sheet** section of the relevant topic
+3. Use the **Table of Contents** on the right side of each article
+
+  </TabItem>
+  <TabItem value="deep" label="🎓 Deep Study">
+
+**Goal:** Master a topic completely.
+
+1. Read the **complete article** from top to bottom
+2. Explore the **official references** linked at the bottom
+3. Do the **hands-on practice** exercises
+4. Write your own **personal notes** in the designated section
+
+  </TabItem>
+</Tabs>
+
+---
+
+## Knowledge Sources
+
+This knowledge base is not only built from certifications. It draws from multiple sources:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+  {[
+    ['🏅', 'Professional Certifications', 'AWS, Oracle, Google, IBM, GitHub, Linux Foundation'],
+    ['🎓', 'Academic Studies', 'Computer Science, Software Engineering, Algorithms'],
+    ['💼', 'Work Experience', 'Java backends, insurance platforms, document systems'],
+    ['🔨', 'Personal Projects', 'Audio tools, AI apps, web apps, CLI tools'],
+    ['📄', 'Official Documentation', 'Vendor docs, RFCs, specifications, white papers'],
+    ['🔬', 'Continuous Research', 'Tech blogs, conference talks, open-source codebases'],
+  ].map(([icon, title, desc]) => (
+    <div key={title} style={{
+      padding: '1.25rem', borderRadius: '0.75rem',
+      border: '1px solid var(--ifm-toc-border-color)',
+      background: 'var(--ifm-background-surface-color)',
+      textAlign: 'center'
+    }}>
+      <div style={{fontSize: '1.75rem', marginBottom: '0.5rem'}}>{icon}</div>
+      <div style={{fontWeight: 700, fontSize: '0.9rem', marginBottom: '0.35rem'}}>{title}</div>
+      <div style={{fontSize: '0.775rem', color: 'var(--ifm-color-content-secondary)', lineHeight: 1.5}}>{desc}</div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Guiding Principles
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '0.75rem', margin: '1.5rem 0'}}>
+  {[
+    ['🧠', 'Understand', 'Understand rather than memorize'],
+    ['🔨', 'Build', 'Build rather than only read'],
+    ['✍️', 'Document', 'Document rather than forget'],
+    ['📈', 'Improve', 'Continuously improve rather than consider knowledge complete'],
+    ['🌍', 'Share', 'Share knowledge to reinforce understanding'],
+  ].map(([icon, title, desc]) => (
+    <div key={title} style={{
+      display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
+      padding: '1rem', borderRadius: '0.75rem',
+      border: '1px solid var(--ifm-toc-border-color)',
+      background: 'var(--ifm-background-surface-color)'
+    }}>
+      <span style={{fontSize: '1.25rem', flexShrink: 0, marginTop: '0.1rem'}}>{icon}</span>
+      <div>
+        <div style={{fontWeight: 700, fontSize: '0.875rem'}}>{title}</div>
+        <div style={{fontSize: '0.8rem', color: 'var(--ifm-color-content-secondary)', marginTop: '0.2rem', lineHeight: 1.5}}>{desc}</div>
+      </div>
+    </div>
+  ))}
+</div>
+
+---
+
+## Learning Roadmap
+
+The knowledge base follows this progression — from foundations to advanced topics:
+
+<div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '2rem auto', maxWidth: '400px'}}>
+  {[
+    {level: 'Foundations', items: 'Git, Linux, Networking', color: '#10b981'},
+    {level: 'Programming', items: 'Java · Python · TypeScript', color: '#ED8B00'},
+    {level: 'Software Engineering', items: 'SDLC · Design Patterns · Testing', color: '#10b981'},
+    {level: 'Databases', items: 'SQL · NoSQL · ORM', color: '#f59e0b'},
+    {level: 'Backend Development', items: 'Spring Boot · REST · Security', color: '#6DB33F'},
+    {level: 'Frontend Development', items: 'React · TypeScript · Next.js', color: '#61DAFB'},
+    {level: 'Cloud Computing', items: 'AWS · OCI · Cloud Native', color: '#2496ED'},
+    {level: 'DevOps', items: 'Docker · Kubernetes · CI/CD', color: '#8b5cf6'},
+    {level: 'Cybersecurity', items: 'Auth · Crypto · Secure Dev', color: '#ef4444'},
+    {level: 'Artificial Intelligence', items: 'ML · GenAI · LLMs · Prompting', color: '#ec4899'},
+    {level: 'System Design', items: 'Scalability · Architecture · Trade-offs', color: '#f97316'},
+  ].map((step, i, arr) => (
+    <div key={i} style={{display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%'}}>
+      <div style={{
+        width: '100%', padding: '0.75rem 1.25rem',
+        borderRadius: '0.75rem',
+        background: `${step.color}18`,
+        border: `1px solid ${step.color}50`,
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        boxSizing: 'border-box'
+      }}>
+        <span style={{fontWeight: 700, fontSize: '0.9rem', color: step.color}}>{step.level}</span>
+        <span style={{fontSize: '0.775rem', color: 'var(--ifm-color-content-secondary)'}}>{step.items}</span>
+      </div>
+      {i < arr.length - 1 && (
+        <div style={{width: '2px', height: '1rem', background: `${step.color}60`}} />
+      )}
+    </div>
+  ))}
+  <div style={{
+    marginTop: '1rem', padding: '0.5rem 2rem',
+    background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+    color: 'white', borderRadius: '9999px',
+    fontWeight: 700, fontSize: '0.875rem'
+  }}>
+    ♾️ Continuous Learning
+  </div>
+</div>
+
+---
+
+:::info Living Document
+This knowledge base grows continuously. Topics are updated when I learn something new, complete a project, or pass a new certification. Last updated: **July 2026**.
+:::
+
+<div style={{textAlign: 'center', marginTop: '3rem', paddingTop: '2rem', borderTop: '1px solid var(--ifm-toc-border-color)'}}>
+  <p style={{color: 'var(--ifm-color-content-secondary)', fontSize: '0.875rem', marginBottom: '1rem'}}>
+    Built by <a href="https://oussamazbair.engineer" style={{color: 'var(--ifm-color-primary)', textDecoration: 'none', fontWeight: 600}}>Oussama Zbair</a> — Software Engineer & AI Solutions Builder
+  </p>
+  <div style={{display: 'flex', gap: '0.75rem', justifyContent: 'center', flexWrap: 'wrap'}}>
+    <a href="/java/java-core" style={{color: 'var(--ifm-color-primary)', fontSize: '0.875rem', textDecoration: 'none'}}>☕ Start with Java →</a>
+    <a href="/cloud/aws-cloud-practitioner" style={{color: 'var(--ifm-color-primary)', fontSize: '0.875rem', textDecoration: 'none'}}>☁️ Cloud Computing →</a>
+    <a href="/devops/docker" style={{color: 'var(--ifm-color-primary)', fontSize: '0.875rem', textDecoration: 'none'}}>🐳 DevOps →</a>
+    <a href="/ai/google-ai-professional" style={{color: 'var(--ifm-color-primary)', fontSize: '0.875rem', textDecoration: 'none'}}>🤖 AI →</a>
+  </div>
+</div>
