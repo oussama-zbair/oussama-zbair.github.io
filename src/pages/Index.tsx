@@ -7,6 +7,7 @@ import TechStackConstellation from '@/components/artistic/TechStackConstellation
 import ProjectGalaxy from '@/components/artistic/ProjectGalaxy';
 import CertificationsGalaxy from '@/components/artistic/CertificationsGalaxy';
 import BlogSection from '@/components/artistic/BlogSection';
+import VisitorsSection from '@/components/VisitorsSection';
 import ContactPortal from '@/components/artistic/ContactPortal';
 
 const Index: React.FC = () => {
@@ -40,6 +41,8 @@ const Index: React.FC = () => {
         <section id="blog">
           <BlogSection />
         </section>
+
+        <VisitorsSection />
 
         <section id="contact">
           <ContactPortal />
