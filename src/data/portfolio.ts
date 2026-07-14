@@ -73,7 +73,7 @@ export const personalInfo: PersonalInfo = {
   freelance: 'Available',
   bio: "I'm a passionate Software Engineer with expertise in full-stack development and AI solutions. My journey started with a curiosity about how software works, and evolved into a deep love for building elegant, efficient systems — from robust Java backends to intelligent AI-powered applications. I specialize in building scalable backend services with Spring Boot, and I also design and ship AI/LLM-integrated solutions, leveraging modern tools and APIs to bring smart features to real products. I hold certifications in AWS Cloud, Google AI, and Oracle Java/Cloud, reflecting my commitment to staying sharp across the stack. Currently available for freelance projects with proper contract agreements. When I'm not coding, I enjoy contributing to open source, writing technical articles, and exploring the latest in AI and cloud.",
   shortBio: 'I build scalable backend systems and AI-powered applications. Java specialist with hands-on experience in LLMs, cloud architecture, and full-stack development. Available for freelance projects.',
-  email: 'oussama.zbair9@gmail.com',
+  email: 'oz.eng.freelance@gmail.com',
   calendlyUrl: 'https://calendly.com/oussama-zbair',
 };
 
