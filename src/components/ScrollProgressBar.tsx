@@ -23,7 +23,7 @@ const ScrollProgressBar: React.FC = () => {
       className="fixed top-0 left-0 right-0 z-[60] h-[2px] origin-left"
       style={{
         scaleX: spring,
-        background: 'linear-gradient(90deg, hsl(262 83% 58%), hsl(340 82% 52%), hsl(185 95% 50%))',
+        background: 'linear-gradient(90deg, hsl(217 91% 60%), hsl(24 95% 53%), hsl(173 80% 50%))',
       }}
     />
   );

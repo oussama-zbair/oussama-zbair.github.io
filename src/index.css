@@ -25,41 +25,42 @@
 
 @layer base {
   :root {
-    /* Light theme - Clean, professional with warm accents */
-    --background: 0 0% 99%;
-    --foreground: 240 10% 10%;
+    /* Light theme — Electric Blue & Warm Orange */
+    --background: 220 15% 97%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 240 10% 10%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 10%;
+    --popover-foreground: 222 47% 11%;
 
-    /* Vibrant gradient accent */
-    --primary: 262 83% 50%;
+    /* Electric Blue primary */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 94%;
-    --secondary-foreground: 240 10% 10%;
+    --secondary: 220 13% 91%;
+    --secondary-foreground: 222 47% 11%;
 
-    --muted: 240 5% 92%;
-    --muted-foreground: 240 5% 45%;
+    --muted: 220 14% 92%;
+    --muted-foreground: 220 8% 46%;
 
-    --accent: 340 82% 50%;
+    /* Warm Orange accent */
+    --accent: 24 95% 53%;
     --accent-foreground: 0 0% 100%;
 
-    /* Cyan for tech */
-    --info: 185 95% 40%;
+    /* Teal for tech indicators */
+    --info: 173 80% 40%;
     
     /* Success green */
-    --success: 142 76% 40%;
+    --success: 142 71% 45%;
 
     --destructive: 0 84% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 240 5% 88%;
-    --input: 240 5% 88%;
-    --ring: 262 83% 50%;
+    --border: 220 13% 87%;
+    --input: 220 13% 87%;
+    --ring: 217 91% 60%;
 
     --radius: 1rem;
 
@@ -67,52 +68,53 @@
     --bento-gap: 1rem;
     --bento-radius: 1.5rem;
     
-    --sidebar-background: 0 0% 99%;
-    --sidebar-foreground: 240 10% 10%;
-    --sidebar-primary: 262 83% 50%;
+    --sidebar-background: 220 15% 97%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 217 91% 60%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 5% 94%;
-    --sidebar-accent-foreground: 240 10% 10%;
-    --sidebar-border: 240 5% 88%;
-    --sidebar-ring: 262 83% 50%;
+    --sidebar-accent: 220 13% 91%;
+    --sidebar-accent-foreground: 222 47% 11%;
+    --sidebar-border: 220 13% 87%;
+    --sidebar-ring: 217 91% 60%;
   }
 
   .dark {
-    /* Deep space background with warm accents */
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
+    /* Deep navy-black background — not pure black, warm undertone */
+    --background: 222 47% 5%;
+    --foreground: 210 40% 96%;
 
-    --card: 240 10% 6%;
-    --card-foreground: 0 0% 98%;
+    --card: 222 40% 7%;
+    --card-foreground: 210 40% 96%;
 
-    --popover: 240 10% 6%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 222 40% 7%;
+    --popover-foreground: 210 40% 96%;
 
-    /* Vibrant gradient accent */
-    --primary: 262 83% 58%;
+    /* Electric Blue primary */
+    --primary: 217 91% 60%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 5% 12%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 222 30% 12%;
+    --secondary-foreground: 210 40% 96%;
 
-    --muted: 240 5% 15%;
-    --muted-foreground: 240 5% 55%;
+    --muted: 222 25% 14%;
+    --muted-foreground: 217 20% 55%;
 
-    --accent: 340 82% 52%;
+    /* Warm Orange accent */
+    --accent: 24 95% 53%;
     --accent-foreground: 0 0% 100%;
 
-    /* Cyan for tech */
-    --info: 185 95% 50%;
+    /* Teal for tech indicators */
+    --info: 173 80% 50%;
     
     /* Success green */
-    --success: 142 76% 45%;
+    --success: 142 71% 45%;
 
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive-foreground: 210 40% 96%;
 
-    --border: 240 5% 15%;
-    --input: 240 5% 15%;
-    --ring: 262 83% 58%;
+    --border: 222 25% 14%;
+    --input: 222 25% 14%;
+    --ring: 217 91% 60%;
 
     --sidebar-background: 240 10% 3.9%;
     --sidebar-foreground: 0 0% 98%;

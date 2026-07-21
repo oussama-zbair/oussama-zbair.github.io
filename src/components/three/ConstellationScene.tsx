@@ -35,7 +35,7 @@ const ConstellationScene: React.FC = () => {
           />
           <FloatingOrb 
             position={[5, -1, -2]} 
-            color="#ec4899" 
+            color="#f97316" 
             scale={0.6} 
             speed={0.8} 
           />

@@ -191,7 +191,7 @@ const TechParticles: React.FC = () => {
         if (l.x > canvas.width + 60) l.x = -10;
         if (l.y < -20) l.y = canvas.height + 10;
         if (l.y > canvas.height + 20) l.y = -10;
-        ctx.fillStyle = `rgba(139,92,246,${l.opacity})`;
+        ctx.fillStyle = `rgba(59,130,246,${l.opacity})`;
         ctx.fillText(l.text, l.x, l.y);
       });
 
@@ -210,7 +210,7 @@ const TechParticles: React.FC = () => {
           const dist = Math.sqrt(dx * dx + dy * dy);
           if (dist < 110) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(139,92,246,${0.12 * (1 - dist / 110)})`;
+            ctx.strokeStyle = `rgba(59,130,246,${0.12 * (1 - dist / 110)})`;
             ctx.lineWidth = 0.8;
             ctx.moveTo(nodes[i].x, nodes[i].y);
             ctx.lineTo(nodes[j].x, nodes[j].y);
@@ -223,7 +223,7 @@ const TechParticles: React.FC = () => {
       nodes.forEach(n => {
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(139,92,246,${n.opacity})`;
+        ctx.fillStyle = `rgba(59,130,246,${n.opacity})`;
         ctx.fill();
       });
 

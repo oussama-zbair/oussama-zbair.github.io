@@ -156,13 +156,13 @@ const WorldMap: React.FC<{ visitors: VisitorEntry[]; currentCode: string }> = ({
 
     // ── Background gradient ──────────────────────────────────────────────────
     const bg = ctx.createRadialGradient(W / 2, H / 2, 0, W / 2, H / 2, W * 0.6);
-    bg.addColorStop(0, 'rgba(139,92,246,0.06)');
+    bg.addColorStop(0, 'rgba(59,130,246,0.06)');
     bg.addColorStop(1, 'rgba(0,0,0,0)');
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);
 
     // ── Latitude grid lines ──────────────────────────────────────────────────
-    ctx.strokeStyle = 'rgba(139,92,246,0.07)';
+    ctx.strokeStyle = 'rgba(59,130,246,0.07)';
     ctx.lineWidth = 0.5;
     for (let lat = -60; lat <= 60; lat += 30) {
       const [, y] = latLonToXY(lat, 0, W, H);
@@ -198,7 +198,7 @@ const WorldMap: React.FC<{ visitors: VisitorEntry[]; currentCode: string }> = ({
       const [x, y] = latLonToXY(lat, lon, W, H);
       ctx.beginPath();
       ctx.arc(x, y, 1.2, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(139,92,246,0.18)';
+      ctx.fillStyle = 'rgba(59,130,246,0.18)';
       ctx.fill();
     });
 
@@ -245,8 +245,8 @@ const WorldMap: React.FC<{ visitors: VisitorEntry[]; currentCode: string }> = ({
         ctx.beginPath();
         ctx.arc(x, y, 6 + phase * 14, 0, Math.PI * 2);
         ctx.strokeStyle = isCurrent
-          ? `rgba(139,92,246,${0.6 * (1 - phase)})`
-          : `rgba(236,72,153,${0.4 * (1 - phase)})`;
+          ? `rgba(59,130,246,${0.6 * (1 - phase)})`
+          : `rgba(249,115,22,${0.4 * (1 - phase)})`;
         ctx.lineWidth = 1.5;
         ctx.stroke();
         ctx.restore();
@@ -257,10 +257,10 @@ const WorldMap: React.FC<{ visitors: VisitorEntry[]; currentCode: string }> = ({
       ctx.beginPath();
       ctx.arc(x, y, isCurrent ? 5 : 3.5, 0, Math.PI * 2);
       const grad = ctx.createRadialGradient(x, y, 0, x, y, isCurrent ? 5 : 3.5);
-      grad.addColorStop(0, isCurrent ? '#c4b5fd' : '#f9a8d4');
-      grad.addColorStop(1, isCurrent ? '#7c3aed' : '#db2777');
+      grad.addColorStop(0, isCurrent ? '#93c5fd' : '#fdba74');
+      grad.addColorStop(1, isCurrent ? '#2563eb' : '#ea580c');
       ctx.fillStyle = grad;
-      ctx.shadowColor = isCurrent ? '#8b5cf6' : '#ec4899';
+      ctx.shadowColor = isCurrent ? '#3b82f6' : '#f97316';
       ctx.shadowBlur  = isCurrent ? 12 : 6;
       ctx.fill();
       ctx.restore();
@@ -285,7 +285,7 @@ const WorldMap: React.FC<{ visitors: VisitorEntry[]; currentCode: string }> = ({
         x1, y1, x2, y2,
         progress: 0,
         speed: 0.008 + Math.random() * 0.006,
-        color: Math.random() > 0.5 ? 'rgba(139,92,246,0.55)' : 'rgba(236,72,153,0.45)',
+        color: Math.random() > 0.5 ? 'rgba(59,130,246,0.55)' : 'rgba(249,115,22,0.45)',
       });
       // cap arcs
       if (arcsRef.current.length > 8) arcsRef.current.shift();

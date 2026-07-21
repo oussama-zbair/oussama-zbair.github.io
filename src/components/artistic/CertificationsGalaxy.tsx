@@ -13,7 +13,7 @@ const ISSUERS: Record<string, { color: string; bg: string; border: string; logo:
   ibm:             { color: '#0062FF', bg: 'rgba(0,98,255,0.08)',   border: 'rgba(0,98,255,0.25)',  logo: 'ibm' },
   hackerrank:      { color: '#00EA64', bg: 'rgba(0,234,100,0.08)',  border: 'rgba(0,234,100,0.25)', logo: 'hackerrank' },
   coursera:        { color: '#0056D2', bg: 'rgba(0,86,210,0.08)',   border: 'rgba(0,86,210,0.25)',  logo: 'coursera' },
-  certiprof:       { color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)',border: 'rgba(139,92,246,0.25)',logo: '' },
+  certiprof:       { color: '#3b82f6', bg: 'rgba(59,130,246,0.08)',border: 'rgba(59,130,246,0.25)',logo: '' },
   'linux-foundation': { color: '#FCC624', bg: 'rgba(252,198,36,0.08)', border: 'rgba(252,198,36,0.25)', logo: 'linux' },
 };
 
@@ -25,7 +25,7 @@ interface CertCardProps {
 
 const CertCard: React.FC<CertCardProps> = ({ cert, index, featured }) => {
   const cfg = ISSUERS[cert.badge || ''] ?? {
-    color: '#8b5cf6', bg: 'rgba(139,92,246,0.08)', border: 'rgba(139,92,246,0.25)', logo: '',
+    color: '#3b82f6', bg: 'rgba(59,130,246,0.08)', border: 'rgba(59,130,246,0.25)', logo: '',
   };
 
   return (
