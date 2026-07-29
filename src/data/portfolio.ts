@@ -140,6 +140,15 @@ export const additionalTechnologies: string[] = [
 // Projects Data
 export const projects: Project[] = [
   {
+    title: 'DebugClip',
+    description: 'Chrome extension that captures console errors, failed network requests, and CSP violations from any tab — then formats them into a structured prompt for Claude or ChatGPT. One-click AI debugging with zero context switching. Manifest V3, privacy-first, 100% local processing.',
+    image: '/projects/debugclip.png',
+    tags: ['TypeScript', 'Chrome Extension', 'Manifest V3', 'AI', 'DevTools'],
+    category: ['AI', 'Desktop', 'Frontend'],
+    liveUrl: 'https://debugclip.online',
+    codeUrl: 'https://github.com/oussama-zbair/DebugClip',
+  },
+  {
     title: 'Ethera - Audio Harmony Platform',
     description: 'Full-stack audio conversion platform that transforms standard 440 Hz tuning to natural 432 Hz frequency. Features YouTube video conversion, local file upload (MP3/WAV/FLAC), real-time audio visualization, and secure download endpoints.',
     image: '/projects/ethera-1.png',
