@@ -44,3 +44,7 @@ Thumbs.db
 
 # Personal CVs — local only, never pushed
 cv/
+
+# Kiro spec files
+.kiro/
+
