@@ -1,0 +1,372 @@
+---
+sidebar_position: 2
+title: Building DebugClip
+description: How I built a Chrome extension that captures front-end errors and sends structured debug context to AI in one click.
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Building DebugClip
+
+<div style={{
+  display: 'inline-flex', gap: '0.5rem', flexWrap: 'wrap', marginBottom: '2rem'
+}}>
+  {['React','TypeScript','Vite','Tailwind CSS','Chrome Extension','Manifest V3','Cloudflare Workers','Next.js'].map(tag => (
+    <span key={tag} style={{
+      padding: '0.2rem 0.75rem', borderRadius: '9999px',
+      background: 'var(--ifm-background-surface-color)',
+      border: '1px solid var(--ifm-toc-border-color)',
+      fontSize: '0.78rem', color: 'var(--ifm-color-content-secondary)'
+    }}>{tag}</span>
+  ))}
+</div>
+
+---
+
+## The Problem
+
+You're debugging a React app. Something broke in production — a user reported a white screen.
+
+You open DevTools. You find a red wall of console errors. You **copy** the first one. You switch to ChatGPT. You **paste** it. You realize you forgot the stack trace. Back to DevTools. Copy again. Paste again. Now the AI asks for the network request that failed. Back to the Network tab. Find the request. Copy the URL, the status code, the response body. Paste. The AI gives you a generic answer because it's missing the request headers. Back to DevTools. Copy headers. Paste.
+
+**Five minutes gone.** And you still haven't started fixing the bug.
+
+This is the workflow for *every single front-end bug*:
+
+1. **Copy** — hunt through DevTools tabs, selecting error messages, stack traces, network details
+2. **Switch** — alt-tab to your AI tool of choice, losing context with every window change
+3. **Paste** — dump fragments of information that are already incomplete and decontextualized
+4. **Repeat** — answer follow-up questions by going back to DevTools for more data you should have sent in the first place
+
+Multiply that by the 10, 20, 50 bugs you encounter in a week. That's **hours** lost to clipboard gymnastics.
+
+The real cost isn't just time — it's the **context loss**. By the time you've assembled all the pieces manually, you've lost your train of thought. The AI gets incomplete data, gives incomplete answers, and you start the cycle over.
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(239,68,68,0.3)', background: 'rgba(239,68,68,0.05)'}}>
+  <strong style={{color: '#ef4444'}}>❌ Before — Manual workflow</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    ~5 minutes per bug. Copy-paste fragments across tabs, lose context, get generic AI answers, repeat.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(16,185,129,0.3)', background: 'rgba(16,185,129,0.05)'}}>
+  <strong style={{color: '#10b981'}}>✓ After — DebugClip</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    ~10 seconds per bug. One click captures everything, formats it into a structured prompt, and delivers it directly to the AI.
+  </p>
+</div>
+
+</div>
+
+I built DebugClip because I was tired of being a human clipboard between DevTools and ChatGPT.
+
+
+---
+
+## The Solution
+
+DebugClip is a browser extension that **captures front-end errors automatically** and sends structured debug context to AI — in one click.
+
+Instead of manually hunting through DevTools tabs, DebugClip watches everything in the background. When something breaks, it's already captured — with full context, properly formatted, ready to be analyzed by an AI of your choice.
+
+### What It Captures
+
+DebugClip monitors four categories of front-end failures:
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(139,92,246,0.3)', background: 'rgba(139,92,246,0.05)'}}>
+  <strong style={{color: '#8b5cf6'}}>🔴 Console Errors</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    <code>console.error()</code>, <code>console.warn()</code>, uncaught TypeError/ReferenceError, and unhandled Promise rejections.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(16,185,129,0.3)', background: 'rgba(16,185,129,0.05)'}}>
+  <strong style={{color: '#10b981'}}>🌐 Network Failures</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Failed <code>fetch()</code> calls (4xx, 5xx), network timeouts, DNS failures, CORS blocks, and XHR errors.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(236,72,153,0.3)', background: 'rgba(236,72,153,0.05)'}}>
+  <strong style={{color: '#ec4899'}}>📦 Resource Loading Failures</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Broken images, missing stylesheets, and failed script loads (404, DNS resolution failures).
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(245,158,11,0.3)', background: 'rgba(245,158,11,0.05)'}}>
+  <strong style={{color: '#f59e0b'}}>🔒 Security Violations</strong>
+  <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    CSP violations, mixed content warnings, and deprecated API notices that silently break functionality.
+  </p>
+</div>
+
+</div>
+
+Every captured error includes **timestamps**, **stack traces**, **request/response headers**, and **body payloads** — the complete picture that AI needs to actually diagnose the problem, not just guess at it.
+
+### One Click to AI
+
+Here's where DebugClip eliminates the clipboard workflow entirely. Once errors are captured, you hit **one button** and the extension:
+
+1. Formats everything into a **structured Markdown prompt** — token-optimized so the AI gets maximum context without wasted tokens
+2. Opens your AI provider of choice
+3. **Auto-injects** the formatted debug context directly into the AI's input field — no paste required
+
+DebugClip supports **seven AI providers** out of the box:
+
+**Claude** · **ChatGPT** · **Gemini** · **DeepSeek** · **Copilot** · **Mistral** · **Groq**
+
+No lock-in. Use whichever AI gives you the best answers for your specific problem. Switch between them freely — the structured prompt format works with all of them.
+
+The result: what used to take 5 minutes of manual copy-paste-switch-repeat now takes **10 seconds**. Click capture, click send, get an answer that actually helps because the AI has the full picture from the start.
+
+
+---
+
+## Architecture
+
+Building a browser extension that captures errors sounds straightforward — until you realize that no single browser API covers every scenario. Some pages lock down their environment with Content Security Policy. Some errors only surface at the network level. And the browser itself can kill your background process at any moment.
+
+Here's how the pieces fit together:
+
+<div style={{background: 'var(--ifm-background-surface-color)', border: '1px solid var(--ifm-toc-border-color)', borderRadius: '0.75rem', padding: '1.5rem', margin: '1.5rem 0', fontFamily: 'monospace', fontSize: '0.85rem', lineHeight: 2}}>
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                      Service Worker (MV3)                        │
+│                   orchestrates all messaging                     │
+├───────────────────────────────┬─────────────────────────────────┤
+│                               │                                 │
+│  ┌─────────────────────┐      │      ┌─────────────────────┐   │
+│  │  chrome.scripting    │      │      │  chrome.debugger    │   │
+│  │  (main-world inject) │      │      │  (CDP attach)       │   │
+│  │                      │      │      │                     │   │
+│  │  • patches console   │      │      │  • Network.* events │   │
+│  │  • wraps fetch/XHR   │      │      │  • Runtime.* events │   │
+│  │  • error event listen│      │      │  • full headers/body│   │
+│  └──────────┬───────────┘      │      └──────────┬──────────┘   │
+│             │                  │                 │               │
+│             ▼                  │                 ▼               │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │                   Shared Error Store                     │    │
+│  │              (in-memory, per tab session)                │    │
+│  │                                                         │    │
+│  │   ┌───────────────────────────────────────────────┐     │    │
+│  │   │  Duplicate Detection (URL + message + timestamp) │     │    │
+│  │   │  prevents redundant entries from both paths    │     │    │
+│  │   └───────────────────────────────────────────────┘     │    │
+│  └─────────────────────────────────────────────────────────┘    │
+│             │                                                    │
+│             ▼                                                    │
+│  ┌─────────────────────────────────────────────────────────┐    │
+│  │              LLM Injection (Content Scripts)             │    │
+│  │  injected into AI sites → handles React inputs &        │    │
+│  │  ProseMirror editors → delivers formatted prompt        │    │
+│  └─────────────────────────────────────────────────────────┘    │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+### The Dual-Capture Strategy
+
+DebugClip uses two complementary capture methods to cover the full spectrum of front-end errors:
+
+**Approach 1: Main-World Script Injection** — via `chrome.scripting` with `world: "MAIN"`, DebugClip injects a script directly into the page's execution context. This script patches `console.error`, wraps `fetch` and `XHR`, and listens for `error` and `unhandledrejection` events. It works silently on most sites without any user-visible indicator.
+
+**Approach 2: Chrome DevTools Protocol** — via the `chrome.debugger` API, DebugClip attaches to a tab and subscribes to `Network.*` and `Runtime.*` CDP events. This captures everything — including requests blocked by CSP or errors the page intentionally suppresses. The tradeoff: Chrome shows a "debugger attached" banner, so this mode is opt-in for users who want maximum coverage.
+
+Both capture paths feed into the **same shared error store**. Since both methods can catch the same error (a failed fetch triggers both the XHR wrapper and a CDP `Network.loadingFailed` event), a **duplicate detection layer** compares entries by URL, message content, and timestamp proximity to prevent redundant entries. The result: users get complete coverage without seeing the same error twice.
+
+### Service Worker Constraints (Manifest V3)
+
+Chrome extensions running on Manifest V3 have no persistent background page. The Service Worker **wakes on events and dies when idle** — typically after 30 seconds of inactivity. This creates a fundamental constraint: you cannot rely on long-lived in-memory state.
+
+DebugClip handles this by splitting data into two categories:
+
+- **Transient data** (captured errors for the current session) — held in memory while the Service Worker is alive. If it dies mid-session, active tab connections re-send their state on reconnect.
+- **Persistent data** (user settings, license status, session history) — written to `chrome.storage.local` immediately on change. The Service Worker reads it back on wake.
+
+All message handling uses the `return true` pattern in `onMessage` listeners to keep the message channel open for async responses — without this, the Service Worker would close the port before the response arrives.
+
+### LLM Injection Mechanism
+
+The "one-click send to AI" feature works through **content scripts injected into AI provider sites** (Claude, ChatGPT, Gemini, DeepSeek, Copilot, Mistral, Groq). When the user clicks "Send", the Service Worker passes the formatted prompt to the appropriate content script, which then inserts it into the AI's input field.
+
+This sounds simple until you realize every AI site uses a different editor:
+
+- **React-controlled inputs** (ChatGPT, Gemini, DeepSeek, Copilot, Mistral, Groq) — you can't just set `input.value`. React ignores DOM mutations it didn't initiate. DebugClip uses the native setter trick: calling the native `HTMLTextAreaElement.prototype.value` setter directly, then dispatching synthetic `input` and `change` events so React's reconciler picks up the change.
+- **ProseMirror editors** (Claude) — Claude uses a ProseMirror-based rich text editor that doesn't respond to value setters at all. Instead, DebugClip focuses the editor and uses `document.execCommand("insertText")` to insert content as if the user typed it.
+
+The injection script retries at 1.5s, 3.5s, 6s, and 10s after page load using a module-level flag to prevent duplicate injections — because AI sites are SPAs that may not have their editor mounted immediately on navigation.
+
+---
+
+## Tech Stack
+
+<Tabs>
+  <TabItem value="extension" label="Extension" default>
+
+| Technology | Version | Purpose |
+|---|---|---|
+| **React** | 18 | Popup and options page UI |
+| **TypeScript** | 5.x | Type safety across the entire extension codebase |
+| **Vite + @crxjs/vite-plugin** | — | Manifest V3 native extension bundler with HMR |
+| **Tailwind CSS** | 3.x | Utility-first styling with dark theme design tokens |
+| **chrome.debugger CDP** | — | Network capture via Chrome DevTools Protocol |
+| **chrome.scripting** | — | Main-world script injection for console/error capture |
+
+  </TabItem>
+  <TabItem value="backend" label="Backend/Infra">
+
+| Technology | Version | Purpose |
+|---|---|---|
+| **Cloudflare Workers + D1** | — | License validation API (serverless, $0/month) |
+| **Vercel** | — | Marketing website hosting and CDN |
+| **Creem** | — | One-time license payment processing via webhooks |
+
+  </TabItem>
+  <TabItem value="website" label="Website">
+
+| Technology | Version | Purpose |
+|---|---|---|
+| **Next.js** | 15 | Static export marketing site with App Router |
+| **Framer Motion** | — | Landing page animations and transitions |
+
+  </TabItem>
+</Tabs>
+
+
+---
+
+## Key Features
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+{[
+  ['rgba(139, 92, 246,', '#8b5cf6', '🔢 Live Badge Counter', 'Real-time error count displayed on the extension icon. Know instantly when something breaks, even if you\'re not in DevTools.'],
+  ['rgba(16, 185, 129,', '#10b981', '📝 Structured Markdown Prompts', 'Errors formatted into token-optimized prompts with full context. AI gets exactly what it needs, structured for maximum comprehension.'],
+  ['rgba(236, 72, 153,', '#ec4899', '🚀 One-Click Send to AI', 'Captured errors delivered to your AI of choice in one click. No copy-paste, no tab switching, no context loss.'],
+  ['rgba(245, 158, 11,', '#f59e0b', '💉 Auto-Inject into AI Input', 'The prompt is injected directly into the AI\'s text field automatically. No paste required — it just appears.'],
+  ['rgba(6, 182, 212,', '#06b6d4', '🔒 Zero Data Collection', 'Everything stays on your machine. No telemetry, no external servers, no data leaves the browser — privacy-first by design.'],
+  ['rgba(59, 130, 246,', '#3b82f6', '🕐 Session History', 'Errors persist across page navigations within a session. Navigate freely without losing your debug context.'],
+].map(([rgba, color, title, desc]) => (
+  <div key={title} style={{padding: '1.25rem', borderRadius: '0.75rem', border: `1px solid ${rgba} 0.3)`, background: `${rgba} 0.05)`}}>
+    <strong style={{color}}>{title}</strong>
+    <p style={{margin: '0.5rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>{desc}</p>
+  </div>
+))}
+
+</div>
+
+
+---
+
+## Pricing
+
+Most browser extensions either charge a monthly subscription or shove ads into your workflow. I went a different direction with DebugClip: **one-time pricing, pay once, own it forever.**
+
+### Why Not a Subscription?
+
+The entire extension runs **100% locally on your machine**. There's no database scaling with each new user, no compute per request, no bandwidth costs. The only backend is a single Cloudflare Workers endpoint for license validation — running at **$0/month** regardless of user count.
+
+When your marginal cost per user is literally zero, charging a recurring subscription is just extracting value without delivering ongoing cost. One-time pricing is honest. You pay for the work that went into building the tool, not for the privilege of continuing to use it.
+
+**Total monthly infrastructure cost: $0.**
+
+### The Three Tiers
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', margin: '1.5rem 0'}}>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(107, 114, 128, 0.3)', background: 'rgba(107, 114, 128, 0.05)'}}>
+  <strong style={{fontSize: '1.1rem'}}>🆓 Free — $0</strong>
+  <p style={{margin: '0.75rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Full error &amp; network capture, live badge counter, view all captured errors, and prompt preview (blurred). Everything you need to see the value before committing.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(139, 92, 246, 0.3)', background: 'rgba(139, 92, 246, 0.05)'}}>
+  <strong style={{fontSize: '1.1rem', color: '#8b5cf6'}}>⚡ Pro — $4 one-time</strong>
+  <p style={{margin: '0.75rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Everything in Free, plus: send to AI, auto-inject into AI input, session history, smart filtering, custom prompt templates, localStorage snapshots, and priority support. One payment, lifetime access.
+  </p>
+</div>
+
+<div style={{padding: '1.25rem', borderRadius: '0.75rem', border: '1px solid rgba(245, 158, 11, 0.3)', background: 'rgba(245, 158, 11, 0.05)'}}>
+  <strong style={{fontSize: '1.1rem', color: '#f59e0b'}}>👑 Ultimate — $19 one-time</strong>
+  <p style={{margin: '0.75rem 0 0', fontSize: '0.875rem', color: 'var(--ifm-color-content-secondary)'}}>
+    Everything in Pro, plus: AI answers inside the popup (BYOK with 6 providers), MCP server for AI agents (Cursor, Kiro), multi-tab capture, and webhook &amp; Slack notifications. The full toolkit — forever.
+  </p>
+</div>
+
+</div>
+
+The philosophy is simple: if you find DebugClip useful enough to send errors to AI, $4 unlocks that permanently. If you want the extension to *be* your entire debugging interface — with AI responses inline and agent integrations — $19 gets you there. No renewals, no "your trial expired" popups, no dark patterns.
+
+
+---
+
+## Challenges & Lessons
+
+Building the extension was the easy part. Getting it into users' hands — and keeping it working across every edge case — was the real engineering challenge.
+
+### Challenges
+
+**1. Chrome Web Store "keyword spam" rejection.**
+The extension description listed every supported AI provider by name: "Works with Claude, ChatGPT, Gemini, DeepSeek, Copilot, Mistral, Groq." Store reviewers flagged this as keyword stuffing and rejected the submission outright. No warning, no specific guidance — just a generic policy violation email.
+
+**Fix:** Rewrote the entire description using generic phrasing — "send to your AI assistant of choice" instead of naming competitors. Removed brand names from the feature list. Resubmitted unchanged code with only metadata differences. Approved within 24 hours.
+
+**2. Double injection bug.**
+Both capture methods — `chrome.scripting` (console patching) and `chrome.debugger` (CDP) — could catch the same error. A failed `fetch` call would trigger the XHR wrapper *and* a CDP `Network.loadingFailed` event. Users saw duplicate entries in their error list, which made the output confusing and wasted AI tokens on redundant context.
+
+**Fix:** Added a duplicate detection layer that compares entries by URL, message content, and timestamp proximity (within 100ms). If two entries match on all three, the later one is discarded. Also added a single module-level boolean flag (`let injected = false`) to prevent the main-world injection script from running twice on the same page — because `chrome.scripting.executeScript` can fire multiple times during SPA navigations.
+
+**3. CSP blocking API calls from content scripts.**
+Content scripts injected into pages with strict Content Security Policy couldn't make API calls to the license validation server. The page's CSP applies to scripts running in its context, so `fetch("https://api.debugclip.online/...")` was blocked with a `connect-src` violation.
+
+**Fix:** Routed all API calls through the Service Worker, which is exempt from page-level CSP. Content scripts send a message to the background, the Service Worker makes the request, and sends the response back. Also added the API domain to the extension's own `connect-src` directive in the manifest to satisfy Chrome's extension CSP requirements.
+
+**4. Service Worker dying mid-API-call.**
+Manifest V3 Service Workers die after ~30 seconds of inactivity. During license activation, if a user was slow to complete payment and the callback arrived late, the worker would die mid-request — leaving the license in a half-activated state. The user would see "activating..." forever.
+
+**Fix:** Write pending activation state to `chrome.storage.local` *before* starting the API call. On worker wake, check for pending states and retry. All message listeners use `return true` to keep the message channel open for async responses. The activation flow is now idempotent — if it fails or the worker dies, it picks up exactly where it left off on next wake.
+
+**5. React SPA input injection.**
+Each AI provider uses a different editor implementation. Claude uses ProseMirror. ChatGPT uses React-controlled textareas. Setting `input.value = "..."` directly doesn't work for React — the framework ignores DOM mutations it didn't initiate, so the value reverts on the next render cycle.
+
+**Fix:** Per-provider injection strategies. For React-controlled inputs (ChatGPT, Gemini, DeepSeek, Copilot, Mistral, Groq): call the native `HTMLTextAreaElement.prototype.value` setter directly, then dispatch synthetic `input` and `change` events so React's reconciler acknowledges the change. For ProseMirror (Claude): focus the editor and use `document.execCommand("insertText")` to simulate typing. The injection script retries at 1.5s, 3.5s, 6s, and 10s after page load — because AI sites are SPAs that may not have their editor mounted on initial navigation.
+
+### Lessons Learned
+
+**1. The product is 30% of the work.**
+Building the extension took about 2 weeks. Getting it listed on the Chrome Web Store, setting up one-time payments via Creem, writing the marketing site, dealing with store rejections, and handling edge cases in license activation took 4+ weeks. Marketing, compliance, and payments dominate the timeline for any product you want people to actually use.
+
+**2. Chrome Web Store reviews are inconsistent.**
+The same extension — identical code, identical description — was rejected once and approved on resubmission without any changes. Different reviewer, different result. Don't take rejections personally. Just resubmit and hope for a more reasonable reviewer.
+
+**3. Ship earlier, polish later.**
+I launched with core capture and send functionality. No session history, no custom templates, no multi-tab support. Real user feedback from that initial launch was more valuable than three more weeks of tweaking animations and edge cases in isolation. The features I thought users wanted were different from the ones they actually asked for.
+
+**4. Developers will pay for tools that save time.**
+$4 is a no-brainer when the alternative is 5 minutes of clipboard gymnastics per bug, multiplied across dozens of bugs per week. Price anchoring against time saved makes the value proposition obvious.
+
+**5. Build what you use daily.**
+DebugClip exists because I needed it every single day. Personal pain drives sustained motivation. When you're your own first user, you notice friction immediately, you test in real conditions constantly, and you never run out of motivation to improve the tool — because every improvement makes *your own* workflow better.
+
+
+---
+
+## Links
+
+- [🌐 Website — debugclip.online](https://debugclip.online)
+- [🏪 Chrome Web Store](https://chromewebstore.google.com/detail/mkkbdlmfhnogenmnffaanalbbbbmcfoe)
+- [🏪 Edge Add-ons](https://microsoftedge.microsoft.com/addons/detail/debugclip/0RDCKGD0GKV6)
+- [💻 GitHub Repository](https://github.com/oussama-zbair/debugclip)
+- [🔒 Privacy Policy](https://debugclip.online/privacy)
