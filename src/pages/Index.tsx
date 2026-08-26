@@ -9,44 +9,51 @@ import CertificationsGalaxy from '@/components/artistic/CertificationsGalaxy';
 import BlogSection from '@/components/artistic/BlogSection';
 import VisitorsSection from '@/components/VisitorsSection';
 import ContactPortal from '@/components/artistic/ContactPortal';
+import Footer from '@/components/Footer';
+import SEOHead from '@/components/SEOHead';
 
 const Index: React.FC = () => {
   return (
     <SecurityWrapper>
       <div className="relative min-h-screen bg-background text-foreground overflow-x-hidden">
 
-        {/* Scroll progress */}
+        <SEOHead ogType="profile" />
+
         <ScrollProgressBar />
 
-        {/* Always-visible navbar */}
-        <SiteNavbar />
+        <header>
+          <SiteNavbar />
+        </header>
 
-        {/* Hero */}
-        <section id="hero">
-          <HeroProfile />
-        </section>
+        <main>
+          <section id="hero">
+            <HeroProfile />
+          </section>
 
-        <section id="tech-stack">
-          <TechStackConstellation />
-        </section>
+          <section id="tech-stack">
+            <TechStackConstellation />
+          </section>
 
-        <section id="projects">
-          <ProjectGalaxy />
-        </section>
+          <section id="projects">
+            <ProjectGalaxy />
+          </section>
 
-        <section id="certifications">
-          <CertificationsGalaxy />
-        </section>
+          <section id="certifications">
+            <CertificationsGalaxy />
+          </section>
 
-        <section id="blog">
-          <BlogSection />
-        </section>
+          <section id="blog">
+            <BlogSection />
+          </section>
 
-        <VisitorsSection />
+          <VisitorsSection />
 
-        <section id="contact">
-          <ContactPortal />
-        </section>
+          <section id="contact">
+            <ContactPortal />
+          </section>
+        </main>
+
+        <Footer />
 
       </div>
     </SecurityWrapper>
