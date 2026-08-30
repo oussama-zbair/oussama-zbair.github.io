@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, TrendingUp, Users } from 'lucide-react';
-import { fetchVisitors, pushVisitor, type VisitorEntry } from '@/lib/visitorStore';
+import { fetchVisitorState, registerVisitor, type VisitorEntry } from '@/lib/visitorStore';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 interface GeoData {
@@ -12,10 +12,6 @@ interface GeoData {
   longitude: string;
   timezone: string;
 }
-
-// ── Constants ──────────────────────────────────────────────────────────────────
-const COUNT_NAMESPACE = 'oussamazbair-engineer';
-const COUNT_KEY       = 'visitors';
 
 // ── Known country coordinates fallback ───────────────────────────────────────
 const COUNTRY_COORDS: Record<string, [number, number]> = {
@@ -71,14 +67,6 @@ function buildEntry(geo: GeoData): VisitorEntry {
     lon:         parseFloat(geo.longitude) || lon,
     timestamp:   Date.now(),
   };
-}
-
-async function bumpCount(): Promise<number | null> {
-  try {
-    const r = await fetch(`https://api.countapi.xyz/hit/${COUNT_NAMESPACE}/${COUNT_KEY}`, { cache: 'no-store' });
-    if (!r.ok) return null;
-    return (await r.json()).value ?? null;
-  } catch { return null; }
 }
 
 // ── Animated counter ───────────────────────────────────────────────────────────
@@ -306,26 +294,25 @@ const VisitorsSection: React.FC = () => {
     setCounted(true);
 
     (async () => {
-      // 1. Load the shared global visitor list first
-      const shared = await fetchVisitors();
-      setVisitors(shared);
+      // 1. Detect current visitor location and load the shared state in parallel.
+      //    Neither blocks the other, so the section paints as soon as either resolves.
+      const geoPromise = fetch('https://get.geojs.io/v1/ip/geo.json')
+        .then(r => (r.ok ? (r.json() as Promise<GeoData>) : null))
+        .catch(() => null);
 
-      // 2. Detect the current visitor + bump the counter in parallel
-      const [geo, count] = await Promise.all([
-        fetch('https://get.geojs.io/v1/ip/geo.json')
-          .then(r => (r.ok ? (r.json() as Promise<GeoData>) : null))
-          .catch(() => null),
-        bumpCount(),
-      ]);
+      const state = await fetchVisitorState();
+      setVisitors(state.visitors);
+      setTotal(state.total);
 
-      if (count !== null) setTotal(count);
-
+      // 2. Once we know the visitor's location, register them (one round-trip
+      //    that both increments the counter and appends the location).
+      const geo = await geoPromise;
       if (geo?.country) {
         setCurrent((geo.country_code || '').toUpperCase());
         const entry = buildEntry(geo);
-        // 3. Append to the shared list and persist back to the bin
-        const updated = await pushVisitor(entry, shared);
-        setVisitors(updated);
+        const updated = await registerVisitor(entry, state);
+        setVisitors(updated.visitors);
+        setTotal(updated.total);
       }
     })();
   }, [counted]);

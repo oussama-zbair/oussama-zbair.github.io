@@ -1,9 +1,12 @@
-// api/visitors.js — Vercel serverless function proxying the shared visitor store.
+// api/visitors.js — Vercel serverless function for the shared visitor store + counter.
 // The JSONBin key stays server-side and is NEVER exposed to the browser.
 //
-// GET  /api/visitors  -> returns the current visitor array
-// POST /api/visitors  -> body: a VisitorEntry; appends (deduped by countryCode),
-//                        caps to 100, drops entries older than 30 days, returns updated array
+// The bin stores a single object: { visitors: VisitorEntry[], total: number }
+//
+// GET  /api/visitors  -> { visitors, total }  (read-only, no increment)
+// POST /api/visitors  -> body: a VisitorEntry; increments total, appends the
+//                        visitor (deduped by countryCode), caps to 100, drops
+//                        entries older than 30 days. Returns { visitors, total }.
 
 const BIN_ID = process.env.JSONBIN_BIN_ID;
 const KEY = process.env.JSONBIN_KEY;
@@ -20,6 +23,20 @@ function pruneAndCap(entries) {
     .slice(0, MAX_STORED);
 }
 
+// Normalizes whatever is stored in the bin into { visitors, total }.
+// Supports the legacy shape where the bin was a bare array of visitors.
+function normalize(record) {
+  if (Array.isArray(record)) {
+    return { visitors: pruneAndCap(record), total: record.length };
+  }
+  if (record && typeof record === 'object') {
+    const visitors = Array.isArray(record.visitors) ? pruneAndCap(record.visitors) : [];
+    const total = typeof record.total === 'number' ? record.total : visitors.length;
+    return { visitors, total };
+  }
+  return { visitors: [], total: 0 };
+}
+
 async function readBin() {
   const res = await fetch(`${BASE}/${BIN_ID}/latest`, {
     headers: { 'X-Access-Key': KEY },
@@ -27,37 +44,33 @@ async function readBin() {
   });
   if (!res.ok) throw new Error(`read failed: ${res.status}`);
   const json = await res.json();
-  const record = json && json.record;
-  return Array.isArray(record) ? record : [];
+  return normalize(json && json.record);
 }
 
-async function writeBin(list) {
+async function writeBin(state) {
   const res = await fetch(`${BASE}/${BIN_ID}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json', 'X-Access-Key': KEY },
-    body: JSON.stringify(list),
+    body: JSON.stringify(state),
   });
   if (!res.ok) throw new Error(`write failed: ${res.status}`);
 }
 
 export default async function handler(req, res) {
-  // Basic CORS for same-origin use
   res.setHeader('Cache-Control', 'no-store');
 
   if (!BIN_ID || !KEY) {
-    return res.status(200).json([]); // not configured — behave gracefully
+    return res.status(200).json({ visitors: [], total: 0 });
   }
 
   try {
     if (req.method === 'GET') {
-      const list = pruneAndCap(await readBin());
-      return res.status(200).json(list);
+      return res.status(200).json(await readBin());
     }
 
     if (req.method === 'POST') {
       const entry = typeof req.body === 'string' ? JSON.parse(req.body) : req.body;
 
-      // Minimal validation
       if (
         !entry ||
         typeof entry.countryCode !== 'string' ||
@@ -76,16 +89,18 @@ export default async function handler(req, res) {
         timestamp: Date.now(),
       };
 
-      const existing = await readBin();
-      const deduped = existing.filter((e) => e.countryCode !== safeEntry.countryCode);
-      const updated = pruneAndCap([safeEntry, ...deduped]);
-      await writeBin(updated);
-      return res.status(200).json(updated);
+      const state = await readBin();
+      const deduped = state.visitors.filter((e) => e.countryCode !== safeEntry.countryCode);
+      const visitors = pruneAndCap([safeEntry, ...deduped]);
+      const total = state.total + 1;
+
+      await writeBin({ visitors, total });
+      return res.status(200).json({ visitors, total });
     }
 
     res.setHeader('Allow', 'GET, POST');
     return res.status(405).json({ error: 'method not allowed' });
   } catch (err) {
-    return res.status(200).json([]); // fail soft — UI shows empty rather than breaking
+    return res.status(200).json({ visitors: [], total: 0 });
   }
 }
