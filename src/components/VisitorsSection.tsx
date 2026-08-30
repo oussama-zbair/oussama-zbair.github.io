@@ -1,16 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MapPin, TrendingUp, Users } from 'lucide-react';
+import { fetchVisitors, pushVisitor, type VisitorEntry } from '@/lib/visitorStore';
 
 // ── Types ─────────────────────────────────────────────────────────────────────
-interface VisitorEntry {
-  country: string;
-  countryCode: string;
-  city: string;
-  lat: number;
-  lon: number;
-  timestamp: number;
-}
 interface GeoData {
   country: string;
   country_code: string;
@@ -21,9 +14,6 @@ interface GeoData {
 }
 
 // ── Constants ──────────────────────────────────────────────────────────────────
-const STORAGE_KEY     = 'oz_visitors_log_v2';
-const MAX_STORED      = 30;
-const DECAY_MS        = 14 * 24 * 60 * 60 * 1000;
 const COUNT_NAMESPACE = 'oussamazbair-engineer';
 const COUNT_KEY       = 'visitors';
 
@@ -70,22 +60,10 @@ function timeAgo(ts: number): string {
   return `${Math.floor(s / 86400)}d ago`;
 }
 
-function loadVisitors(): VisitorEntry[] {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const all: VisitorEntry[] = raw ? JSON.parse(raw) : [];
-    return all.filter(v => Date.now() - v.timestamp < DECAY_MS);
-  } catch { return []; }
-}
-
-function saveVisitors(e: VisitorEntry[]) {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(e)); } catch {}
-}
-
-function addVisitor(geo: GeoData, entries: VisitorEntry[]): VisitorEntry[] {
+function buildEntry(geo: GeoData): VisitorEntry {
   const code = (geo.country_code || '').toUpperCase();
   const [lat, lon] = getCoords(code);
-  const entry: VisitorEntry = {
+  return {
     country:     geo.country || 'Unknown',
     countryCode: code,
     city:        geo.city || '',
@@ -93,8 +71,6 @@ function addVisitor(geo: GeoData, entries: VisitorEntry[]): VisitorEntry[] {
     lon:         parseFloat(geo.longitude) || lon,
     timestamp:   Date.now(),
   };
-  const filtered = entries.filter(e => e.countryCode !== code);
-  return [entry, ...filtered].slice(0, MAX_STORED);
 }
 
 async function bumpCount(): Promise<number | null> {
@@ -328,21 +304,30 @@ const VisitorsSection: React.FC = () => {
   useEffect(() => {
     if (counted) return;
     setCounted(true);
-    const stored = loadVisitors();
-    setVisitors(stored);
 
-    Promise.all([
-      fetch('https://get.geojs.io/v1/ip/geo.json').then(r => r.ok ? r.json() as Promise<GeoData> : null).catch(() => null),
-      bumpCount(),
-    ]).then(([geo, count]) => {
+    (async () => {
+      // 1. Load the shared global visitor list first
+      const shared = await fetchVisitors();
+      setVisitors(shared);
+
+      // 2. Detect the current visitor + bump the counter in parallel
+      const [geo, count] = await Promise.all([
+        fetch('https://get.geojs.io/v1/ip/geo.json')
+          .then(r => (r.ok ? (r.json() as Promise<GeoData>) : null))
+          .catch(() => null),
+        bumpCount(),
+      ]);
+
       if (count !== null) setTotal(count);
+
       if (geo?.country) {
         setCurrent((geo.country_code || '').toUpperCase());
-        const updated = addVisitor(geo, stored);
+        const entry = buildEntry(geo);
+        // 3. Append to the shared list and persist back to the bin
+        const updated = await pushVisitor(entry, shared);
         setVisitors(updated);
-        saveVisitors(updated);
       }
-    });
+    })();
   }, [counted]);
 
   const shown = expanded ? visitors : visitors.slice(0, 5);
