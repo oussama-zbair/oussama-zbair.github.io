@@ -316,6 +316,15 @@ export const certifications: Certification[] = [
     isLatest: true,
   },
   {
+    title: 'Microsoft Azure Essentials Professional Certificate',
+    issuer: 'Microsoft & LinkedIn',
+    date: 'Aug 31, 2026',
+    id: 'MS-AZURE-ESSENTIALS-2026',
+    verifyUrl: 'https://www.linkedin.com/learning/certificates/f8d9295a5dc19f3b68c5edbd169b0c34df0938665a69d11fb94bb78a932e85c3',
+    badge: 'microsoft',
+    isLatest: true,
+  },
+  {
     title: 'Oracle Certified Professional: Java SE 17 Developer',
     issuer: 'Oracle',
     date: 'Aug 2025',
